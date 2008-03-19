@@ -3,15 +3,13 @@ package com.sun.javanet.cvsnews.cli;
 import com.sun.javanet.cvsnews.Commit;
 
 import java.util.Set;
-import java.util.HashSet;
 
 /**
- * Subcommand that reads e-mail from stdin and adds news files.
+ * Dumps issues found in the commit message.
  *
  * @author Kohsuke Kawaguchi
  */
-public class UpdateCommand extends AbstractIssueCommand {
-
+public class DumpIssuesCommand extends AbstractIssueCommand {
     public int execute() throws Exception {
         System.out.println("Parsing stdin");
         Commit commit = parseStdin();
@@ -21,6 +19,4 @@ public class UpdateCommand extends AbstractIssueCommand {
 
         return 0;
     }
-
-    private final static Set<String> PARTICIPATING_PROJECTS = new HashSet<String>(); 
 }
