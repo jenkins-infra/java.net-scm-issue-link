@@ -25,5 +25,5 @@ abstract class AbstractCommand implements Command {
         return new JavaNetCVSNewsParser().parse(msg);
     }
 
-    protected static final File HOME = new File(System.getProperty("user.home");
+    protected static final File HOME = new File(System.getProperty("user.home"));
 }
