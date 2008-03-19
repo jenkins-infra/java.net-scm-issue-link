@@ -7,6 +7,7 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import java.text.ParseException;
+import java.io.File;
 
 /**
  * @author Kohsuke Kawaguchi
@@ -23,4 +24,6 @@ abstract class AbstractCommand implements Command {
 
         return new JavaNetCVSNewsParser().parse(msg);
     }
+
+    protected static final File HOME = new File(System.getProperty("user.home");
 }

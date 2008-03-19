@@ -31,9 +31,9 @@ public abstract class AbstractIssueCommand extends AbstractCommand implements Co
     /**
      * Issue in an issue tracker.
      */
-    public static class Issue {
-        private final String projectName;
-        private final int number;
+    public static final class Issue {
+        public final String projectName;
+        public final int number;
 
         public Issue(String projectName, int number) {
             this.projectName = projectName.toLowerCase();
