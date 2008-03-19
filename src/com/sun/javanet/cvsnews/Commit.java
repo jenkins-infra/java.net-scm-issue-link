@@ -39,7 +39,7 @@ public final class Commit {
     public final String project;
 
     /**
-     * Branch
+     * Branch where the commit was made. Null if trunk.
      */
     public final String branch;
 

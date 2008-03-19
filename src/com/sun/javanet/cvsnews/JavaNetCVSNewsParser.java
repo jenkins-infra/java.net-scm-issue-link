@@ -172,6 +172,7 @@ public class JavaNetCVSNewsParser extends NewsParser {
     private static final Pattern DIRECTORY_LINE = Pattern.compile("^Directory: (/.+/)$");
     private static final Pattern FILE_LINE = Pattern.compile("^File \\[(changed|added|removed)\\]: (.+)$");
     private static final Pattern URL_LINE = Pattern.compile("^Url: (.+)$");
+    private static final Pattern DIFF_LINE = Pattern.compile("^\\+\\+\\+ .+\t(20\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d+0000)\t[0-9.]+$");
 
     private static final Pattern DIFF_REVISION = Pattern.compile("\\?r1=([0-9.]+)&r2=([0-9.]+)");
     private static final Pattern NEW_REVISION = Pattern.compile("\\?rev=([0-9.]+)&");
