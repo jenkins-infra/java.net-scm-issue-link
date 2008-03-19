@@ -55,7 +55,17 @@ public class UpdateCommand extends AbstractCommand implements Command {
     public int execute() throws Exception {
         System.out.println("Parsing stdin");
         Commit commit = parseStdin();
+        Set<Issue> issues = parseIssues(commit);
 
+        System.out.println("Found "+issues);
+
+        return 0;
+    }
+
+    /**
+     * Discovers links to issues.
+     */
+    protected final Set<Issue> parseIssues(Commit commit) {
         Set<Issue> issues = new HashSet<Issue>();
         Matcher m = ISSUE_MARKER.matcher(commit.log);
         while(m.find())
@@ -64,10 +74,7 @@ public class UpdateCommand extends AbstractCommand implements Command {
         m = ID_MARKER.matcher(commit.log);
         while(m.find())
             issues.add(new Issue(m.group(1),m.group(2)));
-
-        System.out.println("Found "+issues);
-
-        return 0;
+        return issues;
     }
 
     // look for strings like "issue #350" and "issue 350"
