@@ -48,13 +48,14 @@ public class UpdateCommand extends AbstractIssueCommand {
 
     private String createUpdateMessage(Commit commit) {
         StringBuilder buf = new StringBuilder();
-        buf.append("==[Code change]==\n");
+        buf.append("Code changed in "+commit.project+"\n");
         buf.append(MessageFormat.format("User: {0}\n",commit.userName));
         buf.append("Path:\n");
         for (CodeChange cc : commit.getCodeChanges()) {
             buf.append(MessageFormat.format(" {0} ({1})\n",cc.fileName,cc.revision));
             buf.append("   "+cc.url+"\n");
         }
+        buf.append("\n");
         buf.append("Log:\n");
         buf.append(commit.log);
 
