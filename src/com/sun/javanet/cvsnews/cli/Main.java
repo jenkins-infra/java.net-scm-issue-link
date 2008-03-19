@@ -21,8 +21,8 @@ public class Main {
         Command com;
         List<String> commandArgs;
         if(args.length==0) {
-            com = new UpdateCommand();   // compatibility
-            commandArgs = Collections.emptyList();
+            System.err.println("Usage: java -jar parser.jar <subcommand>");
+            return -1;
         } else {
             try {
                 Class c = Class.forName("com.sun.javanet.cvsnews.cli."+capitalize(args[0])+"Command");
