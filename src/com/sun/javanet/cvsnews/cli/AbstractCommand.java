@@ -1,7 +1,7 @@
 package com.sun.javanet.cvsnews.cli;
 
-import com.sun.javanet.cvsnews2.Commit;
-import com.sun.javanet.cvsnews2.JavaNetCVSNewsParser;
+import com.sun.javanet.cvsnews.Commit;
+import com.sun.javanet.cvsnews.JavaNetCVSNewsParser;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;

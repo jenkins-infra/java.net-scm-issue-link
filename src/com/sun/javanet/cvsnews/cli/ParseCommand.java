@@ -1,6 +1,6 @@
 package com.sun.javanet.cvsnews.cli;
 
-import com.sun.javanet.cvsnews2.Commit;
+import com.sun.javanet.cvsnews.Commit;
 
 /**
  * Subcommand that reads e-mail from stdin and adds news files.
