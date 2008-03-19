@@ -4,7 +4,6 @@ import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**

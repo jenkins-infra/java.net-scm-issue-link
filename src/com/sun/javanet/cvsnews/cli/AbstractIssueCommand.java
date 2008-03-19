@@ -2,8 +2,8 @@ package com.sun.javanet.cvsnews.cli;
 
 import com.sun.javanet.cvsnews.Commit;
 
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

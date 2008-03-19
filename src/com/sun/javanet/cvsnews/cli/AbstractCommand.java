@@ -6,8 +6,8 @@ import com.sun.javanet.cvsnews.JavaNetCVSNewsParser;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
-import java.text.ParseException;
 import java.io.File;
+import java.text.ParseException;
 
 /**
  * @author Kohsuke Kawaguchi
