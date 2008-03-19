@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<project name="cvs-news" default="jar">
+  <path id="classpath">
+    <fileset dir="${basedir}" includes="lib/*.jar"/>
+  </path>
+
+  <target name="compile">
+    <mkdir dir="build/classes"/>
+    <javac srcdir="src" destdir="build/classes" debug="on" classpathref="classpath"/>
+  </target>
+
+  <target name="test-compile" depends="compile">
+    <mkdir dir="build/classes"/>
+    <javac srcdir="test" destdir="build/classes" debug="on">
+      <classpath>
+        <path refid="classpath"/>
+        <pathelement path="build/classes" />
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile">
+    <jar destfile="build/cvs-news.jar">
+      <manifest>
+        <attribute name="Main-Class" value="com.sun.javanet.cvsnews.cli.Main"/>
+        <attribute name="Class-Path" value="../lib/activation.jar ../lib/mail.jar ../lib/xstream-1.1.3.jar ../lib/xpp3.jar ../lib/args4j-2.0.7.jar"/>
+      </manifest>
+      <fileset dir="build/classes"/>
+    </jar>
+    <zip destfile="build/cvs-news-src.zip" basedir="src" />
+  </target>
+
+  <target name="clean">
+    <delete dir="build"/>
+  </target>
+</project>

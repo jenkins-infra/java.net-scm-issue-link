@@ -1,0 +1,111 @@
+X-Account-Key: account2
+X-UIDL: 28Mar200604:35:13GMT4907
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Return-path: <cvs-return-3331-kohsuke.kawaguchi=sun.com@jax-ws-sources.dev.java.net>
+Received: from fe-amer-09.sun.com ([192.18.108.183])
+ by bedge1-mail1.central.sun.com
+ (Sun Java System Messaging Server 6.2-4.02 (built Sep  9 2005))
+ with ESMTP id <0IWT00FK1M2PCU10@bedge1-mail1.central.sun.com> for
+ kk122374@bedge1-mail1.Central.Sun.COM; Mon, 27 Mar 2006 21:35:13 -0700 (MST)
+Received: from conversion-daemon.mail-amer.sun.com by mail-amer.sun.com
+ (Sun Java System Messaging Server 6.2-4.02 (built Sep  9 2005))
+ id <0IWT00C01LY70100@mail-amer.sun.com> for
+ kk122374@bedge1-mail1.Central.Sun.COM (ORCPT kohsuke.kawaguchi@sun.com); Mon,
+ 27 Mar 2006 21:35:13 -0700 (MST)
+Received: from phys-bedge1-1 ([129.147.156.99])
+ by mail-amer.sun.com (Sun Java System Messaging Server 6.2-4.02 (built Sep  9
+ 2005)) with ESMTP id <0IWT00EL3M2PSUK0@mail-amer.sun.com> for
+ kk122374@bedge1-mail1.Central.Sun.COM (ORCPT kohsuke.kawaguchi@sun.com); Mon,
+ 27 Mar 2006 21:35:13 -0700 (MST)
+Received: from sfbaymail1sca.SFBay.Sun.COM ([129.145.154.35])
+ by bedge1-mail1.central.sun.com
+ (Sun Java System Messaging Server 6.2-4.02 (built Sep  9 2005))
+ with ESMTP id <0IWT00FF5M2PCV10@bedge1-mail1.central.sun.com> for
+ kk122374@bedge1-mail1.Central.Sun.COM (ORCPT kohsuke.kawaguchi@sun.com); Mon,
+ 27 Mar 2006 21:35:13 -0700 (MST)
+Received: from sunmail1brm.Central.Sun.COM
+ (sunmail1brm.Central.Sun.COM [129.147.62.17])	by sfbaymail1sca.SFBay.Sun.COM
+ (8.12.10+Sun/8.12.10/ENSMAIL,v2.2) with ESMTP id k2S4ZCEZ005513	for
+ <kohsuke.kawaguchi@sfbay.sun.com>; Mon, 27 Mar 2006 20:35:13 -0800 (PST)
+Received: from nwk-avmta-2.sfbay.sun.com
+ (nwk-avmta-2.SFBay.Sun.COM [129.149.247.22])	by sunmail1brm.Central.Sun.COM
+ (8.11.7p1+Sun/8.11.7/ENSMAIL,v2.2) with ESMTP id k2S4ZCn29851	for
+ <@sunmail3.sfbay.sun.com:kohsuke.kawaguchi@sun.com>; Mon,
+ 27 Mar 2006 21:35:12 -0700 (MST)
+Received: from pmxchannel-daemon.nwk-avmta-2.sfbay.sun.com by
+ nwk-avmta-2.sfbay.sun.com
+ (Sun Java System Messaging Server 6.2-3.04 (built Jul 15 2005))
+ id <0IWT00F03M2N0V00@nwk-avmta-2.sfbay.sun.com> for kohsuke.kawaguchi@sun.com
+ (ORCPT kohsuke.kawaguchi@sun.com); Mon, 27 Mar 2006 20:35:11 -0800 (PST)
+Received: from nwkea-mail-5.sun.com ([192.18.42.27])
+ by nwk-avmta-2.sfbay.sun.com
+ (Sun Java System Messaging Server 6.2-3.04 (built Jul 15 2005))
+ with ESMTP id <0IWT002M1M2NNYE0@nwk-avmta-2.sfbay.sun.com> for
+ kohsuke.kawaguchi@sun.com (ORCPT kohsuke.kawaguchi@sun.com); Mon,
+ 27 Mar 2006 20:35:11 -0800 (PST)
+Received: from relay1.sun.com (relay1.sun.com [150.143.103.14] (may be forged))
+	by nwkea-mail-5.sun.com (8.12.10/8.12.9) with ESMTP id k2S4W4xn017984	for
+ <kohsuke.kawaguchi@sun.com>; Mon, 27 Mar 2006 20:35:10 -0800 (PST)
+Received: from mms05es.sun.com (mms05es.sun.com [150.143.104.94])
+ by relay1.sun.com with ESMTP for kohsuke.kawaguchi@sun.com; Tue,
+ 28 Mar 2006 04:35:10 +0000 (Z)
+Received: from relay2.sun.com (relay2.sun.com [150.143.103.24])
+ by mms05es.sun.com with ESMTP for kohsuke.kawaguchi@sun.com; Tue,
+ 28 Mar 2006 04:35:10 +0000 (Z)
+Received: from dev.java.net (dev.java.net [64.125.133.206])
+ by relay2.sun.com for kohsuke.kawaguchi@sun.com; Tue,
+ 28 Mar 2006 04:35:09 +0000 (Z)
+Received: (qmail 5935 invoked by uid 5000); Tue, 28 Mar 2006 04:35:09 +0000
+Received: (qmail 5921 invoked by uid 5000); Tue, 28 Mar 2006 04:35:08 +0000
+Date: Tue, 28 Mar 2006 04:35:08 +0000
+From: ramapulavarthi@dev.java.net
+Subject: CVS update [rearch-2005]:
+ /jax-ws-sources/jaxws-ri/rt/src/com/sun/xml/ws/handler/
+Sender: cvs-return-3331-kohsuke.kawaguchi=sun.com@jax-ws-sources.dev.java.net
+To: cvs@jax-ws-sources.dev.java.net
+Reply-to: cvs@jax-ws-sources.dev.java.net
+Message-id: <20060328043508.5920.qmail@dev.java.net>
+Content-type: TEXT/PLAIN
+Content-transfer-encoding: 7BIT
+Precedence: bulk
+Delivered-to: mailing list cvs@jax-ws-sources.dev.java.net
+X-PMX-Version: 5.1.2.240295
+Mailing-List: contact cvs-help@jax-ws-sources.dev.java.net; run by ezmlm
+List-Post: <mailto:cvs@jax-ws-sources.dev.java.net>
+List-Unsubscribe: <mailto:cvs-unsubscribe@jax-ws-sources.dev.java.net>
+List-Help: <mailto:cvs-help@jax-ws-sources.dev.java.net>
+X-No-Archive: yes
+Original-recipient: rfc822;kohsuke.kawaguchi@sun.com
+
+Tag: rearch-2005
+User: kohsuke
+Date: 2006/04/26 20:35:08
+
+Removed:
+   jax-ws-sources/jaxws-ri/rt/src/com/sun/xml/ws/handler/HandlerResolverImpl.java
+
+Log:
+ moving HandlerResolverImpl to client directory.
+ 
+ [NEWS:tag1 tag2 tag3 jaxb] This is a test of some looooooooooooooooooooooooong title and looooooooooooooooooooooooong description.
+ More description more description; fixed 6414236. What  about  having  two  whitespace  !  ?  and  let's  see  how  it  goes!
+ foo bar;
+ 
+ zot
+
+File Changes:
+
+Directory: /jax-ws-sources/jaxws-ri/rt/src/com/sun/xml/ws/handler/
+==================================================================
+
+File [removed]: HandlerResolverImpl.java
+
+
+
+
+---------------------------------------------------------------------
+To unsubscribe, e-mail: cvs-unsubscribe@jax-ws-sources.dev.java.net
+For additional commands, e-mail: cvs-help@jax-ws-sources.dev.java.net
+
+
