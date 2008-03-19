@@ -21,11 +21,11 @@ public class Main {
         Command com;
         List<String> commandArgs;
         if(args.length==0) {
-            com = new ParseCommand();   // compatibility
+            com = new UpdateCommand();   // compatibility
             commandArgs = Collections.emptyList();
         } else {
             try {
-                Class c = Class.forName(capitalize(args[0])+"Command");
+                Class c = Class.forName("com.sun.javanet.cvsnews.cli."+capitalize(args[0])+"Command");
                 com = (Command)c.newInstance();
             } catch (ClassNotFoundException e) {
                 System.err.println("No such command: "+args[0]);
