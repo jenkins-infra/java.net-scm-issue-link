@@ -34,4 +34,8 @@ public class CodeChange {
         this.url = url;
         this.revision = revision;
     }
+
+    public String toString() {
+        return fileName+':'+revision;
+    }
 }
