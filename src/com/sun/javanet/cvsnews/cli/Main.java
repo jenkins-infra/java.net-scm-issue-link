@@ -1,11 +1,11 @@
 package com.sun.javanet.cvsnews.cli;
 
-import java.util.List;
-import java.util.Collections;
-import java.util.Arrays;
-
-import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Reads CVS changelog e-mail from stdin and writes a news file to the current directory.
@@ -16,8 +16,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
         System.exit(run(args));
     }
-    public static int run(String[] args) throws Exception {
 
+    public static int run(String[] args) throws Exception {
         Command com;
         List<String> commandArgs;
         if(args.length==0) {

@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Kohsuke Kawaguchi
  */
-public final class NewsItem {
+public final class Commit {
     /**
      * The user who commmitted the change.
      */
@@ -43,7 +43,7 @@ public final class NewsItem {
      */
     public final String branch;
 
-    public NewsItem(String project, String userName, String branch, Date date, String log) {
+    public Commit(String project, String userName, String branch, Date date, String log) {
         this.userName = userName;
         this.project = project;
         this.branch = branch;

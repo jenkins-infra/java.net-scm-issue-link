@@ -11,6 +11,8 @@ import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,12 +51,12 @@ Added lines: 27
 ---------------
 */
 /**
- * Parses {@link NewsItem} from java.net CVS changelog e-mail.
+ * Parses {@link Commit} from java.net CVS changelog e-mail.
  *
  * @author Kohsuke Kawaguchi
  */
 public class JavaNetCVSNewsParser extends NewsParser {
-    public NewsItem parse(MimeMessage msg) throws ParseException {
+    public Commit parse(MimeMessage msg) throws ParseException {
         List<CodeChange> codeChanges = new ArrayList<CodeChange>();
 
         try {
@@ -92,7 +94,7 @@ public class JavaNetCVSNewsParser extends NewsParser {
                 if(line.startsWith("Date: ")) {
                     if(line.endsWith("+0000"))
                         line = line.substring(0,line.length()-5);
-                    date = new Date(line.substring(6));
+                    date = DATE_FORMAT.parse(line.substring(6));
                     continue;
                 }
                 if(line.startsWith("Log:")) {
@@ -130,7 +132,7 @@ public class JavaNetCVSNewsParser extends NewsParser {
             if(file!=null)
                 codeChanges.add(createCodeChange(directory,file,url));
 
-            NewsItem item = new NewsItem(project, user, branch, date, log.toString());
+            Commit item = new Commit(project, user, branch, date, log.toString());
             item.addCodeChanges(codeChanges);
 
             return item;
@@ -174,4 +176,6 @@ public class JavaNetCVSNewsParser extends NewsParser {
 
     private static final Pattern DIFF_REVISION = Pattern.compile("\\?r1=([0-9.]+)&r2=([0-9.]+)");
     private static final Pattern NEW_REVISION = Pattern.compile("\\?rev=([0-9.]+)&");
+
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 }

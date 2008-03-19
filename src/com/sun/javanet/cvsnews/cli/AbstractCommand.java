@@ -1,12 +1,11 @@
 package com.sun.javanet.cvsnews.cli;
 
-import com.sun.javanet.cvsnews.NewsItem;
-import com.sun.javanet.cvsnews.JavaNetCVSNewsParser;
+import com.sun.javanet.cvsnews2.Commit;
+import com.sun.javanet.cvsnews2.JavaNetCVSNewsParser;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
-import java.util.List;
 import java.text.ParseException;
 
 /**
@@ -14,9 +13,9 @@ import java.text.ParseException;
  */
 abstract class AbstractCommand implements Command {
     /**
-     * Parses stdin into {@link NewsItem}s.
+     * Parses stdin into {@link Commit}.
      */
-    protected final List<NewsItem> parseStdin() throws MessagingException, ParseException {
+    protected final Commit parseStdin() throws MessagingException, ParseException {
         MimeMessage msg = new MimeMessage(
             Session.getInstance(System.getProperties()), System.in);
 

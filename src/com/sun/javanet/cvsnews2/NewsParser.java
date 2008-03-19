@@ -11,7 +11,7 @@ public abstract class NewsParser {
     /**
      * Parses a changelog e-mail.
      */
-    public abstract NewsItem parse(MimeMessage msg) throws ParseException;
+    public abstract Commit parse(MimeMessage msg) throws ParseException;
 
     protected static final String TAG = "[a-zA-Z0-9_\\-.]+";
     protected static final Pattern TAGLINE = Pattern.compile("^ \\[NEWS: *"+TAG+"( +"+TAG+")*\\]");
