@@ -120,7 +120,14 @@ Modified:
    hudson/hudson/main/core/src/main/resources/hudson/model/View/sidepanel_ru.properties
 
 Log:
- Russian i18n update
+ In this test, bad entries always have issue ID 53.
+ Russian i18n update. This is issue #150
+ And issue 120. (and also issue #350)
+ JAVANETTASKS-TEST-2
+ But not issue
+ 53 nor iiissue 53pdt.
+ UTF-8. (JAXB-95) JAX-WS-53t
+ don't be fakedByTHIS-53
 
 File Changes:
 
