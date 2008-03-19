@@ -1,111 +1,263 @@
 X-Account-Key: account2
-X-UIDL: 28Mar200604:35:13GMT4907
+X-UIDL: 18Mar200812:18:14GMT14482
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Return-path: <cvs-return-3331-kohsuke.kawaguchi=sun.com@jax-ws-sources.dev.java.net>
-Received: from fe-amer-09.sun.com ([192.18.108.183])
- by bedge1-mail1.central.sun.com
- (Sun Java System Messaging Server 6.2-4.02 (built Sep  9 2005))
- with ESMTP id <0IWT00FK1M2PCU10@bedge1-mail1.central.sun.com> for
- kk122374@bedge1-mail1.Central.Sun.COM; Mon, 27 Mar 2006 21:35:13 -0700 (MST)
-Received: from conversion-daemon.mail-amer.sun.com by mail-amer.sun.com
- (Sun Java System Messaging Server 6.2-4.02 (built Sep  9 2005))
- id <0IWT00C01LY70100@mail-amer.sun.com> for
- kk122374@bedge1-mail1.Central.Sun.COM (ORCPT kohsuke.kawaguchi@sun.com); Mon,
- 27 Mar 2006 21:35:13 -0700 (MST)
-Received: from phys-bedge1-1 ([129.147.156.99])
- by mail-amer.sun.com (Sun Java System Messaging Server 6.2-4.02 (built Sep  9
- 2005)) with ESMTP id <0IWT00EL3M2PSUK0@mail-amer.sun.com> for
- kk122374@bedge1-mail1.Central.Sun.COM (ORCPT kohsuke.kawaguchi@sun.com); Mon,
- 27 Mar 2006 21:35:13 -0700 (MST)
-Received: from sfbaymail1sca.SFBay.Sun.COM ([129.145.154.35])
- by bedge1-mail1.central.sun.com
- (Sun Java System Messaging Server 6.2-4.02 (built Sep  9 2005))
- with ESMTP id <0IWT00FF5M2PCV10@bedge1-mail1.central.sun.com> for
- kk122374@bedge1-mail1.Central.Sun.COM (ORCPT kohsuke.kawaguchi@sun.com); Mon,
- 27 Mar 2006 21:35:13 -0700 (MST)
-Received: from sunmail1brm.Central.Sun.COM
- (sunmail1brm.Central.Sun.COM [129.147.62.17])	by sfbaymail1sca.SFBay.Sun.COM
- (8.12.10+Sun/8.12.10/ENSMAIL,v2.2) with ESMTP id k2S4ZCEZ005513	for
- <kohsuke.kawaguchi@sfbay.sun.com>; Mon, 27 Mar 2006 20:35:13 -0800 (PST)
-Received: from nwk-avmta-2.sfbay.sun.com
- (nwk-avmta-2.SFBay.Sun.COM [129.149.247.22])	by sunmail1brm.Central.Sun.COM
- (8.11.7p1+Sun/8.11.7/ENSMAIL,v2.2) with ESMTP id k2S4ZCn29851	for
- <@sunmail3.sfbay.sun.com:kohsuke.kawaguchi@sun.com>; Mon,
- 27 Mar 2006 21:35:12 -0700 (MST)
-Received: from pmxchannel-daemon.nwk-avmta-2.sfbay.sun.com by
- nwk-avmta-2.sfbay.sun.com
+X-Mozilla-Keys:                                                                                 
+Return-path: <kohsuke@kohsuke.org>
+Received: from fe-sfbay-09.sun.com ([192.18.34.119])
+ by sfbay3-mail1.sfbay.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTP id <0JXX00E1KE6ES7F0@sfbay3-mail1.sfbay.sun.com> for
+ kk122374@sfbay3-mail1.sfbay.Sun.COM; Tue, 18 Mar 2008 05:18:14 -0700 (PDT)
+Received: from conversion-daemon.fe-sfbay-09.sun.com by fe-sfbay-09.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ id <0JXX00L01E4I3N00@fe-sfbay-09.sun.com> for
+ kk122374@sfbay3-mail1.sfbay.Sun.COM (ORCPT kohsuke.kawaguchi@sun.com); Tue,
+ 18 Mar 2008 05:18:14 -0700 (PDT)
+Received: from phys-sfbay3-2.sfbay.sun.com ([129.145.47.25])
+ by fe-sfbay-09.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTP id <0JXX00IFKE6DFP10@fe-sfbay-09.sun.com> for
+ kk122374@sfbay3-mail1.sfbay.Sun.COM (ORCPT kohsuke.kawaguchi@sun.com); Tue,
+ 18 Mar 2008 05:18:13 -0700 (PDT)
+Received: from dm-sfbay-01.sfbay.sun.com ([129.145.155.118])
+ by sfbay3-mail1.sfbay.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTP id <0JXX00E1IE6DS7F0@sfbay3-mail1.sfbay.sun.com> for
+ kk122374@sfbay3-mail1.sfbay.Sun.COM (ORCPT kohsuke.kawaguchi@sun.com); Tue,
+ 18 Mar 2008 05:18:13 -0700 (PDT)
+Received: from sunmail5.uk.sun.com (sunmail5.UK.Sun.COM [129.156.85.165])
+	by dm-sfbay-01.sfbay.sun.com (8.13.8+Sun/8.13.8/ENSMAIL,v2.2)
+ with ESMTP id m2ICICoX063440	for <kohsuke.kawaguchi@sfbay.sun.com>; Tue,
+ 18 Mar 2008 05:18:13 -0700 (PDT)
+Received: from nwk-avmta-1.SFBay.Sun.COM
+ (nwk-avmta-1.SFBay.Sun.COM [129.146.11.74])
+	by sunmail5.uk.sun.com (8.13.8+Sun/8.13.8/ENSMAIL,v2.2)
+ with ESMTP id m2ICIAAB006201	for
+ <@sunmail2sca.sfbay.sun.com:kohsuke.kawaguchi@sun.com>; Tue,
+ 18 Mar 2008 12:18:12 +0000 (GMT)
+Received: from pmxchannel-daemon.nwk-avmta-1.sfbay.Sun.COM by
+ nwk-avmta-1.sfbay.Sun.COM
  (Sun Java System Messaging Server 6.2-3.04 (built Jul 15 2005))
- id <0IWT00F03M2N0V00@nwk-avmta-2.sfbay.sun.com> for kohsuke.kawaguchi@sun.com
- (ORCPT kohsuke.kawaguchi@sun.com); Mon, 27 Mar 2006 20:35:11 -0800 (PST)
-Received: from nwkea-mail-5.sun.com ([192.18.42.27])
- by nwk-avmta-2.sfbay.sun.com
+ id <0JXX00K01E6AZM00@nwk-avmta-1.sfbay.Sun.COM> for kohsuke.kawaguchi@sun.com
+ (ORCPT kohsuke.kawaguchi@sun.com); Tue, 18 Mar 2008 05:18:10 -0700 (PDT)
+Received: from brmea-mail-1.sun.com ([192.18.98.31])
+ by nwk-avmta-1.sfbay.Sun.COM
  (Sun Java System Messaging Server 6.2-3.04 (built Jul 15 2005))
- with ESMTP id <0IWT002M1M2NNYE0@nwk-avmta-2.sfbay.sun.com> for
- kohsuke.kawaguchi@sun.com (ORCPT kohsuke.kawaguchi@sun.com); Mon,
- 27 Mar 2006 20:35:11 -0800 (PST)
-Received: from relay1.sun.com (relay1.sun.com [150.143.103.14] (may be forged))
-	by nwkea-mail-5.sun.com (8.12.10/8.12.9) with ESMTP id k2S4W4xn017984	for
- <kohsuke.kawaguchi@sun.com>; Mon, 27 Mar 2006 20:35:10 -0800 (PST)
-Received: from mms05es.sun.com (mms05es.sun.com [150.143.104.94])
- by relay1.sun.com with ESMTP for kohsuke.kawaguchi@sun.com; Tue,
- 28 Mar 2006 04:35:10 +0000 (Z)
-Received: from relay2.sun.com (relay2.sun.com [150.143.103.24])
- by mms05es.sun.com with ESMTP for kohsuke.kawaguchi@sun.com; Tue,
- 28 Mar 2006 04:35:10 +0000 (Z)
-Received: from dev.java.net (dev.java.net [64.125.133.206])
- by relay2.sun.com for kohsuke.kawaguchi@sun.com; Tue,
- 28 Mar 2006 04:35:09 +0000 (Z)
-Received: (qmail 5935 invoked by uid 5000); Tue, 28 Mar 2006 04:35:09 +0000
-Received: (qmail 5921 invoked by uid 5000); Tue, 28 Mar 2006 04:35:08 +0000
-Date: Tue, 28 Mar 2006 04:35:08 +0000
-From: ramapulavarthi@dev.java.net
-Subject: CVS update [rearch-2005]:
- /jax-ws-sources/jaxws-ri/rt/src/com/sun/xml/ws/handler/
-Sender: cvs-return-3331-kohsuke.kawaguchi=sun.com@jax-ws-sources.dev.java.net
-To: cvs@jax-ws-sources.dev.java.net
-Reply-to: cvs@jax-ws-sources.dev.java.net
-Message-id: <20060328043508.5920.qmail@dev.java.net>
+ with ESMTP id <0JXX00KMIE69AK30@nwk-avmta-1.sfbay.Sun.COM> for
+ kohsuke.kawaguchi@sun.com (ORCPT kohsuke.kawaguchi@sun.com); Tue,
+ 18 Mar 2008 05:18:10 -0700 (PDT)
+Received: from relay24.sun.com
+ (ip192-12-251-74.block6.us.syntegra.com [192.12.251.74])
+	by brmea-mail-1.sun.com (8.13.6+Sun/8.12.9) with ESMTP id m2IC53xl019003	for
+ <kohsuke.kawaguchi@sun.com>; Tue, 18 Mar 2008 12:18:09 +0000 (GMT)
+Received: from mms22es.sun.com ([150.143.232.34] [150.143.232.34])
+ by relay24i.sun.com with ESMTP id BT-MMP-500223 for kohsuke.kawaguchi@sun.com;
+ Tue, 18 Mar 2008 12:18:09 +0000 (Z)
+Received: from relay22.sun.com (relay22.sun.com [192.12.251.34])
+ by mms22es.sun.com with ESMTP id BT-MMP-2458473 for kohsuke.kawaguchi@sun.com;
+ Tue, 18 Mar 2008 12:18:08 +0000 (Z)
+Received: from kohsuke.org ([216.194.64.164] [216.194.64.164])
+ by relay22i.sun.com with ESMTP id BT-MMP-10151407 for
+ kohsuke.kawaguchi@sun.com; Tue, 18 Mar 2008 12:18:08 +0000 (Z)
+Received: (from kohsuke@localhost)	by kohsuke.org (8.11.6/8.11.6)
+ id m2ICHvG05363; Tue, 18 Mar 2008 06:17:57 -0600
+Received: from homer.tera-byte.com (root@localhost)
+	by kohsuke.org (8.11.6/8.11.6) with ESMTP id m2ICHuX05360	for
+ <kk@kohsuke.org>; Tue, 18 Mar 2008 06:17:56 -0600
+Received: from mx1.mailscanner.tera-byte.com
+ (mx1.mailscanner.tera-byte.com [216.234.161.54])
+	by homer.tera-byte.com (8.11.6/8.11.6) with ESMTP id m2ICHuh05356	for
+ <kk@kohsuke.org>; Tue, 18 Mar 2008 06:17:56 -0600
+Received: from dev.java.net (s015.sjc.collab.net [204.16.104.198])
+	by mx1.mailscanner.tera-byte.com (8.14.2/8.14.2) with SMTP id m2ICHs9W087634
+	for <kk@kohsuke.org>; Tue, 18 Mar 2008 06:17:56 -0600 (MDT)
+Received: (qmail 22953 invoked by uid 5000); Tue, 18 Mar 2008 12:17:53 +0000
+Received: (qmail 22936 invoked by uid 5000); Tue, 18 Mar 2008 12:17:52 +0000
+Date: Tue, 18 Mar 2008 12:17:52 +0000
+From: jazzjack@dev.java.net
+Subject: CVS update:
+ /hudson/hudson/main/core/src/main/resources/hudson/model/AbstractBuild/,
+ /hudson/hudson/main/core/src/main/resources/hudson/model/ListV...
+Sender: kohsuke@kohsuke.org
+To: cvs@hudson.dev.java.net
+Reply-to: cvs@hudson.dev.java.net
+Message-id: <20080318121752.22935.qmail@dev.java.net>
+MIME-version: 1.0
 Content-type: TEXT/PLAIN
-Content-transfer-encoding: 7BIT
+Content-transfer-encoding: 8BIT
 Precedence: bulk
-Delivered-to: mailing list cvs@jax-ws-sources.dev.java.net
-X-PMX-Version: 5.1.2.240295
-Mailing-List: contact cvs-help@jax-ws-sources.dev.java.net; run by ezmlm
-List-Post: <mailto:cvs@jax-ws-sources.dev.java.net>
-List-Unsubscribe: <mailto:cvs-unsubscribe@jax-ws-sources.dev.java.net>
-List-Help: <mailto:cvs-help@jax-ws-sources.dev.java.net>
+Delivered-to: mailing list cvs@hudson.dev.java.net
+X-PMX-Version: 5.4.1.325704
+X-Brightmail-Tracker: AAAAAA==
+X-ClientAddr: 216.234.161.54
+X-Virus-Scanned: ClamAV 0.92.1/6288/Tue Mar 18 04:43:22 2008 on
+ mx1.mailscanner.tera-byte.com
+X-Virus-Status: Clean
+X-Antispam: No, score=-2.6/5.0, scanned in 0.146sec at (localhost [127.0.0.1])
+	by smf-spamd v1.3.1 - http://smfs.sf.net/
+Mailing-List: contact cvs-help@hudson.dev.java.net; run by ezmlm
+List-Post: <mailto:cvs@hudson.dev.java.net>
+List-Unsubscribe: <mailto:cvs-unsubscribe@hudson.dev.java.net>
+List-Help: <mailto:cvs-help@hudson.dev.java.net>
 X-No-Archive: yes
 Original-recipient: rfc822;kohsuke.kawaguchi@sun.com
 
-Tag: rearch-2005
-User: kohsuke
-Date: 2006/04/26 20:35:08
+User: jazzjack
+Date: 2008-03-18 12:17:52+0000
+Added:
+   hudson/hudson/main/core/src/main/resources/hudson/model/View/builds_ru.properties
+   hudson/hudson/main/core/src/main/resources/hudson/scm/AbstractScmTagAction/inProgress_ru.properties
+   hudson/hudson/main/core/src/main/resources/hudson/scm/CVSSCM/TagAction/tagForm_ru.properties
+   hudson/hudson/main/core/src/main/resources/hudson/scm/SubversionTagAction/tagForm_ru.properties
+   hudson/hudson/main/core/src/main/resources/hudson/tasks/junit/ClassResult/body_ru.properties
+   hudson/hudson/main/core/src/main/resources/hudson/tasks/junit/MetaTabulatedResult/body_ru.properties
+   hudson/hudson/main/core/src/main/resources/lib/test/bar_ru.properties
 
-Removed:
-   jax-ws-sources/jaxws-ri/rt/src/com/sun/xml/ws/handler/HandlerResolverImpl.java
+Modified:
+   hudson/hudson/main/core/src/main/resources/hudson/model/AbstractBuild/index_ru.properties
+   hudson/hudson/main/core/src/main/resources/hudson/model/ListView/configure_ru.properties
+   hudson/hudson/main/core/src/main/resources/hudson/model/View/sidepanel_ru.properties
 
 Log:
- moving HandlerResolverImpl to client directory.
- 
- [NEWS:tag1 tag2 tag3 jaxb] This is a test of some looooooooooooooooooooooooong title and looooooooooooooooooooooooong description.
- More description more description; fixed 6414236. What  about  having  two  whitespace  !  ?  and  let's  see  how  it  goes!
- foo bar;
- 
- zot
+ Russian i18n update
 
 File Changes:
 
-Directory: /jax-ws-sources/jaxws-ri/rt/src/com/sun/xml/ws/handler/
-==================================================================
+Directory: /hudson/hudson/main/core/src/main/resources/hudson/model/AbstractBuild/
+==================================================================================
 
-File [removed]: HandlerResolverImpl.java
+File [changed]: index_ru.properties
+Url: https://hudson.dev.java.net/source/browse/hudson/hudson/main/core/src/main/resources/hudson/model/AbstractBuild/index_ru.properties?r1=1.1&r2=1.2
+Delta lines:  +1 -0
+-------------------
+--- index_ru.properties	2008-03-06 05:05:29+0000	1.1
++++ index_ru.properties	2008-03-18 12:17:47+0000	1.2
+@@ -11,3 +11,4 @@
+ none=\u043d\u0435\u0442
+ Permalinks=\u041f\u043e\u0441\u0442\u043e\u044f\u043d\u043d\u044b\u0435 \u0441\u0441\u044b\u043b\u043a\u0438
+ Build\ number=\u041d\u043e\u043c\u0435\u0440 \u0441\u0431\u043e\u0440\u043a\u0438
++Took=\u0417\u0430\u043d\u044f\u043b\u043e
+\ No newline at end of file
+
+Directory: /hudson/hudson/main/core/src/main/resources/hudson/model/ListView/
+=============================================================================
+
+File [changed]: configure_ru.properties
+Url: https://hudson.dev.java.net/source/browse/hudson/hudson/main/core/src/main/resources/hudson/model/ListView/configure_ru.properties?r1=1.1&r2=1.2
+Delta lines:  +2 -0
+-------------------
+--- configure_ru.properties	2008-03-06 05:05:34+0000	1.1
++++ configure_ru.properties	2008-03-18 12:17:48+0000	1.2
+@@ -1,3 +1,5 @@
+ Name=\u0418\u043c\u044f
+ Description=\u041e\u043f\u0438\u0441\u0430\u043d\u0438\u0435
+ Jobs=\u0417\u0430\u0434\u0430\u0447\u0438
++Use\ a\ regular\ expression\ to\ include\ jobs\ into\ the\ view=\u0418\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u044c \u0440\u0435\u0433\u0443\u043b\u044f\u0440\u043d\u043e\u0435 \u0432\u044b\u0440\u0430\u0436\u0435\u043d\u0438\u0435 \u0434\u043b\u044f \u0434\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u044f \u0437\u0430\u0434\u0430\u0447 \u0432 \u0441\u043f\u0438\u0441\u043e\u043a
++Regular\ expression=\u0420\u0435\u0433\u0443\u043b\u044f\u0440\u043d\u043e\u0435 \u0432\u044b\u0440\u0430\u0436\u0435\u043d\u0438\u0435
+
+Directory: /hudson/hudson/main/core/src/main/resources/hudson/model/View/
+=========================================================================
+
+File [added]: builds_ru.properties
+Url: https://hudson.dev.java.net/source/browse/hudson/hudson/main/core/src/main/resources/hudson/model/View/builds_ru.properties?rev=1.1&content-type=text/vnd.viewcvs-markup
+Added lines: 1
+--------------
+buildHistory=\u0418\u0441\u0442\u043e\u0440\u0438\u044f \u0441\u0431\u043e\u0440\u043e\u043a {0}
+
+File [changed]: sidepanel_ru.properties
+Url: https://hudson.dev.java.net/source/browse/hudson/hudson/main/core/src/main/resources/hudson/model/View/sidepanel_ru.properties?r1=1.1&r2=1.2
+Delta lines:  +1 -0
+-------------------
+--- sidepanel_ru.properties	2008-03-06 05:05:36+0000	1.1
++++ sidepanel_ru.properties	2008-03-18 12:17:48+0000	1.2
+@@ -1,3 +1,4 @@
+ New\ Job=\u041d\u043e\u0432\u0430\u044f \u0437\u0430\u0434\u0430\u0447\u0430
+ Manage\ Hudson=\u041d\u0430\u0441\u0442\u0440\u043e\u0438\u0442\u044c Hudson
+ People=\u0410\u043a\u043a\u0430\u0443\u043d\u0442\u044b
++Build\ History=\u0418\u0441\u0442\u043e\u0440\u0438\u044f \u0441\u0431\u043e\u0440\u043e\u043a
+\ No newline at end of file
+
+Directory: /hudson/hudson/main/core/src/main/resources/hudson/scm/AbstractScmTagAction/
+=======================================================================================
+
+File [added]: inProgress_ru.properties
+Url: https://hudson.dev.java.net/source/browse/hudson/hudson/main/core/src/main/resources/hudson/scm/AbstractScmTagAction/inProgress_ru.properties?rev=1.1&content-type=text/vnd.viewcvs-markup
+Added lines: 1
+--------------
+Tagging\ is\ in\ progress\:=\u0423\u0441\u0442\u0430\u043d\u043e\u0432\u043a\u0430 \u043c\u0435\u0442\u043e\u043a \u0432 \u043f\u0440\u043e\u0446\u0435\u0441\u0441\u0435:
+
+Directory: /hudson/hudson/main/core/src/main/resources/hudson/scm/CVSSCM/TagAction/
+===================================================================================
+
+File [added]: tagForm_ru.properties
+Url: https://hudson.dev.java.net/source/browse/hudson/hudson/main/core/src/main/resources/hudson/scm/CVSSCM/TagAction/tagForm_ru.properties?rev=1.1&content-type=text/vnd.viewcvs-markup
+Added lines: 6
+--------------
+Choose\ the\ CVS\ tag\ name\ for\ this\ build=\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0438\u043c\u044f \u043c\u0435\u0442\u043a\u0438 \u0434\u043b\u044f \u044d\u0442\u043e\u0439 \u0441\u0431\u043e\u0440\u043a\u0438
+Tag=\u041c\u0435\u0442\u043a\u0430
+This\ build\ is\ already\ tagged\ as=\u042d\u0442\u0430 \u0441\u0431\u043e\u0440\u043a\u0430 \u0443\u0436\u0435 \u043f\u043e\u043c\u0435\u0447\u0435\u043d\u0430 \u043a\u0430\u043a
+Create\ another\ tag=\u0421\u043e\u0437\u0434\u0430\u0442\u044c \u043d\u043e\u0432\u0443\u044e \u043c\u0435\u0442\u043a\u0443
+Upstream\ tags=\u0412\u043e\u0441\u0445\u043e\u0434\u044f\u0449\u0438\u0435 \u043c\u0435\u0442\u043a\u0438
+Build=\u0421\u0431\u043e\u0440\u043a\u0430
+
+Directory: /hudson/hudson/main/core/src/main/resources/hudson/scm/SubversionTagAction/
+======================================================================================
+
+File [added]: tagForm_ru.properties
+Url: https://hudson.dev.java.net/source/browse/hudson/hudson/main/core/src/main/resources/hudson/scm/SubversionTagAction/tagForm_ru.properties?rev=1.1&content-type=text/vnd.viewcvs-markup
+Added lines: 4
+--------------
+This\ build\ is\ already\ tagged=\u042d\u0442\u0430 \u0441\u0431\u043e\u0440\u043a\u0430 \u0443\u0436\u0435 \u043f\u043e\u043c\u0435\u0447\u0435\u043d\u0430
+Module\ URL=URL \u043c\u043e\u0434\u0443\u043b\u044f
+Tag\ URL=URL \u043c\u0435\u0442\u043a\u0438
+Tag=\u041c\u0435\u0442\u043a\u0430
+
+Directory: /hudson/hudson/main/core/src/main/resources/hudson/tasks/junit/ClassResult/
+======================================================================================
+
+File [added]: body_ru.properties
+Url: https://hudson.dev.java.net/source/browse/hudson/hudson/main/core/src/main/resources/hudson/tasks/junit/ClassResult/body_ru.properties?rev=1.1&content-type=text/vnd.viewcvs-markup
+Added lines: 4
+--------------
+All\ Tests=\u0412\u0441\u0435 \u0442\u0435\u0441\u0442\u044b
+Test\ name=\u0418\u043c\u044f \u0442\u0435\u0441\u0442\u0430
+Duration=\u041f\u0440\u043e\u0434\u043e\u043b\u0436\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u044c
+Status=\u0421\u0442\u0430\u0442\u0443\u0441
+
+Directory: /hudson/hudson/main/core/src/main/resources/hudson/tasks/junit/MetaTabulatedResult/
+==============================================================================================
+
+File [added]: body_ru.properties
+Url: https://hudson.dev.java.net/source/browse/hudson/hudson/main/core/src/main/resources/hudson/tasks/junit/MetaTabulatedResult/body_ru.properties?rev=1.1&content-type=text/vnd.viewcvs-markup
+Added lines: 8
+--------------
+All\ Failed\ Tests=\u0412\u0441\u0435 \u043f\u0440\u043e\u0432\u0430\u043b\u0438\u0432\u0448\u0438\u0435\u0441\u044f \u0442\u0435\u0441\u0442\u044b
+Test\ Name=\u0418\u043c\u044f \u0442\u0435\u0441\u0442\u0430
+Duration=\u041f\u0440\u043e\u0434\u043e\u043b\u0436\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u044c
+Age=\u0412\u043e\u0437\u0440\u0430\u0441\u0442
+All\ Tests=\u0412\u0441\u0435 \u0442\u0435\u0441\u0442\u044b
+Fail=\u041d\u0435\u0443\u0434\u0430\u0447\u0430
+diff=diff
+Total=\u0418\u0442\u043e\u0433\u043e
+
+Directory: /hudson/hudson/main/core/src/main/resources/lib/test/
+================================================================
+
+File [added]: bar_ru.properties
+Url: https://hudson.dev.java.net/source/browse/hudson/hudson/main/core/src/main/resources/lib/test/bar_ru.properties?rev=1.1&content-type=text/vnd.viewcvs-markup
+Added lines: 4
+--------------
+No\ tests=??\u0432 \u0432?\u0431\u0432??
+failures=?\u0438????
+skipped=?\u0430??\u0433\u0439???
+tests=\u0432?\u0431\u0432??
 
 
 
 
 ---------------------------------------------------------------------
-To unsubscribe, e-mail: cvs-unsubscribe@jax-ws-sources.dev.java.net
-For additional commands, e-mail: cvs-help@jax-ws-sources.dev.java.net
+To unsubscribe, e-mail: cvs-unsubscribe@hudson.dev.java.net
+For additional commands, e-mail: cvs-help@hudson.dev.java.net
 
 
