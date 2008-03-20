@@ -1,7 +1,7 @@
 package com.sun.javanet.cvsnews.cli;
 
 import com.sun.javanet.cvsnews.Commit;
-import com.sun.javanet.cvsnews.JavaNetCVSNewsParser;
+import com.sun.javanet.cvsnews.CVSParser;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -22,7 +22,7 @@ abstract class AbstractCommand implements Command {
 
         System.err.println("Subject: "+msg.getSubject());
 
-        return new JavaNetCVSNewsParser().parse(msg);
+        return new CVSParser().parse(msg);
     }
 
     protected static final File HOME = new File(System.getProperty("user.home"));
