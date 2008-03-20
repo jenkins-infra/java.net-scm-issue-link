@@ -80,7 +80,7 @@ public class CVSChange extends CodeChange {
             "-N",
             "-r",
             revision,
-            fileName);
+            fileName.substring(1)); // trim off the first '/'
         pb.redirectErrorStream(true);
 
         Process proc = pb.start();
