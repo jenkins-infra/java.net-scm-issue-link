@@ -1,0 +1,301 @@
+X-Account-Key: account2
+X-UIDL: 19Mar200821:54:52GMT13943
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys: $label1                                                                         
+Return-path: <kohsuke@kohsuke.org>
+Received: from fe-sfbay-09.sun.com ([192.18.34.119])
+ by sfbay3-mail1.sfbay.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTP id <0JXZ006H6ZJFU570@sfbay3-mail1.sfbay.sun.com> for
+ kk122374@sfbay3-mail1.sfbay.Sun.COM; Wed, 19 Mar 2008 14:54:52 -0700 (PDT)
+Received: from conversion-daemon.fe-sfbay-09.sun.com by fe-sfbay-09.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ id <0JXZ00701YEKXO00@fe-sfbay-09.sun.com> for
+ kk122374@sfbay3-mail1.sfbay.Sun.COM (ORCPT kohsuke.kawaguchi@sun.com); Wed,
+ 19 Mar 2008 14:54:52 -0700 (PDT)
+Received: from phys-sfbay3-2.sfbay.sun.com ([129.145.47.25])
+ by fe-sfbay-09.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTP id <0JXZ009X9ZJ5E860@fe-sfbay-09.sun.com> for
+ kk122374@sfbay3-mail1.sfbay.Sun.COM (ORCPT kohsuke.kawaguchi@sun.com); Wed,
+ 19 Mar 2008 14:54:43 -0700 (PDT)
+Received: from dm-sfbay-01.sfbay.sun.com ([129.145.155.118])
+ by sfbay3-mail1.sfbay.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTP id <0JXZ006EGZJ6U570@sfbay3-mail1.sfbay.sun.com> for
+ kk122374@sfbay3-mail1.sfbay.Sun.COM (ORCPT kohsuke.kawaguchi@sun.com); Wed,
+ 19 Mar 2008 14:54:42 -0700 (PDT)
+Received: from sunmail5.uk.sun.com (sunmail5.UK.Sun.COM [129.156.85.165])
+	by dm-sfbay-01.sfbay.sun.com (8.13.8+Sun/8.13.8/ENSMAIL,v2.2)
+ with ESMTP id m2JLsfDm059906	for <kohsuke.kawaguchi@sfbay.sun.com>; Wed,
+ 19 Mar 2008 14:54:41 -0700 (PDT)
+Received: from brm-avmta-1.central.sun.com
+ (brm-avmta-1.Central.Sun.COM [129.147.4.11])
+	by sunmail5.uk.sun.com (8.13.8+Sun/8.13.8/ENSMAIL,v2.2)
+ with ESMTP id m2JLsW7V012851	for
+ <@sunmail2sca.sfbay.sun.com:kohsuke.kawaguchi@sun.com>; Wed,
+ 19 Mar 2008 21:54:40 +0000 (GMT)
+Received: from pmxchannel-daemon.brm-avmta-1.central.sun.com by
+ brm-avmta-1.central.sun.com
+ (Sun Java System Messaging Server 6.2-3.04 (built Jul 15 2005))
+ id <0JXZ00D0TZJ3Q300@brm-avmta-1.central.sun.com> for
+ kohsuke.kawaguchi@sun.com (ORCPT kohsuke.kawaguchi@sun.com); Wed,
+ 19 Mar 2008 15:54:39 -0600 (MDT)
+Received: from sca-ea-mail-3.sun.com ([192.18.43.21])
+ by brm-avmta-1.central.sun.com
+ (Sun Java System Messaging Server 6.2-3.04 (built Jul 15 2005))
+ with ESMTP id <0JXZ00MLYZJ2JGC0@brm-avmta-1.central.sun.com> for
+ kohsuke.kawaguchi@sun.com (ORCPT kohsuke.kawaguchi@sun.com); Wed,
+ 19 Mar 2008 15:54:38 -0600 (MDT)
+Received: from relay43i.sun.com ([192.5.209.74])
+	by sca-ea-mail-3.sun.com (8.13.6+Sun/8.12.9) with ESMTP id m2JLjdZi026665	for
+ <kohsuke.kawaguchi@sun.com>; Wed, 19 Mar 2008 21:54:37 +0000 (GMT)
+Received: from mms49es.sun.com ([160.41.221.233] [160.41.221.233])
+ by relay43i.sun.com with ESMTP id BT-MMP-1278515 for
+ kohsuke.kawaguchi@sun.com; Wed, 19 Mar 2008 21:54:37 +0000 (Z)
+Received: from relay41i.sun.com (relay41i.sun.com [192.5.209.70])
+ by mms49es.sun.com with ESMTP id BT-MMP-3919799 for kohsuke.kawaguchi@sun.com;
+ Wed, 19 Mar 2008 21:54:37 +0000 (Z)
+Received: from kohsuke.org ([216.194.64.164] [216.194.64.164])
+ by relay4i.sun.com with ESMTP id BT-MMP-32965919 for
+ kohsuke.kawaguchi@sun.com; Wed, 19 Mar 2008 21:54:36 +0000 (Z)
+Received: (from kohsuke@localhost)	by kohsuke.org (8.11.6/8.11.6)
+ id m2JLsZc25393; Wed, 19 Mar 2008 15:54:35 -0600
+Received: from homer.tera-byte.com (root@localhost)
+	by kohsuke.org (8.11.6/8.11.6) with ESMTP id m2JLsZ225390	for
+ <kk@kohsuke.org>; Wed, 19 Mar 2008 15:54:35 -0600
+Received: from mx2.mailscanner.tera-byte.com
+ (mx2.mailscanner.tera-byte.com [216.234.161.56])
+	by homer.tera-byte.com (8.11.6/8.11.6) with ESMTP id m2JLsZh25386	for
+ <kk@kohsuke.org>; Wed, 19 Mar 2008 15:54:35 -0600
+Received: from dev.java.net (s015.sjc.collab.net [204.16.104.198])
+	by mx2.mailscanner.tera-byte.com (8.14.2/8.14.2) with SMTP id m2JLsXrV096254
+	for <kk@kohsuke.org>; Wed, 19 Mar 2008 15:54:35 -0600 (MDT)
+Received: (qmail 20843 invoked by uid 5000); Wed, 19 Mar 2008 21:54:33 +0000
+Received: (qmail 20815 invoked by uid 5000); Wed, 19 Mar 2008 21:54:32 +0000
+Date: Wed, 19 Mar 2008 21:54:32 +0000
+From: kohsuke@dev.java.net
+Subject: svn commit: r19025 - trunk/v3/ejb: . ejb-all ejb-connector
+ ejb-timer-databases
+Sender: kohsuke@kohsuke.org
+To: commits@glassfish-svn.dev.java.net
+Reply-to: commits@glassfish-svn.dev.java.net
+Message-id: <20080319215432.20811.qmail@dev.java.net>
+MIME-version: 1.0
+Content-type: text/plain; charset=UTF-8
+Content-transfer-encoding: 7BIT
+Precedence: bulk
+Delivered-to: mailing list commits@glassfish-svn.dev.java.net
+X-PMX-Version: 5.4.1.325704
+X-Brightmail-Tracker: AAAAAA==
+X-ClientAddr: 216.234.161.56
+X-Virus-Scanned: ClamAV version 0.92.1,
+ clamav-milter version 0.92.1 on mx2.mailscanner.tera-byte.com
+X-Virus-Status: Clean
+X-Antispam: No, score=-2.6/5.0, scanned in 0.208sec at (localhost [127.0.0.1])
+	by smf-spamd v1.3.1 - http://smfs.sf.net/
+Mailing-List: contact commits-help@glassfish-svn.dev.java.net; run by ezmlm
+List-Post: <mailto:commits@glassfish-svn.dev.java.net>
+List-Unsubscribe: <mailto:commits-unsubscribe@glassfish-svn.dev.java.net>
+List-Help: <mailto:commits-help@glassfish-svn.dev.java.net>
+X-No-Archive: yes
+Original-recipient: rfc822;kohsuke.kawaguchi@sun.com
+
+Author: kohsuke
+Date: 2008-03-19 21:54:31+0000
+New Revision: 19025
+
+Added:
+   trunk/v3/ejb/ejb-all/
+   trunk/v3/ejb/ejb-all/pom.xml   (contents, props changed)
+Modified:
+   trunk/v3/ejb/ejb-connector/pom.xml
+   trunk/v3/ejb/ejb-timer-databases/pom.xml
+   trunk/v3/ejb/pom.xml
+
+Log:
+- Added 'ejb-all' as the grouping POM to bundle all the EJB related modules together.
+  This simplifies the distribution assembly, and leave the control to the EJB team
+  as to what will be included in GlassFish.
+
+- Distribution fragment now includes EJB timer app.
+
+
+
+Added: trunk/v3/ejb/ejb-all/pom.xml
+Url: https://glassfish-svn.dev.java.net/source/browse/glassfish-svn/trunk/v3/ejb/ejb-all/pom.xml?view=auto&rev=19025
+==============================================================================
+--- (empty file)
++++ trunk/v3/ejb/ejb-all/pom.xml	2008-03-19 21:54:31+0000
+@@ -0,0 +1,74 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!-- 
++/* 
++* DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER. 
++* 
++* Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved. 
++* 
++* The contents of this file are subject to the terms of either the GNU 
++* General Public License Version 2 only ("GPL") or the Common Development 
++* and Distribution License("CDDL") (collectively, the "License").  You 
++* may not use this file except in compliance with the License. You can obtain 
++* a copy of the License at https://glassfish.dev.java.net/public/CDDL+GPL.html 
++* or glassfish/bootstrap/legal/LICENSE.txt.  See the License for the specific 
++* language governing permissions and limitations under the License. 
++* 
++* When distributing the software, include this License Header Notice in each 
++* file and include the License file at glassfish/bootstrap/legal/LICENSE.txt. 
++* Sun designates this particular file as subject to the "Classpath" exception 
++* as provided by Sun in the GPL Version 2 section of the License file that 
++* accompanied this code.  If applicable, add the following below the License 
++* Header, with the fields enclosed by brackets [] replaced by your own 
++* identifying information: "Portions Copyrighted [year] 
++* [name of copyright owner]" 
++* 
++* Contributor(s): 
++* 
++* If you wish your version of this file to be governed by only the CDDL or 
++* only the GPL Version 2, indicate your decision by adding "[Contributor] 
++* elects to include this software in this distribution under the [CDDL or GPL 
++* Version 2] license."  If you don't indicate a single choice of license, a 
++* recipient has the option to distribute your version of this file under 
++* either the CDDL, the GPL Version 2 or to extend the choice of license to 
++* its licensees as provided above.  However, if you add GPL Version 2 code 
++* and therefore, elected the GPL Version 2 license, then the option applies 
++* only if the new code is made subject to such option by the copyright 
++* holder. 
++*/ 
++--> 
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
++    <parent>
++        <groupId>org.glassfish.ejb</groupId>
++        <artifactId>ejb</artifactId>
++        <version>10.0-SNAPSHOT</version>
++    </parent>
++    <modelVersion>4.0.0</modelVersion>
++    <artifactId>ejb-all</artifactId>
++    <packaging>pom</packaging>
++    <name>EJB tier for GlassFish</name>
++    <description>
++      This module bundles all the EJB related Maven modules together.
++      Distributions that need EJB capability should depend on this module,
++      instead of pulling in individual EJB modules separately.
++    </description>
++
++    <dependencies>
++        <dependency>
++            <groupId>${project.groupId}</groupId>
++            <artifactId>gf-ejb-connector</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>${project.groupId}</groupId>
++            <artifactId>ejb-timer-databases</artifactId>
++            <version>${project.version}</version>
++            <type>distribution-fragment</type>
++        </dependency>
++        <dependency>
++            <groupId>${project.groupId}</groupId>
++            <artifactId>ejb-container</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++    </dependencies>
++</project>
+
+Modified: trunk/v3/ejb/ejb-connector/pom.xml
+Url: https://glassfish-svn.dev.java.net/source/browse/glassfish-svn/trunk/v3/ejb/ejb-connector/pom.xml?view=diff&rev=19025&p1=trunk/v3/ejb/ejb-connector/pom.xml&p2=trunk/v3/ejb/ejb-connector/pom.xml&r1=19024&r2=19025
+==============================================================================
+--- trunk/v3/ejb/ejb-connector/pom.xml	(original)
++++ trunk/v3/ejb/ejb-connector/pom.xml	2008-03-19 21:54:31+0000
+@@ -39,8 +39,8 @@
+ <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+     <modelVersion>4.0.0</modelVersion>
+     <parent>
+-		<groupId>org.glassfish.ejb</groupId>
+-    	<artifactId>ejb</artifactId>
++        <groupId>org.glassfish.ejb</groupId>
++        <artifactId>ejb</artifactId>
+         <version>10.0-SNAPSHOT</version>
+     </parent>
+ 
+@@ -74,12 +74,6 @@
+             <groupId>org.glassfish.common</groupId>
+             <artifactId>glassfish-api</artifactId>
+             <version>${project.version}</version>
+-        </dependency>        
+-        <dependency>
+-            <groupId>org.glassfish.ejb</groupId>
+-            <artifactId>ejb-timer-databases</artifactId>
+-            <version>${project.version}</version>
+-            <type>distribution-fragment</type>
+-        </dependency>        
++        </dependency>
+     </dependencies>
+ </project>
+
+Modified: trunk/v3/ejb/ejb-timer-databases/pom.xml
+Url: https://glassfish-svn.dev.java.net/source/browse/glassfish-svn/trunk/v3/ejb/ejb-timer-databases/pom.xml?view=diff&rev=19025&p1=trunk/v3/ejb/ejb-timer-databases/pom.xml&p2=trunk/v3/ejb/ejb-timer-databases/pom.xml&r1=19024&r2=19025
+==============================================================================
+--- trunk/v3/ejb/ejb-timer-databases/pom.xml	(original)
++++ trunk/v3/ejb/ejb-timer-databases/pom.xml	2008-03-19 21:54:31+0000
+@@ -45,7 +45,7 @@
+ 	    
+ 	    The following section shows how you can do this.
+ 	  -->
+-	  <!--plugins>
++	  <plugins>
+ 	    <plugin>
+         <groupId>org.jvnet.maven-antrun-extended-plugin</groupId>
+         <artifactId>maven-antrun-extended-plugin</artifactId>
+@@ -54,7 +54,8 @@
+             <phase>generate-sources</phase>
+             <configuration>
+               <tasks>
+-                <echo file="target/classes/generated.txt">use Ant for processing resources</echo>
++                <!-- place the ejb timer app jar into the location -->
++                <resolveArtifact artifactId="ejb-timer-service-app" todir="target/classes/glassfish/lib/install/applications" />
+              </tasks>
+             </configuration>
+             <goals>
+@@ -63,6 +64,14 @@
+           </execution>
+         </executions>
+       </plugin>
+-    </plugins-->
++    </plugins>
+   </build>
++  
++  <dependencies>
++    <dependency>
++      <groupId>${project.groupId}</groupId>
++      <artifactId>ejb-timer-service-app</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++  </dependencies>
+ </project>
+
+Modified: trunk/v3/ejb/pom.xml
+Url: https://glassfish-svn.dev.java.net/source/browse/glassfish-svn/trunk/v3/ejb/pom.xml?view=diff&rev=19025&p1=trunk/v3/ejb/pom.xml&p2=trunk/v3/ejb/pom.xml&r1=19024&r2=19025
+==============================================================================
+--- trunk/v3/ejb/pom.xml	(original)
++++ trunk/v3/ejb/pom.xml	2008-03-19 21:54:31+0000
+@@ -49,8 +49,10 @@
+     <packaging>pom</packaging>
+     <name>GlassFish EJB container related modules</name>  
+     <modules>
+-        <module>ejb-timer-databases</module>
++        <module>ejb-all</module>
+         <module>ejb-connector</module>
+         <module>ejb-container</module>
++        <module>ejb-timer-databases</module>
++        <module>ejb-timer-service-app</module>
+     </modules>
+ </project>
+
+---------------------------------------------------------------------
+To unsubscribe, e-mail: commits-unsubscribe@glassfish-svn.dev.java.net
+For additional commands, e-mail: commits-help@glassfish-svn.dev.java.net
+
+
