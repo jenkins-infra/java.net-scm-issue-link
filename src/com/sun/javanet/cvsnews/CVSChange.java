@@ -37,43 +37,80 @@
 
 package com.sun.javanet.cvsnews;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * {@link CodeChange} for CVS.
+ *
  * @author Kohsuke Kawaguchi
  */
-public abstract class NewsParser {
+public class CVSChange extends CodeChange {
     /**
-     * Parses a changelog e-mail.
+     * Revision of the new file.
      */
-    public abstract Commit parse(MimeMessage msg) throws ParseException;
+    public final String revision;
 
-    protected final String getProjectName(MimeMessage msg) throws MessagingException {
-        InternetAddress ia = (InternetAddress) msg.getRecipients(Message.RecipientType.TO)[0];
-        String a = ia.getAddress();
-        int idx = a.indexOf('@');
-        int end = a.indexOf('.',idx);
-        return a.substring(idx+1,end);
+    public CVSChange(String fileName, URL url, String revision) {
+        super(fileName, url);
+        this.revision = revision;
     }
 
-    protected final Date parseDateLine(String line) throws ParseException {
-        Date date;
-        if(line.endsWith("+0000"))
-                        line = line.substring(0,line.length()-5);
-        date = DATE_FORMAT.parse(line.substring(6));
-        return date;
+    public String toString() {
+        return fileName+':'+revision;
     }
-
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
-    protected static final String TAG = "[a-zA-Z0-9_\\-.]+";
-    protected static final Pattern TAGLINE = Pattern.compile("^ \\[NEWS: *"+TAG+"( +"+TAG+")*\\]");
-    protected static final Pattern URL_LINE = Pattern.compile("^Url: (.+)$");
+    /**
+     * Obtains the CVS repository's exact timestamp for this change.
+     */
+    public Date determineTimstamp() throws IOException, InterruptedException {
+        ProcessBuilder pb = new ProcessBuilder();
+        pb.command(
+            "cvs",
+            "-d:pserver:guest@cvs.dev.java.net:/cvs",
+            "rlog",
+            "-N",
+            "-r",
+            revision,
+            fileName);
+        pb.redirectErrorStream(true);
+
+        Process proc = pb.start();
+        proc.getOutputStream().close();
+        BufferedReader r = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+        String line;
+        Date result=null;
+        StringWriter out = new StringWriter();
+        while((line=r.readLine())!=null) {
+            out.write(line);
+            out.write('\n');
+            if(result==null) {
+                Matcher m = DATE_PATTERN.matcher(line);
+                if(m.matches()) {
+                    try {
+                        result = DATE_FORMAT.parse(m.group(1));
+                    } catch (ParseException e) {
+                        throw new IOException("Failed to parse "+m.group(1));
+                    }
+                }
+            }
+        }
+
+        // wait for the completion
+        proc.waitFor();
+
+        throw new IOException("cvs output:\n"+out);
+    }
+
+    private static final Pattern DATE_PATTERN = Pattern.compile("^date: (..../../.. ..:..:..);.+");
+
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 }

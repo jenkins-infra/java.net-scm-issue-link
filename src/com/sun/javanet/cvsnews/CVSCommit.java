@@ -35,25 +35,23 @@
  *
  */
 
-package com.sun.javanet.cvsnews.cli;
+package com.sun.javanet.cvsnews;
 
-import com.sun.javanet.cvsnews.Commit;
-
-import java.util.Set;
+import java.util.Date;
 
 /**
- * Dumps issues found in the commit message.
+ * {@link Commit} for CVS.
  *
  * @author Kohsuke Kawaguchi
  */
-public class DumpIssuesCommand extends AbstractIssueCommand {
-    public int execute() throws Exception {
-        System.out.println("Parsing stdin");
-        Commit commit = parseStdin();
-        Set<Issue> issues = parseIssues(commit);
+public final class CVSCommit extends Commit<CVSChange> {
+    /**
+     * Branch where the commit was made. Null if trunk.
+     */
+    public final String branch;
 
-        System.out.println("Found "+issues);
-
-        return 0;
+    public CVSCommit(String project, String userName, String branch, Date date, String log) {
+        super(project, userName, date, log);
+        this.branch = branch;
     }
 }

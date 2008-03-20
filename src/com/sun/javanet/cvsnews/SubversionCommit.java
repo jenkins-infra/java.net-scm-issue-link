@@ -35,25 +35,23 @@
  *
  */
 
-package com.sun.javanet.cvsnews.cli;
+package com.sun.javanet.cvsnews;
 
-import com.sun.javanet.cvsnews.Commit;
-
-import java.util.Set;
+import java.util.Date;
 
 /**
- * Dumps issues found in the commit message.
- *
+ * {@link Commit} for Subversion.
+ * 
  * @author Kohsuke Kawaguchi
  */
-public class DumpIssuesCommand extends AbstractIssueCommand {
-    public int execute() throws Exception {
-        System.out.println("Parsing stdin");
-        Commit commit = parseStdin();
-        Set<Issue> issues = parseIssues(commit);
+public class SubversionCommit extends Commit<CodeChange> {
+    /**
+     * New revision.
+     */
+    public final long revision;
 
-        System.out.println("Found "+issues);
-
-        return 0;
+    public SubversionCommit(String project, String userName, Date date, String log, long revision) {
+        super(project, userName, date, log);
+        this.revision = revision;
     }
 }
