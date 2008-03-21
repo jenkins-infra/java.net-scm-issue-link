@@ -78,8 +78,7 @@ public class CVSChange extends CodeChange {
             "-d:pserver:guest@cvs.dev.java.net:/cvs",
             "rlog",
             "-N",
-            "-r",
-            revision,
+            "-r"+revision,
             fileName.substring(1)); // trim off the first '/'
         pb.redirectErrorStream(true);
 
