@@ -146,22 +146,18 @@ public class CVSParser extends NewsParser {
 
                     m = FILE_LINE.matcher(line);
                     if(m.matches()) {
-                        // file always marks the start of new change
-                        if(file!=null)
-                            codeChanges.add(createCodeChange(directory,file,url));
                         file = m.group(2);
                         continue;
                     }
 
                     m = URL_LINE.matcher(line);
-                    if(m.matches())
+                    if(m.matches()) {
                         url = m.group(1);
+                        // conclude one change
+                        codeChanges.add(createCodeChange(directory,file,url));
+                    }
                 }
             }
-
-            // wrap up the last change
-            if(file!=null)
-                codeChanges.add(createCodeChange(directory,file,url));
 
             CVSCommit item = new CVSCommit(project, user, branch, date, log.toString());
             item.addCodeChanges(codeChanges);
