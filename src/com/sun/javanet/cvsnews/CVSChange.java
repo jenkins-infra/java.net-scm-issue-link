@@ -104,9 +104,9 @@ public class CVSChange extends CodeChange {
         }
 
         // wait for the completion
-        proc.waitFor();
-
-        throw new IOException("cvs output:\n"+out);
+        if(proc.waitFor()!=0 || result==null)
+            throw new IOException("cvs output:\n"+out);
+        return result;
     }
 
     private static final Pattern DATE_PATTERN = Pattern.compile("^date: (..../../.. ..:..:..);.+");
