@@ -163,7 +163,7 @@ public class CVSParser extends NewsParser {
             if(file!=null)
                 codeChanges.add(createCodeChange(directory,file,url));
 
-            CVSCommit item = new CVSCommit(project, branch, user, date, log.toString());
+            CVSCommit item = new CVSCommit(project, user, branch, date, log.toString());
             item.addCodeChanges(codeChanges);
 
             return item;
