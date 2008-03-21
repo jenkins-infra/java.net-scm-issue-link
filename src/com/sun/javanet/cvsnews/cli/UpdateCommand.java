@@ -119,8 +119,8 @@ public class UpdateCommand extends AbstractIssueCommand {
                     buf.append(MessageFormat.format(
                     " http://fisheye5.cenqua.com/changelog/{0}/?cs={1}:{2}:{3}\n",
                         commit.project,
-                        commit.userName,
                         commit.branch==null?"MAIN":commit.branch,
+                        commit.userName,
                         DATE_FORMAT.format(commit.getCodeChanges().get(0).determineTimstamp())));
                 } catch (IOException e) {
                     e.printStackTrace();
