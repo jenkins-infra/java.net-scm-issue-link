@@ -106,7 +106,7 @@ public abstract class AbstractIssueCommand extends AbstractCommand implements Co
     /**
      * Look for strings like "issue #350" and "issue 350"
      */
-    private static final Pattern ISSUE_MARKER = Pattern.compile("\\bissue #?(\\d+)\\b");
+    private static final Pattern ISSUE_MARKER = Pattern.compile("\\b[Ii]ssue #?(\\d+)\\b");
 
     /**
      * Look for full ID line like "JAXB-512"
