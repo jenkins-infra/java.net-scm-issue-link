@@ -37,7 +37,13 @@
 
 package com.sun.javanet.cvsnews.cli;
 
-import com.sun.javanet.cvsnews.*;
+import com.sun.javanet.cvsnews.CVSChange;
+import com.sun.javanet.cvsnews.CVSCommit;
+import com.sun.javanet.cvsnews.CodeChange;
+import com.sun.javanet.cvsnews.Commit;
+import com.sun.javanet.cvsnews.SubversionCommit;
+import org.kohsuke.jnt.IssueEditor;
+import org.kohsuke.jnt.IssueResolution;
 import org.kohsuke.jnt.JNIssue;
 import org.kohsuke.jnt.JNProject;
 import org.kohsuke.jnt.JavaNet;
@@ -50,6 +56,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Subcommand that reads e-mail from stdin and adds news files.
@@ -67,6 +74,8 @@ public class UpdateCommand extends AbstractIssueCommand {
 
         String msg = createUpdateMessage(commit);
 
+        boolean markedAsFixed = FIXED.matcher(commit.log).find();
+
         JavaNet con = JavaNet.connect(new File(HOME, ".java.net.scm_issue_link"));
         for (Issue issue : issues) {
             JNProject p = con.getProject(issue.projectName);
@@ -77,7 +86,10 @@ public class UpdateCommand extends AbstractIssueCommand {
             System.out.println("Updating "+issue);
             try {
                 JNIssue i = p.getIssueTracker().get(issue.number);
-                i.update(msg);
+                IssueEditor e = i.beginEdit();
+                if(markedAsFixed && issues.size()==1)
+                    e.resolve(IssueResolution.FIXED);
+                e.commit(msg);
             } catch (ProcessingException e) {
                 e.printStackTrace();
             }
@@ -142,6 +154,11 @@ public class UpdateCommand extends AbstractIssueCommand {
 
         return buf.toString();
     }
+
+    /**
+     * Marked for marking bug as fixed.
+     */
+    private static final Pattern FIXED = Pattern.compile("\\b\\[fixed\\]\\b");
 
     // taken from http://fisheye5.cenqua.com/
     private static final Set<String> FISHEYE_CVS_PROJECT = new HashSet<String>(Arrays.asList(
