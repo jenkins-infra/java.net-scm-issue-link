@@ -71,6 +71,8 @@ public class UpdateCommand extends AbstractIssueCommand {
         Set<Issue> issues = parseIssues(commit);
 
         System.out.println("Found "+issues);
+        if(issues.isEmpty())
+            return 0;   // no issue link
 
         String msg = createUpdateMessage(commit);
 
