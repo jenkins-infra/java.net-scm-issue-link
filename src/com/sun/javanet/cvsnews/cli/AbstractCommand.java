@@ -60,7 +60,7 @@ abstract class AbstractCommand implements Command {
 
         String subject = msg.getSubject();
         System.err.println("Subject: "+ subject);
-        if(subject.startsWith("CVS update:"))
+        if(subject.startsWith("CVS update"))
             return new CVSParser().parse(msg);
         if(subject.startsWith("svn commit:"))
             return new SubversionParser().parse(msg);
