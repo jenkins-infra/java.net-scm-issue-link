@@ -59,6 +59,10 @@ public abstract class AbstractIssueCommand extends AbstractCommand implements Co
         while(m.find())
             issues.add(new Issue(commit.project,m.group(1)));
 
+        m = ISSUE_MARKER2.matcher(commit.log);
+        while(m.find())
+            issues.add(new Issue(commit.project,m.group(1)));
+
         m = ID_MARKER.matcher(commit.log);
         while(m.find())
             issues.add(new Issue(m.group(1),m.group(2)));
@@ -107,6 +111,11 @@ public abstract class AbstractIssueCommand extends AbstractCommand implements Co
      * Look for strings like "issue #350" and "issue 350"
      */
     private static final Pattern ISSUE_MARKER = Pattern.compile("\\b[Ii]ssue #?(\\d+)\\b");
+
+    /**
+     * Looks for the line "Issue number: #350" which is the default commit message format on java.net
+     */
+    private static final Pattern ISSUE_MARKER2 = Pattern.compile("\\bIssue number:\\s*#?(\\d+)\\b");
 
     /**
      * Look for full ID line like "JAXB-512"
