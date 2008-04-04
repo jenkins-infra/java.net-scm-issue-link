@@ -160,7 +160,7 @@ public class UpdateCommand extends AbstractIssueCommand {
     /**
      * Marked for marking bug as fixed.
      */
-    private static final Pattern FIXED = Pattern.compile("\\b\\[.*(fixed|FIXED).*\\]\\b");
+    private static final Pattern FIXED = Pattern.compile("\\[.*(fixed|FIXED).*\\]");
 
     // taken from http://fisheye5.cenqua.com/
     private static final Set<String> FISHEYE_CVS_PROJECT = new HashSet<String>(Arrays.asList(
