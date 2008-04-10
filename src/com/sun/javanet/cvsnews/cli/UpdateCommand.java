@@ -146,7 +146,7 @@ public class UpdateCommand extends AbstractIssueCommand {
                 buf.append(MessageFormat.format(
                 "http://fisheye4.cenqua.com/changelog/{0}/?cs={1}",
                     commit.project,
-                    commit.revision));
+                    String.valueOf(commit.revision)));
             }
         }
 
