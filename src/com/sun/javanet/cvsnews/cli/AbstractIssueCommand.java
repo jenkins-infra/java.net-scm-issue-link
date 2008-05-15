@@ -55,15 +55,15 @@ public abstract class AbstractIssueCommand extends AbstractCommand implements Co
      */
     protected final Set<Issue> parseIssues(Commit commit) {
         Set<Issue> issues = new HashSet<Issue>();
-        Matcher m = ISSUE_MARKER.matcher(commit.log);
-        while(m.find())
+//        Matcher m = ISSUE_MARKER.matcher(commit.log);
+//        while(m.find())
+//            issues.add(new Issue(commit.project,m.group(1)));
+//
+//        Matcher m = ISSUE_MARKER2.matcher(commit.log);
+//        while(m.find())
             issues.add(new Issue(commit.project,m.group(1)));
 
-        m = ISSUE_MARKER2.matcher(commit.log);
-        while(m.find())
-            issues.add(new Issue(commit.project,m.group(1)));
-
-        m = ID_MARKER.matcher(commit.log);
+        Matcher m = ID_MARKER.matcher(commit.log);
         while(m.find())
             issues.add(new Issue(m.group(1),m.group(2)));
         return issues;
