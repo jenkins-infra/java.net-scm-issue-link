@@ -94,6 +94,7 @@ public class UpdateCommand extends AbstractIssueCommand {
                 e.commit(msg);
             } catch (ProcessingException e) {
                 e.printStackTrace();
+                return 1;
             }
         }
 
