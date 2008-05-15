@@ -61,7 +61,7 @@ public abstract class AbstractIssueCommand extends AbstractCommand implements Co
 //
 //        Matcher m = ISSUE_MARKER2.matcher(commit.log);
 //        while(m.find())
-            issues.add(new Issue(commit.project,m.group(1)));
+//            issues.add(new Issue(commit.project,m.group(1)));
 
         Matcher m = ID_MARKER.matcher(commit.log);
         while(m.find())
