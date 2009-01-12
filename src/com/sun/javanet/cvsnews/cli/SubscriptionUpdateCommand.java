@@ -60,7 +60,7 @@ public class SubscriptionUpdateCommand extends AbstractCommand {
             System.out.println("Subscribing to "+p.getName());
             p = admin.getProject(p.getName());
             JNMailingLists mls = p.getMailingLists();
-            subscribe(mls.get("commits")); // TODO: subversion support
+            subscribe(mls.get("commits"));
             subscribe(mls.get("cvs"));
         }
         
