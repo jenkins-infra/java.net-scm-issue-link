@@ -120,5 +120,5 @@ public abstract class AbstractIssueCommand extends AbstractCommand implements Co
     /**
      * Look for full ID line like "JAXB-512"
      */
-    private static final Pattern ID_MARKER = Pattern.compile("\\b([A-Z-]+)-(\\d+)\\b");
+    private static final Pattern ID_MARKER = Pattern.compile("\\b([A-Z0-9-]+)-(\\d+)\\b");
 }
