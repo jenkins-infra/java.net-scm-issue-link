@@ -118,8 +118,10 @@ public class UpdateCommand extends AbstractIssueCommand {
 
                     // resolve.
                     // comment set here doesn't work. see http://jira.atlassian.com/browse/JRA-11278
-                    service.progressWorkflowAction(securityToken,id,"5" /*this is apparently the ID for "resolved"*/,
+                    if (markedAsFixed && issues.size()==1) {
+                        service.progressWorkflowAction(securityToken,id,"5" /*this is apparently the ID for "resolved"*/,
                             new RemoteFieldValue[]{new RemoteFieldValue("comment",new String[]{"closing comment"})});
+                    }
                 } else {
                     // update java.net
                     JNIssue i = p.getIssueTracker().get(issue.number);
