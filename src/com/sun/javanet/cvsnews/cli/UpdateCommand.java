@@ -51,19 +51,29 @@ import org.kohsuke.jnt.ProcessingException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.FileInputStream;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Properties;
 import java.util.regex.Pattern;
+import java.net.URL;
+
+import hudson.plugins.jira.soap.JiraSoapServiceService;
+import hudson.plugins.jira.soap.JiraSoapServiceServiceLocator;
+import hudson.plugins.jira.soap.JiraSoapService;
+import hudson.plugins.jira.soap.RemoteComment;
+import hudson.plugins.jira.soap.RemoteFieldValue;
 
 /**
- * Subcommand that reads e-mail from stdin and adds news files.
+ * Subcommand that reads e-mail from stdin and updates the issue tracker.
  *
  * @author Kohsuke Kawaguchi
  */
 public class UpdateCommand extends AbstractIssueCommand {
+    private final File credential = new File(HOME, ".java.net.scm_issue_link");
 
     public int execute() throws Exception {
         System.out.println("Parsing stdin");
@@ -78,7 +88,8 @@ public class UpdateCommand extends AbstractIssueCommand {
 
         boolean markedAsFixed = FIXED.matcher(commit.log).find();
 
-        JavaNet con = JavaNet.connect(new File(HOME, ".java.net.scm_issue_link"));
+        JavaNet con = JavaNet.connect(credential);
+
         for (Issue issue : issues) {
             JNProject p = con.getProject(issue.projectName);
             if(!con.getMyself().getMyProjects().contains(p))
@@ -87,11 +98,36 @@ public class UpdateCommand extends AbstractIssueCommand {
 
             System.out.println("Updating "+issue);
             try {
-                JNIssue i = p.getIssueTracker().get(issue.number);
-                IssueEditor e = i.beginEdit();
-                if(markedAsFixed && issues.size()==1)
-                    e.resolve(IssueResolution.FIXED);
-                e.commit(msg);
+                if (issue.projectName.equals("hudson")) {
+                    // update JIRA
+                    JiraSoapServiceService jiraSoapServiceGetter = new JiraSoapServiceServiceLocator();
+
+                    Properties props = new Properties();
+                    props.load(new FileInputStream(credential));
+
+                    String id = "HUDSON-" + issue.number;
+
+                    JiraSoapService service = jiraSoapServiceGetter.getJirasoapserviceV2(new URL(new URL("http://issues.hudson-ci.org/"), "rpc/soap/jirasoapservice-v2"));
+                    String securityToken = service.login(props.getProperty("userName"),props.getProperty("password"));
+
+                    // if an issue doesn't exist an exception will be thrown
+                    service.getIssue(securityToken, id);
+
+                    // add comment
+                    service.addComment(securityToken, id, new RemoteComment(msg));
+
+                    // resolve.
+                    // comment set here doesn't work. see http://jira.atlassian.com/browse/JRA-11278
+                    service.progressWorkflowAction(securityToken,id,"5" /*this is apparently the ID for "resolved"*/,
+                            new RemoteFieldValue[]{new RemoteFieldValue("comment",new String[]{"closing comment"})});
+                } else {
+                    // update java.net
+                    JNIssue i = p.getIssueTracker().get(issue.number);
+                    IssueEditor e = i.beginEdit();
+                    if(markedAsFixed && issues.size()==1)
+                        e.resolve(IssueResolution.FIXED);
+                    e.commit(msg);
+                }
             } catch (ProcessingException e) {
                 e.printStackTrace();
                 return 1;
