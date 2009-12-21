@@ -42,6 +42,8 @@ import com.sun.javanet.cvsnews.CVSCommit;
 import com.sun.javanet.cvsnews.CodeChange;
 import com.sun.javanet.cvsnews.Commit;
 import com.sun.javanet.cvsnews.SubversionCommit;
+import hudson.plugins.jira.soap.RemoteIssue;
+import org.apache.axis.AxisFault;
 import org.kohsuke.jnt.IssueEditor;
 import org.kohsuke.jnt.IssueResolution;
 import org.kohsuke.jnt.JNIssue;
@@ -52,6 +54,7 @@ import org.kohsuke.jnt.ProcessingException;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileInputStream;
+import java.rmi.RemoteException;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -111,7 +114,7 @@ public class UpdateCommand extends AbstractIssueCommand {
                     String securityToken = service.login(props.getProperty("userName"),props.getProperty("password"));
 
                     // if an issue doesn't exist an exception will be thrown
-                    service.getIssue(securityToken, id);
+                    RemoteIssue i = service.getIssue(securityToken, id);
 
                     // add comment
                     service.addComment(securityToken, id, new RemoteComment(msg));
@@ -119,8 +122,17 @@ public class UpdateCommand extends AbstractIssueCommand {
                     // resolve.
                     // comment set here doesn't work. see http://jira.atlassian.com/browse/JRA-11278
                     if (markedAsFixed && issues.size()==1) {
-                        service.progressWorkflowAction(securityToken,id,"5" /*this is apparently the ID for "resolved"*/,
-                            new RemoteFieldValue[]{new RemoteFieldValue("comment",new String[]{"closing comment"})});
+                        try {
+                            service.progressWorkflowAction(securityToken,id,"5" /*this is apparently the ID for "resolved"*/,
+                                new RemoteFieldValue[]{new RemoteFieldValue("comment",new String[]{"closing comment"})});
+                        } catch (AxisFault e) {
+                            // if the issue cannot be put into the "resolved" state
+                            // (perhaps it's already in that state), let it be. Or else
+                            // we end up with the carpet bombing like HUDSON-2552.
+                            // See HUDSON-5133 for the failure mode.
+                            System.err.println("Failed to mark the issue as resolved");
+                            e.printStackTrace();
+                        }
                     }
                 } else {
                     // update java.net
