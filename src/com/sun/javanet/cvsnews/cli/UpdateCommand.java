@@ -54,7 +54,6 @@ import org.kohsuke.jnt.ProcessingException;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileInputStream;
-import java.rmi.RemoteException;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -193,6 +192,11 @@ public class UpdateCommand extends AbstractIssueCommand {
                 if(!hasFisheye)
                     buf.append("   "+cc.url+"\n");
             }
+            if(commit.project.equals("hudson")) {
+                buf.append(MessageFormat.format(
+                "http://hudson-ci.org/commit/{0}",
+                    String.valueOf(commit.revision)));
+            } else
             if(hasFisheye) {
                 buf.append(MessageFormat.format(
                 "http://fisheye4.cenqua.com/changelog/{0}/?cs={1}",
@@ -304,7 +308,6 @@ public class UpdateCommand extends AbstractIssueCommand {
             "diy",
             "glassfish-svn",
             "hk2",
-            "hudson",
             "jax-ws-commons",
             "jmimeinfo",
             "jtharness",
