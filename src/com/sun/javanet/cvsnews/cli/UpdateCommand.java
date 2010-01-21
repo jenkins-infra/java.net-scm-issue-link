@@ -308,6 +308,7 @@ public class UpdateCommand extends AbstractIssueCommand {
             "diy",
             "glassfish-svn",
             "hk2",
+            "hudson",
             "jax-ws-commons",
             "jmimeinfo",
             "jtharness",
