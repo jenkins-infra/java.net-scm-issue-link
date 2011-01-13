@@ -61,7 +61,7 @@ public class Main {
             return -1;
         } else {
             try {
-                Class c = Class.forName("com.sun.javanet.cvsnews.cli."+capitalize(args[0])+"Command");
+                Class c = Class.forName("com.cloudbees.javanet.cvsnews.cli."+capitalize(args[0])+"Command");
                 com = (Command)c.newInstance();
             } catch (ClassNotFoundException e) {
                 System.err.println("No such command: "+args[0]);
