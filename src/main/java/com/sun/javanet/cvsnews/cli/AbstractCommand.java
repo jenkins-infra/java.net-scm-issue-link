@@ -37,23 +37,37 @@
 
 package com.sun.javanet.cvsnews.cli;
 
+import com.sun.javanet.cvsnews.CVSParser;
+import com.sun.javanet.cvsnews.SubversionParser;
 import com.sun.javanet.cvsnews.Commit;
 
-import java.util.Set;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
+import java.io.File;
+import java.text.ParseException;
+import java.util.List;
 
 /**
- * Dumps issues found in the commit message.
- *
  * @author Kohsuke Kawaguchi
  */
-public class DumpIssuesCommand extends AbstractIssueCommand {
-    public int execute() throws Exception {
-        System.out.println("Parsing stdin");
-        Commit commit = parseStdin();
-        Set<Issue> issues = parseIssues(commit);
+abstract class AbstractCommand implements Command {
+    /**
+     * Parses stdin into {@link Commit}.
+     */
+    protected final List<? extends Commit> parseStdin() throws MessagingException, ParseException {
+        MimeMessage msg = new MimeMessage(
+            Session.getInstance(System.getProperties()), System.in);
 
-        System.out.println("Found "+issues);
+        String subject = msg.getSubject();
+        System.err.println("Subject: "+ subject);
+        if(subject.startsWith("CVS update"))
+            return new CVSParser().parse(msg);
+        if(subject.startsWith("svn commit:"))
+            return new SubversionParser().parse(msg);
 
-        return 0;
+        throw new ParseException("Neither CVS nor svn commit message",0);
     }
+
+    protected static final File HOME = new File(System.getProperty("user.home"));
 }

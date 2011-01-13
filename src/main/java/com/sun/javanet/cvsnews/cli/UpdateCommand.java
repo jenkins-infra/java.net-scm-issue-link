@@ -79,71 +79,72 @@ public class UpdateCommand extends AbstractIssueCommand {
 
     public int execute() throws Exception {
         System.out.println("Parsing stdin");
-        Commit commit = parseStdin();
-        Set<Issue> issues = parseIssues(commit);
+        for (Commit commit : parseStdin()) {
+            Set<Issue> issues = parseIssues(commit);
 
-        System.out.println("Found "+issues);
-        if(issues.isEmpty())
-            return 0;   // no issue link
+            System.out.println("Found "+issues);
+            if(issues.isEmpty())
+                return 0;   // no issue link
 
-        String msg = createUpdateMessage(commit);
+            String msg = createUpdateMessage(commit);
 
-        boolean markedAsFixed = FIXED.matcher(commit.log).find();
+            boolean markedAsFixed = FIXED.matcher(commit.log).find();
 
-        JavaNet con = JavaNet.connect(credential);
+            JavaNet con = JavaNet.connect(credential);
 
-        for (Issue issue : issues) {
-            JNProject p = con.getProject(issue.projectName);
-            if(!con.getMyself().getMyProjects().contains(p))
-                // not a participating project
-                continue;
+            for (Issue issue : issues) {
+                JNProject p = con.getProject(issue.projectName);
+                if(!con.getMyself().getMyProjects().contains(p))
+                    // not a participating project
+                    continue;
 
-            System.out.println("Updating "+issue);
-            try {
-                if (issue.projectName.equals("hudson")) {
-                    // update JIRA
-                    JiraSoapServiceService jiraSoapServiceGetter = new JiraSoapServiceServiceLocator();
+                System.out.println("Updating "+issue);
+                try {
+                    if (issue.projectName.equals("hudson")) {
+                        // update JIRA
+                        JiraSoapServiceService jiraSoapServiceGetter = new JiraSoapServiceServiceLocator();
 
-                    Properties props = new Properties();
-                    props.load(new FileInputStream(credential));
+                        Properties props = new Properties();
+                        props.load(new FileInputStream(credential));
 
-                    String id = "HUDSON-" + issue.number;
+                        String id = "HUDSON-" + issue.number;
 
-                    JiraSoapService service = jiraSoapServiceGetter.getJirasoapserviceV2(new URL(new URL("http://issues.hudson-ci.org/"), "rpc/soap/jirasoapservice-v2"));
-                    String securityToken = service.login(props.getProperty("userName"),props.getProperty("password"));
+                        JiraSoapService service = jiraSoapServiceGetter.getJirasoapserviceV2(new URL(new URL("http://issues.hudson-ci.org/"), "rpc/soap/jirasoapservice-v2"));
+                        String securityToken = service.login(props.getProperty("userName"),props.getProperty("password"));
 
-                    // if an issue doesn't exist an exception will be thrown
-                    RemoteIssue i = service.getIssue(securityToken, id);
+                        // if an issue doesn't exist an exception will be thrown
+                        RemoteIssue i = service.getIssue(securityToken, id);
 
-                    // add comment
-                    service.addComment(securityToken, id, new RemoteComment(msg));
+                        // add comment
+                        service.addComment(securityToken, id, new RemoteComment(msg));
 
-                    // resolve.
-                    // comment set here doesn't work. see http://jira.atlassian.com/browse/JRA-11278
-                    if (markedAsFixed && issues.size()==1) {
-                        try {
-                            service.progressWorkflowAction(securityToken,id,"5" /*this is apparently the ID for "resolved"*/,
-                                new RemoteFieldValue[]{new RemoteFieldValue("comment",new String[]{"closing comment"})});
-                        } catch (AxisFault e) {
-                            // if the issue cannot be put into the "resolved" state
-                            // (perhaps it's already in that state), let it be. Or else
-                            // we end up with the carpet bombing like HUDSON-2552.
-                            // See HUDSON-5133 for the failure mode.
-                            System.err.println("Failed to mark the issue as resolved");
-                            e.printStackTrace();
+                        // resolve.
+                        // comment set here doesn't work. see http://jira.atlassian.com/browse/JRA-11278
+                        if (markedAsFixed && issues.size()==1) {
+                            try {
+                                service.progressWorkflowAction(securityToken,id,"5" /*this is apparently the ID for "resolved"*/,
+                                    new RemoteFieldValue[]{new RemoteFieldValue("comment",new String[]{"closing comment"})});
+                            } catch (AxisFault e) {
+                                // if the issue cannot be put into the "resolved" state
+                                // (perhaps it's already in that state), let it be. Or else
+                                // we end up with the carpet bombing like HUDSON-2552.
+                                // See HUDSON-5133 for the failure mode.
+                                System.err.println("Failed to mark the issue as resolved");
+                                e.printStackTrace();
+                            }
                         }
+                    } else {
+                        // update java.net
+                        JNIssue i = p.getIssueTracker().get(issue.number);
+                        IssueEditor e = i.beginEdit();
+                        if(markedAsFixed && issues.size()==1)
+                            e.resolve(IssueResolution.FIXED);
+                        e.commit(msg);
                     }
-                } else {
-                    // update java.net
-                    JNIssue i = p.getIssueTracker().get(issue.number);
-                    IssueEditor e = i.beginEdit();
-                    if(markedAsFixed && issues.size()==1)
-                        e.resolve(IssueResolution.FIXED);
-                    e.commit(msg);
+                } catch (ProcessingException e) {
+                    e.printStackTrace();
+                    return 1;
                 }
-            } catch (ProcessingException e) {
-                e.printStackTrace();
-                return 1;
             }
         }
 

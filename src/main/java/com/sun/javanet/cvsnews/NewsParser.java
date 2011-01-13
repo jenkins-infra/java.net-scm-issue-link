@@ -44,6 +44,7 @@ import javax.mail.internet.MimeMessage;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -53,7 +54,7 @@ public abstract class NewsParser {
     /**
      * Parses a changelog e-mail.
      */
-    public abstract Commit parse(MimeMessage msg) throws ParseException;
+    public abstract List<? extends Commit> parse(MimeMessage msg) throws ParseException;
 
     protected final String getProjectName(MimeMessage msg) throws MessagingException {
         InternetAddress ia = (InternetAddress) msg.getRecipients(Message.RecipientType.TO)[0];

@@ -47,50 +47,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/* Sample changelog messages from java.net
-
-File Changes:
-
-Directory: /ws-test-harness/test-harness/test/testcases/jaxws/fromjava/server/
-==============================================================================
-
-File [removed]: AddWebservice.java
-
-File [removed]: EndpointStopper.java
-
-
-******************************************
-
-Directory: /ws-test-harness/test-harness/bootstrap/src/com/sun/xml/ws/test/
-===========================================================================
-
-File [changed]: Bootstrap.java
-Url: https://ws-test-harness.dev.java.net/source/browse/ws-test-harness/test-harness/bootstrap/src/com/sun/xml/ws/test/Bootstrap.java?r1=1.3&r2=1.4
-Delta lines:  +11 -11
-
-
-******************************************
-Directory: /ws-test-harness/test-harness/src/com/sun/xml/ws/test/model/
-=======================================================================
-
-File [added]: WSDL.java
-Url: https://ws-test-harness.dev.java.net/source/browse/ws-test-harness/test-harness/src/com/sun/xml/ws/test/model/WSDL.java?rev=1.1&content-type=text/vnd.viewcvs-markup
-Added lines: 27
----------------
-*/
 /**
- * Parses {@link Commit} from java.net CVS changelog e-mail.
+ * Parses {@link Commit} from java.net Subversion changelog e-mail.
  *
  * @author Kohsuke Kawaguchi
  */
-public class CVSParser extends NewsParser {
-    public CVSCommit parse(MimeMessage msg) throws ParseException {
-        List<CVSChange> codeChanges = new ArrayList<CVSChange>();
+public class SubversionParser extends NewsParser {
+    public List<SubversionCommit> parse(MimeMessage msg) throws ParseException {
+        List<CodeChange> codeChanges = new ArrayList<CodeChange>();
 
         try {
             Object content = msg.getContent();
@@ -99,15 +69,14 @@ public class CVSParser extends NewsParser {
 
             String project = getProjectName(msg);
 
-            String branch = null;
             String user = null;
             Date date = null;
             boolean inLog = false;
             StringWriter log = new StringWriter();
 
-            String directory = null;    // set to the value of "Directory:" when parsing diffs
             String file = null;         // set to the value of "File [...]:" when parsing diffs
             String url = null;          // set to the value of "Url:" when parsing diffs
+            long newRevision = -1;
 
             BufferedReader in = new BufferedReader(new StringReader(content.toString()));
             String line;
@@ -116,12 +85,12 @@ public class CVSParser extends NewsParser {
                     inLog = false;
                 }
 
-                if(line.startsWith("Tag: ")) {
-                    branch = line.substring(5).trim();
+                if(line.startsWith("Author: ")) {
+                    user = line.substring(6).trim();
                     continue;
                 }
-                if(line.startsWith("User: ")) {
-                    user = line.substring(6).trim();
+                if(line.startsWith("New Revision: ")) {
+                    newRevision = Long.parseLong(line.substring("New Revision: ".length()).trim());
                     continue;
                 }
                 if(line.startsWith("Date: ")) {
@@ -135,34 +104,32 @@ public class CVSParser extends NewsParser {
 
                 if(inLog) {
                     // this is a part of the log message
-                    log.write(line.substring(1));   // cut off the first SP
+                    log.write(line);   // unlike CVS messages, Subversion messages don't have indentation
                     log.write('\n');
                 } else {
-                    Matcher m = DIRECTORY_LINE.matcher(line);
+                    Matcher m = FILE_LINE.matcher(line);
                     if(m.matches()) {
-                        directory = m.group(1);
-                        continue;
-                    }
-
-                    m = FILE_LINE.matcher(line);
-                    if(m.matches()) {
+                        // file always marks the start of new change
+                        if(file!=null)
+                            codeChanges.add(createCodeChange(file,url));
                         file = m.group(2);
                         continue;
                     }
 
                     m = URL_LINE.matcher(line);
-                    if(m.matches()) {
+                    if(m.matches())
                         url = m.group(1);
-                        // conclude one change
-                        codeChanges.add(createCodeChange(directory,file,url));
-                    }
                 }
             }
 
-            CVSCommit item = new CVSCommit(project, user, branch, date, log.toString());
+            // wrap up the last change
+            if(file!=null)
+                codeChanges.add(createCodeChange(file,url));
+
+            SubversionCommit item = new SubversionCommit(project, user, date, log.toString(), newRevision);
             item.addCodeChanges(codeChanges);
 
-            return item;
+            return Collections.singletonList(item);
         } catch (IOException e) {
             // impossible
             throw new Error(e);
@@ -172,27 +139,9 @@ public class CVSParser extends NewsParser {
         }
     }
 
-    private CVSChange createCodeChange(String directory, String file, String url) throws MalformedURLException {
-        // compute the revision
-        String rev = null;
-        if(url!=null) {
-            Matcher m = DIFF_REVISION.matcher(url);
-            if(m.find()) {
-                rev = m.group(2);
-            } else {
-                m = NEW_REVISION.matcher(url);
-                if(m.find())
-                    rev = m.group(1);
-            }
-        }
-
-        return new CVSChange(directory+file,url==null?null:new URL(url),rev);
+    private CodeChange createCodeChange(String path, String url) throws MalformedURLException {
+        return new CodeChange(path,new URL(url));
     }
 
-    private static final Pattern DIRECTORY_LINE = Pattern.compile("^Directory: (/.+/)$");
-    private static final Pattern FILE_LINE = Pattern.compile("^File \\[(changed|added|removed)\\]: (.+)$");
-    private static final Pattern DIFF_LINE = Pattern.compile("^\\+\\+\\+ .+\t(20\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d+0000)\t[0-9.]+$");
-
-    private static final Pattern DIFF_REVISION = Pattern.compile("\\?r1=([0-9.]+)&r2=([0-9.]+)");
-    private static final Pattern NEW_REVISION = Pattern.compile("\\?rev=([0-9.]+)&");
+    private static final Pattern FILE_LINE = Pattern.compile("^(Modified|Added): (.+)$");
 }
