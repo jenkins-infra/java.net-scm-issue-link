@@ -127,7 +127,7 @@ Merge branch 'federated-login-service'
 
 Commit: 4207cf93308bc05ab7c4da190bc9d36277d485b6
     https://github.com/hudson/hudson/commit/4207cf93308bc05ab7c4da190bc9d36277d485b6
-Author: Kohsuke Kawaguchi <kk@kohsuke.org>
+Author: kk@kohsuke.org
 Date:   2011-01-12 (Wed, 12 Jan 2011)
 
 Changed paths:
