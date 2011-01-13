@@ -87,6 +87,7 @@ public class GitHubParser extends NewsParser {
                 case PARSING_LOG:
                     if (line.startsWith("Commit: ")) {
                         // completed the whole thing
+                        // TODO: parse the project correctly
                         GitHubCommit c = new GitHubCommit(commit,"hudson",author,null,log.toString());
                         c.addCodeChanges(paths);
                         commits.add(c);

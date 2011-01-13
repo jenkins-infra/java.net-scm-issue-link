@@ -38,6 +38,7 @@
 package com.sun.javanet.cvsnews.cli;
 
 import com.sun.javanet.cvsnews.CVSParser;
+import com.sun.javanet.cvsnews.GitHubParser;
 import com.sun.javanet.cvsnews.SubversionParser;
 import com.sun.javanet.cvsnews.Commit;
 
@@ -60,13 +61,16 @@ abstract class AbstractCommand implements Command {
             Session.getInstance(System.getProperties()), System.in);
 
         String subject = msg.getSubject();
+        String from = msg.getFrom()[0].toString();
         System.err.println("Subject: "+ subject);
         if(subject.startsWith("CVS update"))
             return new CVSParser().parse(msg);
         if(subject.startsWith("svn commit:"))
             return new SubversionParser().parse(msg);
-
-        throw new ParseException("Neither CVS nor svn commit message",0);
+        if (from.equals("noreply@github.com"))
+            return new GitHubParser().parse(msg);
+        
+        throw new ParseException("Unrecognized message type",0);
     }
 
     protected static final File HOME = new File(System.getProperty("user.home"));
