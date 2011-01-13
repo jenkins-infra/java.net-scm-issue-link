@@ -92,14 +92,24 @@ public class GitHubParser extends NewsParser {
                         commits.add(c);
 
                         // reset parser state
-                        commit = author = url = null;
-                        state = State.DEFAULT;
+                        author = url = null;
                         paths.clear();
+
+                        // and parse this commit line
+                        commit = line.substring("Commit: ".length()).trim();
+                        state = State.PARSING_COMMIT;
                         break;
                     }
                     log.append(line).append('\n');
                     break;
                 }
+            }
+
+            // from the last one
+            if (commit!=null) {
+                GitHubCommit c = new GitHubCommit(commit,"hudson",author,null,log.toString());
+                c.addCodeChanges(paths);
+                commits.add(c);
             }
 
             return commits;
