@@ -88,7 +88,7 @@ public class GitHubParser extends NewsParser {
                     if (line.startsWith("Commit: ")) {
                         // completed the whole thing
                         // TODO: parse the project correctly
-                        GitHubCommit c = new GitHubCommit(commit,"hudson",author,null,log.toString());
+                        GitHubCommit c = new GitHubCommit(commit,url,"hudson",author,null,log.toString());
                         c.addCodeChanges(paths);
                         commits.add(c);
 
@@ -108,7 +108,7 @@ public class GitHubParser extends NewsParser {
 
             // from the last one
             if (commit!=null) {
-                GitHubCommit c = new GitHubCommit(commit,"hudson",author,null,log.toString());
+                GitHubCommit c = new GitHubCommit(commit,url,"hudson",author,null,log.toString());
                 c.addCodeChanges(paths);
                 commits.add(c);
             }

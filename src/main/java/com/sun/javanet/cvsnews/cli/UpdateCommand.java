@@ -41,6 +41,7 @@ import com.sun.javanet.cvsnews.CVSChange;
 import com.sun.javanet.cvsnews.CVSCommit;
 import com.sun.javanet.cvsnews.CodeChange;
 import com.sun.javanet.cvsnews.Commit;
+import com.sun.javanet.cvsnews.GitHubCommit;
 import com.sun.javanet.cvsnews.SubversionCommit;
 import hudson.plugins.jira.soap.RemoteIssue;
 import org.apache.axis.AxisFault;
@@ -183,7 +184,8 @@ public class UpdateCommand extends AbstractIssueCommand {
                     buf.append("Failed to compute FishEye link "+e+"\n");
                 }
             }
-        } else {
+        } else
+        if (_commit instanceof SubversionCommit) {
             SubversionCommit commit = (SubversionCommit) _commit;
 
             boolean hasFisheye = FISHEYE_SUBVERSION_PROJECT.contains(commit.project);
@@ -204,6 +206,16 @@ public class UpdateCommand extends AbstractIssueCommand {
                     commit.project,
                     String.valueOf(commit.revision)));
             }
+        } else
+        if (_commit instanceof GitHubCommit) {
+            GitHubCommit commit = (GitHubCommit) _commit;
+
+            for (CodeChange cc : commit.getCodeChanges()) {
+                buf.append(MessageFormat.format(" {0}\n",cc.fileName));
+            }
+            buf.append(commit.url);
+        } else {
+            throw new AssertionError("Unrecognized commit type "+_commit.getClass());
         }
 
         buf.append("\n");

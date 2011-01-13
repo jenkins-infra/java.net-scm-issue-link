@@ -14,10 +14,13 @@ public class GitHubCommit extends Commit<GitHubCodeChange> {
      */
     public final String author;
 
-    public GitHubCommit(String commitSha1, String project, String author, Date date, String log) throws AddressException {
+    public final String url;
+
+    public GitHubCommit(String commitSha1, String url, String project, String author, Date date, String log) throws AddressException {
         super(project, toUserName(author), date, log);
         this.commitSha1 = commitSha1;
         this.author = author;
+        this.url = url;
     }
 
     private static String toUserName(String author) throws AddressException {
