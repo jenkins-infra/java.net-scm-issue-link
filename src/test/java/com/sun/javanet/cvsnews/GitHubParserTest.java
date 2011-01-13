@@ -21,8 +21,8 @@ public class GitHubParserTest extends TestCase {
 
         GitHubCommit c1 = commits.get(1);
         assertEquals("4207cf93308bc05ab7c4da190bc9d36277d485b6", c1.commitSha1);
-        assertEquals("kk@Kohsuke.org",c0.userName);
-        assertEquals("kk@Kohsuke.org",c0.author);
+        assertEquals("kk@kohsuke.org",c1.userName);
+        assertEquals("kk@kohsuke.org",c1.author);
         assertEquals(1, c1.getCodeChanges().size());
         assertEquals("changelog.html", c1.getCodeChanges().get(0).fileName);
     }
