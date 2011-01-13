@@ -1,0 +1,142 @@
+X-Account-Key: account2
+Delivered-To: kawaguchikohsuke@gmail.com
+Received: by 10.204.114.12 with SMTP id c12cs868bkq;
+        Wed, 12 Jan 2011 19:00:48 -0800 (PST)
+Received: by 10.142.142.14 with SMTP id p14mr438088wfd.133.1294887647319;
+        Wed, 12 Jan 2011 19:00:47 -0800 (PST)
+Return-Path: <hudson-commits+bncCNzGt6eDFhDc1bnpBBoE88QL_A@googlegroups.com>
+Received: from homiemail-mx4.g.dreamhost.com (mailbigip.dreamhost.com [208.97.132.5])
+        by mx.google.com with ESMTP id z23si2720911wfd.138.2011.01.12.19.00.45;
+        Wed, 12 Jan 2011 19:00:46 -0800 (PST)
+Received-SPF: neutral (google.com: 208.97.132.5 is neither permitted nor denied by domain of hudson-commits+bncCNzGt6eDFhDc1bnpBBoE88QL_A@googlegroups.com) client-ip=208.97.132.5;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 208.97.132.5 is neither permitted nor denied by domain of hudson-commits+bncCNzGt6eDFhDc1bnpBBoE88QL_A@googlegroups.com) smtp.mail=hudson-commits+bncCNzGt6eDFhDc1bnpBBoE88QL_A@googlegroups.com; dkim=pass (test mode) header.i=@googlegroups.com
+Received: from mail-vw0-f61.google.com (mail-vw0-f61.google.com [209.85.212.61])
+	by homiemail-mx4.g.dreamhost.com (Postfix) with ESMTP id 3BD427081B4
+	for <kk@kohsuke.org>; Wed, 12 Jan 2011 19:00:45 -0800 (PST)
+Received: by vws1 with SMTP id 1sf2938402vws.6
+        for <kk@kohsuke.org>; Wed, 12 Jan 2011 19:00:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:mime-version:x-beenthere:received-spf:date:to
+         :subject:message-id:from:x-original-sender
+         :x-original-authentication-results:reply-to:precedence:mailing-list
+         :list-id:list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=7JS3G37o/p07uYBArmWxGF9FjfdX8AD8JTIGQJogGCE=;
+        b=UF2ryOvPaOVjwcT7I2qS3/rwKnb7bxAiXzMuEg5BCeg+cB9cIHo74E6FwSDcznzxF0
+         TmSyNWEldr99ymqbO2vxYIUQUUICxFsV/VIYSMOiSOBxxDf8mURMWJkQgy3zGLKSNfBO
+         1uo06rbLx7K3Of4nqdRWrHtFYeaF6lXgmQhcc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=mime-version:x-beenthere:received-spf:date:to:subject:message-id
+         :from:x-original-sender:x-original-authentication-results:reply-to
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        b=pOU/E9YGL/SyP6+ixVcXdML6L2u2OAmB9ZPOoOhUyD8Vb696XuZNd1ulZJcypJlmAD
+         APMLOX8752+yRXzgsUOr/WKhIhtqZtETZUps+rjeyrMU18Zxvrz5/fZ2QKNJZuARIVs2
+         GTVrhNo1+ZsqPbPAR1MrCTIGcRGtQPO7W8gg0=
+Received: by 10.220.95.66 with SMTP id c2mr121583vcn.55.1294887644394;
+        Wed, 12 Jan 2011 19:00:44 -0800 (PST)
+MIME-Version: 1.0
+X-BeenThere: hudson-commits@googlegroups.com
+Received: by 10.220.67.197 with SMTP id s5ls154044vci.2.p; Wed, 12 Jan 2011
+ 19:00:44 -0800 (PST)
+Received: by 10.220.179.3 with SMTP id bo3mr1032274vcb.22.1294887644015;
+        Wed, 12 Jan 2011 19:00:44 -0800 (PST)
+Received: by 10.220.179.3 with SMTP id bo3mr1032273vcb.22.1294887643970;
+        Wed, 12 Jan 2011 19:00:43 -0800 (PST)
+Received: from smtp1.rs.github.com (smtp1-ext.rs.github.com [207.97.227.250])
+        by gmr-mx.google.com with ESMTP id j14si114128vbr.3.2011.01.12.19.00.43;
+        Wed, 12 Jan 2011 19:00:43 -0800 (PST)
+Received-SPF: pass (google.com: best guess record for domain of noreply@github.com designates 207.97.227.250 as permitted sender) client-ip=207.97.227.250;
+Received: from github.com (sh1.rs.github.com [172.17.1.41])
+	by smtp1.rs.github.com (Postfix) with ESMTP id AD11242368
+	for <hudson-commits@googlegroups.com>; Wed, 12 Jan 2011 19:00:43 -0800 (PST)
+Date: Wed, 12 Jan 2011 19:00:43 -0800
+To: hudson-commits@googlegroups.com
+Subject: [hudson/hudson] a7f34c: Merge branch 'federated-login-service'
+Message-Id: <20110113030043.AD11242368@smtp1.rs.github.com>
+From: noreply@github.com
+X-Original-Sender: noreply@github.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ best guess record for domain of noreply@github.com designates 207.97.227.250
+ as permitted sender) smtp.mail=noreply@github.com
+Reply-To: hudson-commits@googlegroups.com
+Precedence: list
+Mailing-list: list hudson-commits@googlegroups.com; contact hudson-commits+owners@googlegroups.com
+List-ID: <hudson-commits.googlegroups.com>
+List-Post: <http://groups.google.com/group/hudson-commits/post?hl=en_US>, <mailto:hudson-commits@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:hudson-commits+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/hudson-commits?hl=en_US>
+Sender: hudson-commits@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/hudson-commits/subscribe?hl=en_US>,
+ <mailto:hudson-commits+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/hudson-commits/subscribe?hl=en_US>,
+ <mailto:hudson-commits+unsubscribe@googlegroups.com>
+Content-Type: text/plain; charset=UTF-8
+
+Branch: refs/heads/master
+Home:   https://github.com/hudson/hudson
+
+Commit: a7f34c0a2cb9c05b491abb2307a898c15af42254
+    https://github.com/hudson/hudson/commit/a7f34c0a2cb9c05b491abb2307a898c15af42254
+Author: Kohsuke Kawaguchi <kk@kohsuke.org>
+Date:   2011-01-12 (Wed, 12 Jan 2011)
+
+Changed paths:
+  M core/src/main/java/hudson/model/Hudson.java
+  M core/src/main/java/hudson/model/User.java
+  A core/src/main/java/hudson/security/FederatedLoginService.java
+  A core/src/main/java/hudson/security/FederatedLoginServiceUserProperty.java
+  M core/src/main/java/hudson/security/HudsonPrivateSecurityRealm.java
+  M core/src/main/java/hudson/security/SecurityRealm.java
+  M core/src/main/resources/hudson/model/Hudson/login.jelly
+  M core/src/main/resources/hudson/model/User/configure.jelly
+  A core/src/main/resources/hudson/security/FederatedLoginService/UnclaimedIdentityException/error.jelly
+  A core/src/main/resources/hudson/security/FederatedLoginService/UnclaimedIdentityException/error.properties
+  M core/src/main/resources/hudson/security/HudsonPrivateSecurityRealm/_entryForm.jelly
+  A core/src/main/resources/hudson/security/HudsonPrivateSecurityRealm/signupWithFederatedIdentity.jelly
+  A core/src/main/resources/hudson/security/HudsonPrivateSecurityRealm/signupWithFederatedIdentity_da.properties
+  A core/src/main/resources/hudson/security/HudsonPrivateSecurityRealm/signupWithFederatedIdentity_de.properties
+  A core/src/main/resources/hudson/security/HudsonPrivateSecurityRealm/signupWithFederatedIdentity_es.properties
+  A core/src/main/resources/hudson/security/HudsonPrivateSecurityRealm/signupWithFederatedIdentity_fr.properties
+  A core/src/main/resources/hudson/security/HudsonPrivateSecurityRealm/signupWithFederatedIdentity_ja.properties
+  A core/src/main/resources/hudson/security/HudsonPrivateSecurityRealm/signupWithFederatedIdentity_pt_BR.properties
+  A core/src/main/resources/hudson/security/HudsonPrivateSecurityRealm/signupWithFederatedIdentity_tr.properties
+  A core/src/main/resources/hudson/security/HudsonPrivateSecurityRealm/signupWithFederatedIdentity_zh_CN.properties
+  M core/src/main/resources/hudson/security/Messages.properties
+
+Log Message:
+-----------
+Merge branch 'federated-login-service'
+
+* federated-login-service:
+  show a message indicating why they are seeing the login screen
+  extend from RuntimeException to simplify tunneling
+  Oops
+  honor UserPropertyDescriptor.isEnabled()
+  relaxing this a bit
+  report the user that was signed in.
+  Added the registration screen for newly identified user.
+  unclaimed identity should commence a signup sequence
+  tweaking abstraction
+  needs a title
+  Added an extension point for external federated login service.
+  still a work in progress. Federated login support
+
+
+Commit: 4207cf93308bc05ab7c4da190bc9d36277d485b6
+    https://github.com/hudson/hudson/commit/4207cf93308bc05ab7c4da190bc9d36277d485b6
+Author: Kohsuke Kawaguchi <kk@kohsuke.org>
+Date:   2011-01-12 (Wed, 12 Jan 2011)
+
+Changed paths:
+  M changelog.html
+
+Log Message:
+-----------
+explained the federated-login-service branch
+
+
+
+
