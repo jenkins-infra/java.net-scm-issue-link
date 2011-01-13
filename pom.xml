@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jvnet.cvs-news</groupId>
-  <artifactId>parser</artifactId>
+  <groupId>com.cloudbees.javanet</groupId>
+  <artifactId>scm-issue-link</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>CVSNews parser</name>
   <description>
@@ -21,10 +21,9 @@
   </distributionManagement>
 
   <scm>
-    <connection>scm:svn:https://svn.dev.java.net/svn/cvs-news/trunk/cvs-news/</connection>
-    <developerConnection>scm:svn:https://svn.dev.java.net/svn/cvs-news/trunk/cvs-news/</developerConnection>
+    <connection       >scm:git:git://github.com/cloudbees/java.net-scm-issue-link.git</connection>
+    <developerConnection>scm:git:git@github.com:cloudbees/java.net-scm-issue-link.git</developerConnection>
   </scm>
-
   <dependencies>
     <dependency>
       <groupId>javax.mail</groupId>
