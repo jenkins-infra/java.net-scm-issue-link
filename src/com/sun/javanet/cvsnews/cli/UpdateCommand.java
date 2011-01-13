@@ -194,7 +194,7 @@ public class UpdateCommand extends AbstractIssueCommand {
             }
             if(commit.project.equals("hudson")) {
                 buf.append(MessageFormat.format(
-                "http://hudson-ci.org/commit/{0}",
+                "http://hudson-labs.org/commit/{0}",
                     String.valueOf(commit.revision)));
             } else
             if(hasFisheye) {
