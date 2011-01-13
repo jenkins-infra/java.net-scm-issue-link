@@ -35,23 +35,20 @@
  *
  */
 
-package com.sun.javanet.cvsnews;
-
-import java.util.Date;
+package com.cloudbees.javanet.cvsnews.cli;
 
 /**
- * {@link Commit} for Subversion.
- * 
+ * A sub-command.
+ *
+ * <p>
+ * args4j is used to fill options, then {@link #execute()} is invoked.
+ *
  * @author Kohsuke Kawaguchi
  */
-public class SubversionCommit extends Commit<CodeChange> {
+public interface Command {
     /**
-     * New revision.
+     * @return
+     *      exit code.
      */
-    public final long revision;
-
-    public SubversionCommit(String project, String userName, Date date, String log, long revision) {
-        super(project, userName, date, log);
-        this.revision = revision;
-    }
+    public int execute() throws Exception;
 }

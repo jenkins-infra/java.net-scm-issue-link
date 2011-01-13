@@ -35,14 +35,14 @@
  *
  */
 
-package com.sun.javanet.cvsnews.cli;
+package com.cloudbees.javanet.cvsnews.cli;
 
-import com.sun.javanet.cvsnews.CVSChange;
-import com.sun.javanet.cvsnews.CVSCommit;
-import com.sun.javanet.cvsnews.CodeChange;
-import com.sun.javanet.cvsnews.Commit;
-import com.sun.javanet.cvsnews.GitHubCommit;
-import com.sun.javanet.cvsnews.SubversionCommit;
+import com.cloudbees.javanet.cvsnews.CVSChange;
+import com.cloudbees.javanet.cvsnews.CVSCommit;
+import com.cloudbees.javanet.cvsnews.CodeChange;
+import com.cloudbees.javanet.cvsnews.Commit;
+import com.cloudbees.javanet.cvsnews.GitHubCommit;
+import com.cloudbees.javanet.cvsnews.SubversionCommit;
 import hudson.plugins.jira.soap.RemoteIssue;
 import org.apache.axis.AxisFault;
 import org.kohsuke.jnt.IssueEditor;

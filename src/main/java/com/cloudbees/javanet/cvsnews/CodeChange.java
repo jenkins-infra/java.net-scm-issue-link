@@ -35,82 +35,36 @@
  *
  */
 
-package com.sun.javanet.cvsnews;
+package com.cloudbees.javanet.cvsnews;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.net.URL;
 
 /**
- * A CVS commit.
+ * Change of the source code.
  *
  * @author Kohsuke Kawaguchi
  */
-public class Commit<CC extends CodeChange> {
+public class CodeChange {
     /**
-     * The user who commmitted the change.
+     * The file that was changed.
+     *
+     * <p>
+     * This is a path-like '/' separated name, but the exact meaning
+     * depends on the SCM in use.
      */
-    public final String userName;
-
-    /**
-     * Timestamp when the news item was created.
-     */
-    public final Date date;
-
-    /**
-     * Commit message
-     */
-    public final String log;
+    public final String fileName;
 
     /**
-     * Source code changes associated with this.
-     * Created on demand, and copy-on-write.
+     * Link target that represents this file or the diff.
      */
-    private volatile List<CC> codeChanges;
+    public final URL url;
 
-    /**
-     * Java.net project in which this change was mde.
-     */
-    public final String project;
-
-    public Commit(String project, String userName, Date date, String log) {
-        this.userName = userName;
-        this.project = project;
-        this.date = date;
-
-        this.log = log;
+    public CodeChange(String fileName, URL url) {
+        this.fileName = fileName;
+        this.url = url;
     }
 
-    /**
-     * Adds a new code change to the list.
-     */
-    public synchronized void addCodeChange(CC cc) {
-        List<CC> r = new ArrayList<CC>();
-        if(codeChanges!=null)
-            r.addAll(codeChanges);
-        r.add(cc);
-        codeChanges = r;
-    }
-
-    /**
-     * Adds new code changes to the list.
-     */
-    public synchronized void addCodeChanges(Collection<? extends CC> cc) {
-        List<CC> r = new ArrayList<CC>();
-        if(codeChanges!=null)
-            r.addAll(codeChanges);
-        r.addAll(cc);
-        codeChanges = r;
-    }
-
-    /**
-     * Gets a read-only view of all the code changes.
-     */
-    public List<CC> getCodeChanges() {
-        List<CC> r = codeChanges;
-        if(r==null) return Collections.emptyList();
-        else        return r;
+    public String toString() {
+        return fileName;
     }
 }

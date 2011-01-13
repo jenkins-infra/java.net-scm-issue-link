@@ -35,7 +35,7 @@
  *
  */
 
-package com.sun.javanet.cvsnews.cli;
+package com.cloudbees.javanet.cvsnews.cli;
 
 import org.kohsuke.jnt.JNMailingList;
 import org.kohsuke.jnt.JNMailingLists;

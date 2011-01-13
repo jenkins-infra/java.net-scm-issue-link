@@ -1,4 +1,4 @@
-package com.sun.javanet.cvsnews;
+package com.cloudbees.javanet.cvsnews;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -9,7 +9,6 @@ import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
 
 /**
  * Parses GitHub commit notification e-mail.

@@ -1,5 +1,7 @@
-package com.sun.javanet.cvsnews;
+package com.cloudbees.javanet.cvsnews;
 
+import com.cloudbees.javanet.cvsnews.GitHubCommit;
+import com.cloudbees.javanet.cvsnews.GitHubParser;
 import junit.framework.TestCase;
 
 import javax.mail.Session;

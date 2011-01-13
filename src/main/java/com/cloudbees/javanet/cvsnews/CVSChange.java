@@ -35,7 +35,7 @@
  *
  */
 
-package com.sun.javanet.cvsnews;
+package com.cloudbees.javanet.cvsnews;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -35,36 +35,43 @@
  *
  */
 
-package com.sun.javanet.cvsnews;
+package com.cloudbees.javanet.cvsnews.cli;
 
-import java.net.URL;
+import com.cloudbees.javanet.cvsnews.CVSParser;
+import com.cloudbees.javanet.cvsnews.Commit;
+import com.cloudbees.javanet.cvsnews.GitHubParser;
+import com.cloudbees.javanet.cvsnews.SubversionParser;
+
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
+import java.io.File;
+import java.text.ParseException;
+import java.util.List;
 
 /**
- * Change of the source code.
- *
  * @author Kohsuke Kawaguchi
  */
-public class CodeChange {
+abstract class AbstractCommand implements Command {
     /**
-     * The file that was changed.
-     *
-     * <p>
-     * This is a path-like '/' separated name, but the exact meaning
-     * depends on the SCM in use.
+     * Parses stdin into {@link Commit}.
      */
-    public final String fileName;
+    protected final List<? extends Commit> parseStdin() throws MessagingException, ParseException {
+        MimeMessage msg = new MimeMessage(
+            Session.getInstance(System.getProperties()), System.in);
 
-    /**
-     * Link target that represents this file or the diff.
-     */
-    public final URL url;
-
-    public CodeChange(String fileName, URL url) {
-        this.fileName = fileName;
-        this.url = url;
+        String subject = msg.getSubject();
+        String from = msg.getFrom()[0].toString();
+        System.err.println("Subject: "+ subject);
+        if(subject.startsWith("CVS update"))
+            return new CVSParser().parse(msg);
+        if(subject.startsWith("svn commit:"))
+            return new SubversionParser().parse(msg);
+        if (from.equals("noreply@github.com"))
+            return new GitHubParser().parse(msg);
+        
+        throw new ParseException("Unrecognized message type",0);
     }
 
-    public String toString() {
-        return fileName;
-    }
+    protected static final File HOME = new File(System.getProperty("user.home"));
 }

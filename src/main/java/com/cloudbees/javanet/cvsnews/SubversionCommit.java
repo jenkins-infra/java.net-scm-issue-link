@@ -35,52 +35,23 @@
  *
  */
 
-package com.sun.javanet.cvsnews.cli;
+package com.cloudbees.javanet.cvsnews;
 
-import org.kohsuke.args4j.CmdLineException;
-import org.kohsuke.args4j.CmdLineParser;
-
-import java.util.Arrays;
-import java.util.List;
+import java.util.Date;
 
 /**
- * Reads CVS changelog e-mail from stdin and writes a news file to the current directory.
- *
+ * {@link Commit} for Subversion.
+ * 
  * @author Kohsuke Kawaguchi
  */
-public class Main {
-    public static void main(String[] args) throws Exception {
-        System.exit(run(args));
-    }
+public class SubversionCommit extends Commit<CodeChange> {
+    /**
+     * New revision.
+     */
+    public final long revision;
 
-    public static int run(String[] args) throws Exception {
-        Command com;
-        List<String> commandArgs;
-        if(args.length==0) {
-            System.err.println("Usage: java -jar parser.jar <subcommand>");
-            return -1;
-        } else {
-            try {
-                Class c = Class.forName("com.sun.javanet.cvsnews.cli."+capitalize(args[0])+"Command");
-                com = (Command)c.newInstance();
-            } catch (ClassNotFoundException e) {
-                System.err.println("No such command: "+args[0]);
-                return -1;
-            }
-            commandArgs = Arrays.asList(args).subList(1,args.length);
-        }
-
-        CmdLineParser p = new CmdLineParser(com);
-        try {
-            p.parseArgument(commandArgs.toArray(new String[0]));
-            return com.execute();
-        } catch (CmdLineException e) {
-            p.printUsage(System.err);
-            return -1;
-        }
-    }
-
-    private static String capitalize(String text) {
-        return Character.toUpperCase(text.charAt(0))+text.substring(1);
+    public SubversionCommit(String project, String userName, Date date, String log, long revision) {
+        super(project, userName, date, log);
+        this.revision = revision;
     }
 }

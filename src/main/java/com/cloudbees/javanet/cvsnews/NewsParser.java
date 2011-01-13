@@ -35,20 +35,46 @@
  *
  */
 
-package com.sun.javanet.cvsnews.cli;
+package com.cloudbees.javanet.cvsnews;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
- * A sub-command.
- *
- * <p>
- * args4j is used to fill options, then {@link #execute()} is invoked.
- *
  * @author Kohsuke Kawaguchi
  */
-public interface Command {
+public abstract class NewsParser {
     /**
-     * @return
-     *      exit code.
+     * Parses a changelog e-mail.
      */
-    public int execute() throws Exception;
+    public abstract List<? extends Commit> parse(MimeMessage msg) throws ParseException;
+
+    protected final String getProjectName(MimeMessage msg) throws MessagingException {
+        InternetAddress ia = (InternetAddress) msg.getRecipients(Message.RecipientType.TO)[0];
+        String a = ia.getAddress();
+        int idx = a.indexOf('@');
+        int end = a.indexOf('.',idx);
+        return a.substring(idx+1,end);
+    }
+
+    protected final Date parseDateLine(String line) throws ParseException {
+        Date date;
+        if(line.endsWith("+0000"))
+                        line = line.substring(0,line.length()-5);
+        date = DATE_FORMAT.parse(line.substring(6));
+        return date;
+    }
+
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    
+    protected static final String TAG = "[a-zA-Z0-9_\\-.]+";
+    protected static final Pattern TAGLINE = Pattern.compile("^ \\[NEWS: *"+TAG+"( +"+TAG+")*\\]");
+    protected static final Pattern URL_LINE = Pattern.compile("^Url: (.+)$");
 }

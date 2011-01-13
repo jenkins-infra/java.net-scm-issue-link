@@ -35,28 +35,52 @@
  *
  */
 
-package com.sun.javanet.cvsnews.cli;
+package com.cloudbees.javanet.cvsnews.cli;
 
-import com.sun.javanet.cvsnews.Commit;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * Dumps issues found in the commit message.
+ * Reads CVS changelog e-mail from stdin and writes a news file to the current directory.
  *
  * @author Kohsuke Kawaguchi
  */
-public class DumpIssuesCommand extends AbstractIssueCommand {
-    public int execute() throws Exception {
-        System.out.println("Parsing stdin");
-        Set<Issue> issues = new HashSet<Issue>();
-        for (Commit commit : parseStdin()) {
-            issues.addAll(parseIssues(commit));
+public class Main {
+    public static void main(String[] args) throws Exception {
+        System.exit(run(args));
+    }
+
+    public static int run(String[] args) throws Exception {
+        Command com;
+        List<String> commandArgs;
+        if(args.length==0) {
+            System.err.println("Usage: java -jar parser.jar <subcommand>");
+            return -1;
+        } else {
+            try {
+                Class c = Class.forName("com.sun.javanet.cvsnews.cli."+capitalize(args[0])+"Command");
+                com = (Command)c.newInstance();
+            } catch (ClassNotFoundException e) {
+                System.err.println("No such command: "+args[0]);
+                return -1;
+            }
+            commandArgs = Arrays.asList(args).subList(1,args.length);
         }
 
-        System.out.println("Found "+issues);
+        CmdLineParser p = new CmdLineParser(com);
+        try {
+            p.parseArgument(commandArgs.toArray(new String[0]));
+            return com.execute();
+        } catch (CmdLineException e) {
+            p.printUsage(System.err);
+            return -1;
+        }
+    }
 
-        return 0;
+    private static String capitalize(String text) {
+        return Character.toUpperCase(text.charAt(0))+text.substring(1);
     }
 }

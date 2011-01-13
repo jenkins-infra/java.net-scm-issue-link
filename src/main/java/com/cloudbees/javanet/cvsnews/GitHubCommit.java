@@ -1,4 +1,4 @@
-package com.sun.javanet.cvsnews;
+package com.cloudbees.javanet.cvsnews;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;

@@ -122,6 +122,6 @@
   </licenses>
 
   <properties>
-    <mainClass>com.sun.javanet.cvsnews.cli.Main</mainClass>
+    <mainClass>com.cloudbees.javanet.cvsnews.cli.Main</mainClass>
   </properties>
 </project>

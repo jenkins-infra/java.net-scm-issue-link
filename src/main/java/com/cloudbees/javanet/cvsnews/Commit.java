@@ -35,46 +35,82 @@
  *
  */
 
-package com.sun.javanet.cvsnews;
+package com.cloudbees.javanet.cvsnews;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
+ * A CVS commit.
+ *
  * @author Kohsuke Kawaguchi
  */
-public abstract class NewsParser {
+public class Commit<CC extends CodeChange> {
     /**
-     * Parses a changelog e-mail.
+     * The user who commmitted the change.
      */
-    public abstract List<? extends Commit> parse(MimeMessage msg) throws ParseException;
+    public final String userName;
 
-    protected final String getProjectName(MimeMessage msg) throws MessagingException {
-        InternetAddress ia = (InternetAddress) msg.getRecipients(Message.RecipientType.TO)[0];
-        String a = ia.getAddress();
-        int idx = a.indexOf('@');
-        int end = a.indexOf('.',idx);
-        return a.substring(idx+1,end);
+    /**
+     * Timestamp when the news item was created.
+     */
+    public final Date date;
+
+    /**
+     * Commit message
+     */
+    public final String log;
+
+    /**
+     * Source code changes associated with this.
+     * Created on demand, and copy-on-write.
+     */
+    private volatile List<CC> codeChanges;
+
+    /**
+     * Java.net project in which this change was mde.
+     */
+    public final String project;
+
+    public Commit(String project, String userName, Date date, String log) {
+        this.userName = userName;
+        this.project = project;
+        this.date = date;
+
+        this.log = log;
     }
 
-    protected final Date parseDateLine(String line) throws ParseException {
-        Date date;
-        if(line.endsWith("+0000"))
-                        line = line.substring(0,line.length()-5);
-        date = DATE_FORMAT.parse(line.substring(6));
-        return date;
+    /**
+     * Adds a new code change to the list.
+     */
+    public synchronized void addCodeChange(CC cc) {
+        List<CC> r = new ArrayList<CC>();
+        if(codeChanges!=null)
+            r.addAll(codeChanges);
+        r.add(cc);
+        codeChanges = r;
     }
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    
-    protected static final String TAG = "[a-zA-Z0-9_\\-.]+";
-    protected static final Pattern TAGLINE = Pattern.compile("^ \\[NEWS: *"+TAG+"( +"+TAG+")*\\]");
-    protected static final Pattern URL_LINE = Pattern.compile("^Url: (.+)$");
+    /**
+     * Adds new code changes to the list.
+     */
+    public synchronized void addCodeChanges(Collection<? extends CC> cc) {
+        List<CC> r = new ArrayList<CC>();
+        if(codeChanges!=null)
+            r.addAll(codeChanges);
+        r.addAll(cc);
+        codeChanges = r;
+    }
+
+    /**
+     * Gets a read-only view of all the code changes.
+     */
+    public List<CC> getCodeChanges() {
+        List<CC> r = codeChanges;
+        if(r==null) return Collections.emptyList();
+        else        return r;
+    }
 }

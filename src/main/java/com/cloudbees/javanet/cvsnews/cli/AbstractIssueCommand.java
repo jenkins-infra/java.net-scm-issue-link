@@ -35,9 +35,9 @@
  *
  */
 
-package com.sun.javanet.cvsnews.cli;
+package com.cloudbees.javanet.cvsnews.cli;
 
-import com.sun.javanet.cvsnews.Commit;
+import com.cloudbees.javanet.cvsnews.Commit;
 
 import java.util.HashSet;
 import java.util.Set;
