@@ -50,12 +50,10 @@ import java.util.Set;
 public class DumpIssuesCommand extends AbstractIssueCommand {
     public int execute() throws Exception {
         System.out.println("Parsing stdin");
-        Set<Issue> issues = new HashSet<Issue>();
-        for (Commit commit : parseStdin()) {
-            issues.addAll(parseIssues(commit));
-        }
 
-        System.out.println("Found "+issues);
+        for (Commit commit : parseStdin()) {
+            System.out.println("Found "+parseIssues(commit));
+        }
 
         return 0;
     }

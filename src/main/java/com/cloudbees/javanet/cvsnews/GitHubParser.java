@@ -93,6 +93,7 @@ public class GitHubParser extends NewsParser {
 
                         // reset parser state
                         author = url = null;
+                        log.setLength(0);
                         paths.clear();
 
                         // and parse this commit line

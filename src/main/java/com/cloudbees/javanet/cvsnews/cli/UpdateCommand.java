@@ -85,7 +85,7 @@ public class UpdateCommand extends AbstractIssueCommand {
 
             System.out.println("Found "+issues);
             if(issues.isEmpty())
-                return 0;   // no issue link
+                continue;   // no issue link
 
             String msg = createUpdateMessage(commit);
 
@@ -144,7 +144,6 @@ public class UpdateCommand extends AbstractIssueCommand {
                     }
                 } catch (ProcessingException e) {
                     e.printStackTrace();
-                    return 1;
                 }
             }
         }
