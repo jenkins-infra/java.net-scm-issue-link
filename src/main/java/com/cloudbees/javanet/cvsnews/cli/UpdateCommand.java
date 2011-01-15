@@ -212,7 +212,7 @@ public class UpdateCommand extends AbstractIssueCommand {
             for (CodeChange cc : commit.getCodeChanges()) {
                 buf.append(MessageFormat.format(" {0}\n",cc.fileName));
             }
-            buf.append(commit.url);
+            buf.append("http://hudson-labs.org/commit/core/").append(commit.commitSha1);
         } else {
             throw new AssertionError("Unrecognized commit type "+_commit.getClass());
         }
