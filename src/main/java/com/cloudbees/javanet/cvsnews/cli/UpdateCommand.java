@@ -94,14 +94,9 @@ public class UpdateCommand extends AbstractIssueCommand {
             JavaNet con = JavaNet.connect(credential);
 
             for (Issue issue : issues) {
-                JNProject p = con.getProject(issue.projectName);
-                if(!con.getMyself().getMyProjects().contains(p))
-                    // not a participating project
-                    continue;
-
-                System.out.println("Updating "+issue);
                 try {
                     if (issue.projectName.equals("jenkins")) {
+                        System.out.println("Updating "+issue);
                         // update JIRA
                         JiraSoapServiceService jiraSoapServiceGetter = new JiraSoapServiceServiceLocator();
 
@@ -135,6 +130,12 @@ public class UpdateCommand extends AbstractIssueCommand {
                             }
                         }
                     } else {
+                        JNProject p = con.getProject(issue.projectName);
+                        if(!con.getMyself().getMyProjects().contains(p))
+                            // not a participating project
+                            continue;
+
+                        System.out.println("Updating "+issue);
                         // update java.net
                         JNIssue i = p.getIssueTracker().get(issue.number);
                         IssueEditor e = i.beginEdit();
