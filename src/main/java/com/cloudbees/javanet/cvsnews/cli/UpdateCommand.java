@@ -101,16 +101,16 @@ public class UpdateCommand extends AbstractIssueCommand {
 
                 System.out.println("Updating "+issue);
                 try {
-                    if (issue.projectName.equals("hudson")) {
+                    if (issue.projectName.equals("jenkins")) {
                         // update JIRA
                         JiraSoapServiceService jiraSoapServiceGetter = new JiraSoapServiceServiceLocator();
 
                         Properties props = new Properties();
                         props.load(new FileInputStream(credential));
 
-                        String id = "HUDSON-" + issue.number;
+                        String id = "JENKINS-" + issue.number;
 
-                        JiraSoapService service = jiraSoapServiceGetter.getJirasoapserviceV2(new URL(new URL("http://issues.hudson-ci.org/"), "rpc/soap/jirasoapservice-v2"));
+                        JiraSoapService service = jiraSoapServiceGetter.getJirasoapserviceV2(new URL(new URL("http://issues.jenkins-ci.org/"), "rpc/soap/jirasoapservice-v2"));
                         String securityToken = service.login(props.getProperty("userName"),props.getProperty("password"));
 
                         // if an issue doesn't exist an exception will be thrown
@@ -194,9 +194,9 @@ public class UpdateCommand extends AbstractIssueCommand {
                 if(!hasFisheye)
                     buf.append("   "+cc.url+"\n");
             }
-            if(commit.project.equals("hudson")) {
+            if(commit.project.equals("jenkins")) {
                 buf.append(MessageFormat.format(
-                "http://hudson-labs.org/commit/{0}",
+                "http://jenkins-ci.org/commit/{0}",
                     String.valueOf(commit.revision)));
             } else
             if(hasFisheye) {
@@ -212,7 +212,7 @@ public class UpdateCommand extends AbstractIssueCommand {
             for (CodeChange cc : commit.getCodeChanges()) {
                 buf.append(MessageFormat.format(" {0}\n",cc.fileName));
             }
-            buf.append("http://hudson-labs.org/commit/core/").append(commit.commitSha1);
+            buf.append("http://jenkins-ci.org/commit/core/").append(commit.commitSha1);
         } else {
             throw new AssertionError("Unrecognized commit type "+_commit.getClass());
         }
@@ -320,7 +320,6 @@ public class UpdateCommand extends AbstractIssueCommand {
             "diy",
             "glassfish-svn",
             "hk2",
-            "hudson",
             "jax-ws-commons",
             "jmimeinfo",
             "jtharness",

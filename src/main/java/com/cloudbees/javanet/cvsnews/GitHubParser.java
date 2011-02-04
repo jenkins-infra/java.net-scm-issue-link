@@ -87,7 +87,7 @@ public class GitHubParser extends NewsParser {
                     if (line.startsWith("Commit: ")) {
                         // completed the whole thing
                         // TODO: parse the project correctly
-                        GitHubCommit c = new GitHubCommit(commit,url,"hudson",author,null,log.toString());
+                        GitHubCommit c = new GitHubCommit(commit,url,"jenkins",author,null,log.toString());
                         c.addCodeChanges(paths);
                         commits.add(c);
 
@@ -108,7 +108,7 @@ public class GitHubParser extends NewsParser {
 
             // from the last one
             if (commit!=null) {
-                GitHubCommit c = new GitHubCommit(commit,url,"hudson",author,null,log.toString());
+                GitHubCommit c = new GitHubCommit(commit,url,"jenkins",author,null,log.toString());
                 c.addCodeChanges(paths);
                 commits.add(c);
             }
@@ -128,10 +128,10 @@ public class GitHubParser extends NewsParser {
 
 
 Branch: refs/heads/master
-Home:   https://github.com/hudson/hudson
+Home:   https://github.com/jenkinsci/jenkins
 
 Commit: 3f2ab68b248a8104053227b074221937f7ab3176
-    https://github.com/hudson/hudson/commit/3f2ab68b248a8104053227b074221937f7ab3176
+    https://github.com/jenkinsci/jenkins/commit/3f2ab68b248a8104053227b074221937f7ab3176
 Author: Olivier Lamy <olamy@apache.org>
 Date:   2011-01-13 (Thu, 13 Jan 2011)
 
