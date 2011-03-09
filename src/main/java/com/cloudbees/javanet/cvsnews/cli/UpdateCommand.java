@@ -45,12 +45,6 @@ import com.cloudbees.javanet.cvsnews.GitHubCommit;
 import com.cloudbees.javanet.cvsnews.SubversionCommit;
 import hudson.plugins.jira.soap.RemoteIssue;
 import org.apache.axis.AxisFault;
-import org.kohsuke.jnt.IssueEditor;
-import org.kohsuke.jnt.IssueResolution;
-import org.kohsuke.jnt.JNIssue;
-import org.kohsuke.jnt.JNProject;
-import org.kohsuke.jnt.JavaNet;
-import org.kohsuke.jnt.ProcessingException;
 
 import java.io.File;
 import java.io.IOException;
@@ -91,60 +85,41 @@ public class UpdateCommand extends AbstractIssueCommand {
 
             boolean markedAsFixed = FIXED.matcher(commit.log).find();
 
-            JavaNet con = JavaNet.connect(credential);
-
             for (Issue issue : issues) {
-                try {
-                    if (issue.projectName.equals("jenkins")) {
-                        System.out.println("Updating "+issue);
-                        // update JIRA
-                        JiraSoapServiceService jiraSoapServiceGetter = new JiraSoapServiceServiceLocator();
+                if (issue.projectName.equals("jenkins")) {
+                    System.out.println("Updating "+issue);
+                    // update JIRA
+                    JiraSoapServiceService jiraSoapServiceGetter = new JiraSoapServiceServiceLocator();
 
-                        Properties props = new Properties();
-                        props.load(new FileInputStream(credential));
+                    Properties props = new Properties();
+                    props.load(new FileInputStream(credential));
 
-                        String id = "JENKINS-" + issue.number;
+                    String id = "JENKINS-" + issue.number;
 
-                        JiraSoapService service = jiraSoapServiceGetter.getJirasoapserviceV2(new URL(new URL("http://issues.jenkins-ci.org/"), "rpc/soap/jirasoapservice-v2"));
-                        String securityToken = service.login(props.getProperty("userName"),props.getProperty("password"));
+                    JiraSoapService service = jiraSoapServiceGetter.getJirasoapserviceV2(new URL(new URL("http://issues.jenkins-ci.org/"), "rpc/soap/jirasoapservice-v2"));
+                    String securityToken = service.login(props.getProperty("userName"),props.getProperty("password"));
 
-                        // if an issue doesn't exist an exception will be thrown
-                        RemoteIssue i = service.getIssue(securityToken, id);
+                    // if an issue doesn't exist an exception will be thrown
+                    RemoteIssue i = service.getIssue(securityToken, id);
 
-                        // add comment
-                        service.addComment(securityToken, id, new RemoteComment(msg));
+                    // add comment
+                    service.addComment(securityToken, id, new RemoteComment(msg));
 
-                        // resolve.
-                        // comment set here doesn't work. see http://jira.atlassian.com/browse/JRA-11278
-                        if (markedAsFixed && issues.size()==1) {
-                            try {
-                                service.progressWorkflowAction(securityToken,id,"5" /*this is apparently the ID for "resolved"*/,
-                                    new RemoteFieldValue[]{new RemoteFieldValue("comment",new String[]{"closing comment"})});
-                            } catch (AxisFault e) {
-                                // if the issue cannot be put into the "resolved" state
-                                // (perhaps it's already in that state), let it be. Or else
-                                // we end up with the carpet bombing like HUDSON-2552.
-                                // See HUDSON-5133 for the failure mode.
-                                System.err.println("Failed to mark the issue as resolved");
-                                e.printStackTrace();
-                            }
+                    // resolve.
+                    // comment set here doesn't work. see http://jira.atlassian.com/browse/JRA-11278
+                    if (markedAsFixed && issues.size()==1) {
+                        try {
+                            service.progressWorkflowAction(securityToken,id,"5" /*this is apparently the ID for "resolved"*/,
+                                new RemoteFieldValue[]{new RemoteFieldValue("comment",new String[]{"closing comment"})});
+                        } catch (AxisFault e) {
+                            // if the issue cannot be put into the "resolved" state
+                            // (perhaps it's already in that state), let it be. Or else
+                            // we end up with the carpet bombing like HUDSON-2552.
+                            // See HUDSON-5133 for the failure mode.
+                            System.err.println("Failed to mark the issue as resolved");
+                            e.printStackTrace();
                         }
-                    } else {
-                        JNProject p = con.getProject(issue.projectName);
-                        if(!con.getMyself().getMyProjects().contains(p))
-                            // not a participating project
-                            continue;
-
-                        System.out.println("Updating "+issue);
-                        // update java.net
-                        JNIssue i = p.getIssueTracker().get(issue.number);
-                        IssueEditor e = i.beginEdit();
-                        if(markedAsFixed && issues.size()==1)
-                            e.resolve(IssueResolution.FIXED);
-                        e.commit(msg);
                     }
-                } catch (ProcessingException e) {
-                    e.printStackTrace();
                 }
             }
         }
