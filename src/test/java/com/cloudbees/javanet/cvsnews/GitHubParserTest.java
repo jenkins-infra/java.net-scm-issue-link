@@ -33,7 +33,7 @@ public class GitHubParserTest extends TestCase {
         List<GitHubCommit> commits = new GitHubParser().parse(new MimeMessage(Session.getInstance(System.getProperties()),
                 getClass().getResourceAsStream("github2.txt")));
         for (GitHubCommit c : commits) {
-            assertEquals("ec2-plugin",c.repository);
+            assertEquals("backend-ircbot",c.repository);
         }
     }
 }
