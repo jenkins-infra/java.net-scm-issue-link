@@ -1,0 +1,71 @@
+To: jenkinsci-commits@googlegroups.com
+Subject: [jenkinsci/backend-ircbot] 703ae7: set the post commit hook e-mail address.
+Message-Id: <20110316021458.3EBA44231E@smtp1.rs.github.com>
+From: noreply@github.com
+X-Original-Sender: noreply@github.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ best guess record for domain of noreply@github.com designates 207.97.227.250
+ as permitted sender) smtp.mail=noreply@github.com
+Reply-To: jenkinsci-commits@googlegroups.com
+Precedence: list
+Mailing-list: list jenkinsci-commits@googlegroups.com; contact jenkinsci-commits+owners@googlegroups.com
+List-ID: <jenkinsci-commits.googlegroups.com>
+X-Google-Group-Id: 385363979373
+List-Post: <http://groups.google.com/group/jenkinsci-commits/post?hl=en_US>, <mailto:jenkinsci-commits@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:jenkinsci-commits+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/jenkinsci-commits?hl=en_US>
+Sender: jenkinsci-commits@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/jenkinsci-commits/subscribe?hl=en_US>,
+ <mailto:jenkinsci-commits+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/jenkinsci-commits/subscribe?hl=en_US>,
+ <mailto:jenkinsci-commits+unsubscribe@googlegroups.com>
+Content-Type: text/plain; charset=UTF-8
+
+
+
+Branch: refs/heads/master
+Home:   https://github.com/jenkinsci/backend-ircbot
+
+Commit: 703ae75c8b2535f7987c7831fe77eefe411468f9
+    https://github.com/jenkinsci/backend-ircbot/commit/703ae75c8b2535f7987c7831fe77eefe411468f9
+Author: Kohsuke Kawaguchi <kk@kohsuke.org>
+Date:   2011-03-15 (Tue, 15 Mar 2011)
+
+Changed paths:
+  M pom.xml
+  M src/main/java/org/jvnet/hudson/backend/ircbot/IrcBotImpl.java
+
+Log Message:
+-----------
+set the post commit hook e-mail address.
+
+
+Commit: 8634bb15d28ec0aa314aee700e60c61670efea6c
+    https://github.com/jenkinsci/backend-ircbot/commit/8634bb15d28ec0aa314aee700e60c61670efea6c
+Author: Kohsuke Kawaguchi <kk@kohsuke.org>
+Date:   2011-03-15 (Tue, 15 Mar 2011)
+
+Changed paths:
+  A src/main/java/org/jvnet/hudson/backend/ircbot/FixUpPostCommitHook.java
+  M src/main/java/org/jvnet/hudson/backend/ircbot/IrcBotImpl.java
+
+Log Message:
+-----------
+wrote an one-off program to fix up all the post-commit hooks
+
+
+Commit: 383c588b24ca17adaf1483ddf59c950f3e4e78d0
+    https://github.com/jenkinsci/backend-ircbot/commit/383c588b24ca17adaf1483ddf59c950f3e4e78d0
+Author: Kohsuke Kawaguchi <kk@kohsuke.org>
+Date:   2011-03-15 (Tue, 15 Mar 2011)
+
+Changed paths:
+  M pom.xml
+
+Log Message:
+-----------
+depend on a released version
+
+
+Compare: https://github.com/jenkinsci/backend-ircbot/compare/9928d00...383c588
+

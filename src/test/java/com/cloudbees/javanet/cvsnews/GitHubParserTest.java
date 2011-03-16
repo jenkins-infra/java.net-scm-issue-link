@@ -28,4 +28,12 @@ public class GitHubParserTest extends TestCase {
         assertEquals(1, c1.getCodeChanges().size());
         assertEquals("changelog.html", c1.getCodeChanges().get(0).fileName);
     }
+
+    public void testParse2() throws Exception {
+        List<GitHubCommit> commits = new GitHubParser().parse(new MimeMessage(Session.getInstance(System.getProperties()),
+                getClass().getResourceAsStream("github2.txt")));
+        for (GitHubCommit c : commits) {
+            assertEquals("ec2-plugin",c.repository);
+        }
+    }
 }

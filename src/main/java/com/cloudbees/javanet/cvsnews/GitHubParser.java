@@ -36,6 +36,7 @@ public class GitHubParser extends NewsParser {
             BufferedReader in = new BufferedReader(new StringReader(content.toString()));
 
             String commit=null, author=null, url=null;
+            String repository = null;
             State state = State.DEFAULT;
             StringBuilder log = new StringBuilder();
             List<GitHubCodeChange> paths = new ArrayList<GitHubCodeChange>();
@@ -53,6 +54,12 @@ public class GitHubParser extends NewsParser {
                         author = line.substring("Author: ".length()).trim();
                         continue;
                     }
+                    if (line.startsWith("Home: ")) {
+                        String home = line.substring("Home: ".length()).trim();
+                        repository = home.substring(home.lastIndexOf('/')+1);
+                        continue;
+                    }
+
 //                if(line.startsWith("Date: ")) {
 //                    date = somehowParseDateLine(line);
 //                    continue;
@@ -87,7 +94,7 @@ public class GitHubParser extends NewsParser {
                     if (line.startsWith("Commit: ")) {
                         // completed the whole thing
                         // TODO: parse the project correctly
-                        GitHubCommit c = new GitHubCommit(commit,url,"jenkins",author,null,log.toString());
+                        GitHubCommit c = new GitHubCommit(commit,url,"jenkins",repository,author,null,log.toString());
                         c.addCodeChanges(paths);
                         commits.add(c);
 
@@ -108,7 +115,7 @@ public class GitHubParser extends NewsParser {
 
             // from the last one
             if (commit!=null) {
-                GitHubCommit c = new GitHubCommit(commit,url,"jenkins",author,null,log.toString());
+                GitHubCommit c = new GitHubCommit(commit,url,"jenkins",repository,author,null,log.toString());
                 c.addCodeChanges(paths);
                 commits.add(c);
             }

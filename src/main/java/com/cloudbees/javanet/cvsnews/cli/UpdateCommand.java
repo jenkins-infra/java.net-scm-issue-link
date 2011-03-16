@@ -188,7 +188,7 @@ public class UpdateCommand extends AbstractIssueCommand {
             for (CodeChange cc : commit.getCodeChanges()) {
                 buf.append(MessageFormat.format(" {0}\n",cc.fileName));
             }
-            buf.append("http://jenkins-ci.org/commit/core/").append(commit.commitSha1);
+            buf.append("http://jenkins-ci.org/commit/").append(commit.repository).append('/').append(commit.commitSha1);
         } else {
             throw new AssertionError("Unrecognized commit type "+_commit.getClass());
         }

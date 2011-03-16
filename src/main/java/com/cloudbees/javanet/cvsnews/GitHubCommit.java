@@ -16,10 +16,16 @@ public class GitHubCommit extends Commit<GitHubCodeChange> {
 
     public final String url;
 
-    public GitHubCommit(String commitSha1, String url, String project, String author, Date date, String log) throws AddressException {
+    /**
+     * GitHub repository name (within the user/organization), like "ec2-plugin"
+     */
+    public final String repository;
+
+    public GitHubCommit(String commitSha1, String url, String project, String repository, String author, Date date, String log) throws AddressException {
         super(project, toUserName(author), date, log);
         this.commitSha1 = commitSha1;
         this.author = author;
+        this.repository = repository;
         this.url = url;
     }
 
