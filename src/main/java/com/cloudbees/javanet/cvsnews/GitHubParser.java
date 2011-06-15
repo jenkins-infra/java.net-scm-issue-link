@@ -43,19 +43,20 @@ public class GitHubParser extends NewsParser {
 
             String line;
             while ((line = in.readLine()) != null) {
+                String tline = line.trim();
                 switch (state) {
                 case DEFAULT:
-                    if (line.startsWith("Commit: ")) {
-                        commit = line.substring("Commit: ".length()).trim();
+                    if (tline.startsWith("Commit: ")) {
+                        commit = tline.substring("Commit: ".length()).trim();
                         state = State.PARSING_COMMIT;
                         continue;
                     }
-                    if (line.startsWith("Author: ")) {
-                        author = line.substring("Author: ".length()).trim();
+                    if (tline.startsWith("Author: ")) {
+                        author = tline.substring("Author: ".length()).trim();
                         continue;
                     }
-                    if (line.startsWith("Home: ")) {
-                        String home = line.substring("Home: ".length()).trim();
+                    if (tline.startsWith("Home: ")) {
+                        String home = tline.substring("Home: ".length()).trim();
                         repository = home.substring(home.lastIndexOf('/')+1);
                         continue;
                     }
@@ -64,34 +65,34 @@ public class GitHubParser extends NewsParser {
 //                    date = somehowParseDateLine(line);
 //                    continue;
 //                }
-                    if (line.startsWith("Changed paths:")) {
+                    if (tline.startsWith("Changed paths:")) {
                         state = State.PARSING_CHANGED_PATH;
                         continue;
                     }
-                    if (line.equals("-----------")) {
+                    if (tline.equals("-----------")) {
                         state = State.PARSING_LOG;
                         continue;
                     }
                     break;
 
                 case PARSING_COMMIT:
-                    url = line.trim();
+                    url = tline;
                     state = State.DEFAULT;
                     break;
 
                 case PARSING_CHANGED_PATH: {
-                    if (line.length() == 0) {
+                    if (tline.length() == 0) {
                         state = State.DEFAULT;
                         break;
                     }
 
-                    String fileName = line.trim().substring(2);
+                    String fileName = tline.substring(2);
                     paths.add(new GitHubCodeChange(fileName, new URL(url+"#diff-"+paths.size())));
                     break;
                 }
 
                 case PARSING_LOG:
-                    if (line.startsWith("Commit: ")) {
+                    if (tline.startsWith("Commit: ")) {
                         // completed the whole thing
                         // TODO: parse the project correctly
                         GitHubCommit c = new GitHubCommit(commit,url,"jenkins",repository,author,null,log.toString());
@@ -104,7 +105,7 @@ public class GitHubParser extends NewsParser {
                         paths.clear();
 
                         // and parse this commit line
-                        commit = line.substring("Commit: ".length()).trim();
+                        commit = tline.substring("Commit: ".length()).trim();
                         state = State.PARSING_COMMIT;
                         break;
                     }
