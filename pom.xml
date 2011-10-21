@@ -8,18 +8,6 @@
     Parses CVS/Subversion commit e-mail and extracts information.
   </description>
 
-  <distributionManagement>
-    <repository>
-      <uniqueVersion>false</uniqueVersion>
-      <id>java.net-maven2-repository</id>
-      <url>java-net:/maven2-repository/trunk/www/repository/</url>
-    </repository>
-    <!--site>
-      <id>cvs-news-www</id>
-      <url>java-net:/cvs-news/trunk/www/</url>
-    </site-->
-  </distributionManagement>
-
   <scm>
     <connection       >scm:git:git://github.com/cloudbees/java.net-scm-issue-link.git</connection>
     <developerConnection>scm:git:git@github.com:cloudbees/java.net-scm-issue-link.git</developerConnection>
@@ -90,13 +78,8 @@
 
   <repositories>
     <repository>
-      <id>java.net2</id>
-      <url>http://download.java.net/maven/2</url>
-    </repository>
-    <repository>
-      <id>java.net1</id>
-      <url>http://download.java.net/maven/1</url>
-      <layout>legacy</layout>
+      <id>m.g.o-public</id>
+      <url>http://maven.glassfish.org/content/groups/public/</url>
     </repository>
   </repositories>
 
