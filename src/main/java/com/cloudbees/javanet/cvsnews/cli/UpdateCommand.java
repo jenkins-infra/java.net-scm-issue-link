@@ -52,6 +52,7 @@ import java.io.FileInputStream;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Properties;
@@ -74,7 +75,11 @@ public class UpdateCommand extends AbstractIssueCommand {
 
     public int execute() throws Exception {
         System.out.println("Parsing stdin");
-        for (Commit commit : parseStdin()) {
+        return execute(parseStdin());
+    }
+
+    public int execute(Collection<? extends Commit> commits) throws Exception {
+        for (Commit commit : commits) {
             Set<Issue> issues = parseIssues(commit);
 
             System.out.println("Found "+issues);
@@ -97,13 +102,22 @@ public class UpdateCommand extends AbstractIssueCommand {
                     String id = "JENKINS-" + issue.number;
 
                     JiraSoapService service = jiraSoapServiceGetter.getJirasoapserviceV2(new URL(new URL("http://issues.jenkins-ci.org/"), "rpc/soap/jirasoapservice-v2"));
-                    String securityToken = service.login(props.getProperty("userName"),props.getProperty("password"));
+                    String userName = props.getProperty("userName");
+                    String securityToken = service.login(userName,props.getProperty("password"));
 
                     // if an issue doesn't exist an exception will be thrown
                     RemoteIssue i = service.getIssue(securityToken, id);
 
+                    // is this commit already reported?
+                    RemoteComment[] comments = service.getComments(securityToken, id);
+                    if (isAlreadyCommented(commit,userName,comments))
+                        continue;
+
+
                     // add comment
-                    service.addComment(securityToken, id, new RemoteComment(msg));
+                    RemoteComment c = new RemoteComment();
+                    c.setBody(msg);
+                    service.addComment(securityToken, id, c);
 
                     // resolve.
                     // comment set here doesn't work. see http://jira.atlassian.com/browse/JRA-11278
@@ -125,6 +139,28 @@ public class UpdateCommand extends AbstractIssueCommand {
         }
 
         return 0;
+    }
+
+    /**
+     * Returns true if the given commit is already mentioned in one of the comments.
+     */
+    private boolean isAlreadyCommented(Commit commit, String userName, RemoteComment[] comments) {
+        String msg = createUpdateMessage(commit);
+
+        for (RemoteComment comment : comments) {
+            if (!comment.getAuthor().equals(userName))
+                continue;
+
+            // TODO: do this for Subversion and CVS, although GitHub is the only place where
+            // we can possibly get multiple notifications for the same commit
+            // (when a ref moves and includes existing commits)
+            if (commit instanceof GitHubCommit) {
+                GitHubCommit ghc = (GitHubCommit) commit;
+                if (comment.getBody().contains(ghc.commitSha1+"\nLog"))
+                    return true;
+            }
+        }
+        return false;
     }
 
     private String createUpdateMessage(Commit _commit) {

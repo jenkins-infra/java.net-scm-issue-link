@@ -2,6 +2,7 @@ package com.cloudbees.javanet.cvsnews;
 
 import com.cloudbees.javanet.cvsnews.GitHubCommit;
 import com.cloudbees.javanet.cvsnews.GitHubParser;
+import com.cloudbees.javanet.cvsnews.cli.UpdateCommand;
 import junit.framework.TestCase;
 
 import javax.mail.Session;
@@ -35,5 +36,12 @@ public class GitHubParserTest extends TestCase {
         for (GitHubCommit c : commits) {
             assertEquals("backend-ircbot",c.repository);
         }
+    }
+
+    public void testParse3() throws Exception {
+        List<GitHubCommit> commits = new GitHubParser().parse(new MimeMessage(Session.getInstance(System.getProperties()),
+                getClass().getResourceAsStream("github3.txt")));
+
+        new UpdateCommand().execute(commits);
     }
 }

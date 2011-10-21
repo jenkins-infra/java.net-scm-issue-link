@@ -1,0 +1,53 @@
+MIME-Version: 1.0
+X-BeenThere: jenkinsci-commits@googlegroups.com
+Date: Thu, 20 Oct 2011 05:57:38 -0700
+To: jenkinsci-commits@googlegroups.com
+Subject: [jenkinsci/jenkins] 524717: [FIXED JENKINS-11397] Require POST for doConfigSub...
+Message-Id: <20111020125738.7C3EE426A6@smtp1.rs.github.com>
+From: noreply@github.com
+X-Original-Sender: noreply@github.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of noreply@github.com designates 207.97.227.250 as permitted sender) smtp.mail=noreply@github.com
+Reply-To: jenkinsci-commits@googlegroups.com
+Precedence: list
+Mailing-list: list jenkinsci-commits@googlegroups.com; contact jenkinsci-commits+owners@googlegroups.com
+List-ID: <jenkinsci-commits.googlegroups.com>
+X-Google-Group-Id: 385363979373
+List-Post: <http://groups.google.com/group/jenkinsci-commits/post?hl=en_US>, <mailto:jenkinsci-commits@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:jenkinsci-commits+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/jenkinsci-commits?hl=en_US>
+Sender: jenkinsci-commits@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/jenkinsci-commits/subscribe?hl=en_US>,
+ <mailto:jenkinsci-commits+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/jenkinsci-commits/subscribe?hl=en_US>,
+ <mailto:jenkinsci-commits+unsubscribe@googlegroups.com>
+Content-Type: text/plain; charset=UTF-8
+
+  Branch: refs/heads/master
+  Home:   https://github.com/jenkinsci/jenkins
+
+  Commit: 52471787c6c5c9474e46cc396bf3b91e20036255
+      https://github.com/jenkinsci/jenkins/commit/52471787c6c5c9474e46cc396bf3b91e20036255
+  Author: Seiji Sogabe <s.sogabe@gmail.com>
+  Date:   2011-10-20 (Thu, 20 Oct 2011)
+
+  Changed paths:
+    M changelog.html
+  M core/src/main/java/hudson/logging/LogRecorder.java
+  M core/src/main/java/hudson/model/Computer.java
+  M core/src/main/java/hudson/model/ComputerSet.java
+  M core/src/main/java/hudson/model/Job.java
+  M core/src/main/java/hudson/model/Run.java
+  M core/src/main/java/hudson/model/User.java
+  M core/src/main/java/hudson/model/View.java
+  M core/src/main/java/hudson/model/labels/LabelAtom.java
+
+  Log Message:
+  -----------
+  [FIXED JENKINS-5498] testing
+
+This is me testing the daemon.
+
+
+
+
