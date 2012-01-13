@@ -67,7 +67,7 @@ abstract class AbstractCommand implements Command {
             return new CVSParser().parse(msg);
         if(subject.startsWith("svn commit:"))
             return new SubversionParser().parse(msg);
-        if (from.equals("noreply@github.com"))
+        if (from.contains("noreply@github.com"))
             return new GitHubParser().parse(msg);
         
         throw new ParseException("Unrecognized message type",0);

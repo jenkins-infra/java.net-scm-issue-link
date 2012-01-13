@@ -1,0 +1,62 @@
+Received-SPF: neutral (google.com: 208.97.132.119 is neither permitted nor denied by domain of jenkinsci-commits+bncCNzGt6eDFhDfwsH4BBoEuKaNjA@googlegroups.com) client-ip=208.97.132.119;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 208.97.132.119 is neither permitted nor denied by domain of jenkinsci-commits+bncCNzGt6eDFhDfwsH4BBoEuKaNjA@googlegroups.com) smtp.mail=jenkinsci-commits+bncCNzGt6eDFhDfwsH4BBoEuKaNjA@googlegroups.com; dkim=pass (test mode) header.i=@googlegroups.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:date:from:reply-to:to:message-id:subject
+         :mime-version:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:x-google-group-id:list-post
+         :list-help:list-archive:sender:list-subscribe:list-unsubscribe:date
+         :mime-version:content-type:content-transfer-encoding:content-id;
+        bh=ZWbxzxkHVkzqKCds8+qhmyg+scnuP4uo1A3WW0E2OS8=;
+        b=CaSkGxDSqDsDjH4GeouIXcE/fHyWearpj8W0dFfeIvzFu5HdwpwjQaIYRkRqyQC4uX
+         4Vaa//CidROPEc/5YI+kscVq2thYEGOpBmFRE390H5Of0Z9Pvoc5bfFaYDpGrOhkhkRR
+         mgqjqYlrFYLpPuux6BIWalQACz9pROv+oYJk0=
+X-BeenThere: jenkinsci-commits@googlegroups.com
+Date: Fri, 13 Jan 2012 08:52:46 -0800
+From: GitHub <noreply@github.com>
+Reply-To: jenkinsci-commits@googlegroups.com
+To: jenkinsci-commits@googlegroups.com
+Message-ID: <4f10615e36b5e_1eda3fec047c62f0291522@sh1.rs.github.com.mail>
+Subject: [jenkinsci/android-emulator-plugin] : [FIXED JENKINS-12325] Expose
+ ANDROID_HOME variable...
+Mime-Version: 1.0
+X-Original-Sender: noreply@github.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of noreply@github.com designates 207.97.227.250 as permitted sender) smtp.mail=noreply@github.com
+Precedence: list
+Mailing-list: list jenkinsci-commits@googlegroups.com; contact jenkinsci-commits+owners@googlegroups.com
+List-ID: <jenkinsci-commits.googlegroups.com>
+X-Google-Group-Id: 385363979373
+List-Post: <http://groups.google.com/group/jenkinsci-commits/post?hl=en_US>, <mailto:jenkinsci-commits@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:jenkinsci-commits+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/jenkinsci-commits?hl=en_US>
+Sender: jenkinsci-commits@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/jenkinsci-commits/subscribe?hl=en_US>,
+ <mailto:jenkinsci-commits+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/jenkinsci-commits/subscribe?hl=en_US>,
+ <mailto:googlegroups-manage+385363979373+unsubscribe@googlegroups.com>
+Date: Fri, 13 Jan 2012 08:52:46 -0800
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Content-ID: <4f10615e1c79a_1eda3fec047c62f02914c3@sh1.rs.github.com.mail>
+
+  Branch: refs/heads/master
+  Home:   https://github.com/jenkinsci/android-emulator-plugin
+  Commit: 882b45e2d799a86a3968ce9f160f7c57693bbb7f
+      https://github.com/jenkinsci/android-emulator-plugin/commit/882b45e2d799a86a3968ce9f160f7c57693bbb7f
+  Author: Christopher Orr <chris@orr.me.uk>
+  Date:   2012-01-13 (Fri, 13 Jan 2012)
+
+  Changed paths:
+    M src/main/java/hudson/plugins/android_emulator/AndroidEmulator.java
+
+  Log Message:
+  -----------
+  [FIXED JENKINS-12325] Expose ANDROID_HOME variable for the SDK in use.
+
+
+
+
+
