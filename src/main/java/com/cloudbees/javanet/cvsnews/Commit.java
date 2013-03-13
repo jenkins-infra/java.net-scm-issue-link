@@ -84,10 +84,7 @@ public class Commit<CC extends CodeChange> {
         // this is hard to due during the parsing correctly since it's line based
         int idx = log.lastIndexOf("\n-- \nYou received this message because you are subscribed ");
         if (idx>0) {
-            // footer don't normally have empty lines in it. this help us prevent false positives
-            int emptylines = log.lastIndexOf("\n\n");
-            if (emptylines<idx)
-                log = log.substring(0,idx+1);
+            log = log.substring(0,idx+1);
         }
 
         this.log = log;

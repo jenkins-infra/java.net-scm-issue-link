@@ -1,0 +1,66 @@
+Date: Wed, 13 Mar 2013 14:14:12 -0700
+From: GitHub <noreply@github.com>
+Reply-To: jenkinsci-commits@googlegroups.com
+To: jenkinsci-commits@googlegroups.com
+Message-Id: <5140ec2457a24_6d3e7dd13877293@hookshot-fe6-pe1-prd.aws.github.net.mail>
+Subject: [jenkinsci/build-flow-plugin] f10be2: [FIXED JENKINS-17199]
+Mime-Version: 1.0
+X-Mailgun-Sid: WyJhNmM3ZCIsICJqZW5raW5zY2ktY29tbWl0c0Bnb29nbGVncm91cHMuY29tIiwgIjQwZiJd
+Sender: jenkinsci-commits@googlegroups.com
+X-Original-Sender: noreply@github.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of bounce+6eff58.40f-jenkinsci-commits=googlegroups.com@github.com
+ designates 184.173.153.40 as permitted sender) smtp.mail=bounce+6eff58.40f-jenkinsci-commits=googlegroups.com@github.com;
+       dkim=pass header.i=@github.com
+Precedence: list
+Mailing-list: list jenkinsci-commits@googlegroups.com; contact jenkinsci-commits+owners@googlegroups.com
+List-ID: <jenkinsci-commits.googlegroups.com>
+X-Google-Group-Id: 385363979373
+List-Post: <http://groups.google.com/group/jenkinsci-commits/post?hl=en_US>, <mailto:jenkinsci-commits@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:jenkinsci-commits+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/jenkinsci-commits?hl=en_US>
+List-Subscribe: <http://groups.google.com/group/jenkinsci-commits/subscribe?hl=en_US>,
+ <mailto:jenkinsci-commits+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/jenkinsci-commits/subscribe?hl=en_US>,
+ <mailto:googlegroups-manage+385363979373+unsubscribe@googlegroups.com>
+Date: Wed, 13 Mar 2013 14:14:12 -0700
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-ID: <5140ec2451795_6d3e7dd1387711c@hookshot-fe6-pe1-prd.aws.github.net.mail>
+
+  Branch: refs/heads/JENKINS-17199
+  Home:   https://github.com/jenkinsci/build-flow-plugin
+  Commit: f10be22bdc7693e3e12137ae8fab1fe05788b3a7
+      https://github.com/jenkinsci/build-flow-plugin/commit/f10be22bdc7693e3e12137ae8fab1fe05788b3a7
+  Author: Kohsuke Kawaguchi <kk@kohsuke.org>
+  Date:   2013-03-13 (Wed, 13 Mar 2013)
+
+  Changed paths:
+    M src/main/groovy/com/cloudbees/plugins/flow/FlowDSL.groovy
+    M src/test/groovy/com/cloudbees/plugins/flow/BindingTest.groovy
+    M src/test/groovy/com/cloudbees/plugins/flow/BuildTest.groovy
+
+  Log Message:
+  -----------
+  [FIXED JENKINS-17199]
+
+To inject DSL into the script being parsed, the common technique used
+elsewhere (for example in Spring bean builder Groovy DSL) is to set
+the DSL object as a delegate. This avoids the need to do string
+manipulation, and there's no ExpandoMetaClass hack necessary.
+
+I'v moved the bindings to FlowDelegate. This resolves
+the conflict between "build" as a variable and "build" as a function
+(since binding gets found more quickly it tries to evaluate that
+variable as a Callable), and it'll also make it easier for people to
+find all the available DSL methods/variables in one place.
+
+
+
+-- 
+You received this message because you are subscribed to the Google Groups "Jenkins Commits" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to jenkinsci-commits+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
+
+
+

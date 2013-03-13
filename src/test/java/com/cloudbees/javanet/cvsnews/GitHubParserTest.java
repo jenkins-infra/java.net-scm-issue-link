@@ -44,4 +44,11 @@ public class GitHubParserTest extends TestCase {
 
         new UpdateCommand().execute(commits);
     }
+
+    public void testParse4() throws Exception {
+        List<GitHubCommit> commits = new GitHubParser().parse(new MimeMessage(Session.getInstance(System.getProperties()),
+                getClass().getResourceAsStream("github4.txt")));
+
+        assertFalse(commits.get(0).log.contains("You received this message"));
+    }
 }
