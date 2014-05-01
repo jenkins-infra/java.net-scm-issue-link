@@ -37,7 +37,6 @@
 
 package com.cloudbees.javanet.cvsnews.cli;
 
-import com.cloudbees.javanet.cvsnews.CVSParser;
 import com.cloudbees.javanet.cvsnews.Commit;
 import com.cloudbees.javanet.cvsnews.GitHubParser;
 import com.cloudbees.javanet.cvsnews.SubversionParser;
@@ -63,8 +62,6 @@ abstract class AbstractCommand implements Command {
         String subject = msg.getSubject();
         String from = msg.getFrom()[0].toString();
         System.err.println("Subject: "+ subject);
-        if(subject.startsWith("CVS update"))
-            return new CVSParser().parse(msg);
         if(subject.startsWith("svn commit:"))
             return new SubversionParser().parse(msg);
         if (from.contains("noreply@github.com"))
