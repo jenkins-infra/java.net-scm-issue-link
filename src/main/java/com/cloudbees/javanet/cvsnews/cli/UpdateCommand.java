@@ -37,33 +37,28 @@
 
 package com.cloudbees.javanet.cvsnews.cli;
 
-import com.cloudbees.javanet.cvsnews.CVSChange;
-import com.cloudbees.javanet.cvsnews.CVSCommit;
 import com.cloudbees.javanet.cvsnews.CodeChange;
 import com.cloudbees.javanet.cvsnews.Commit;
 import com.cloudbees.javanet.cvsnews.GitHubCommit;
-import com.cloudbees.javanet.cvsnews.SubversionCommit;
+import hudson.plugins.jira.soap.JiraSoapService;
+import hudson.plugins.jira.soap.JiraSoapServiceService;
+import hudson.plugins.jira.soap.JiraSoapServiceServiceLocator;
+import hudson.plugins.jira.soap.RemoteComment;
+import hudson.plugins.jira.soap.RemoteFieldValue;
 import hudson.plugins.jira.soap.RemoteIssue;
 import org.apache.axis.AxisFault;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.FileInputStream;
+import java.net.URL;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Pattern;
-import java.net.URL;
-
-import hudson.plugins.jira.soap.JiraSoapServiceService;
-import hudson.plugins.jira.soap.JiraSoapServiceServiceLocator;
-import hudson.plugins.jira.soap.JiraSoapService;
-import hudson.plugins.jira.soap.RemoteComment;
-import hudson.plugins.jira.soap.RemoteFieldValue;
 
 /**
  * Subcommand that reads e-mail from stdin and updates the issue tracker.
@@ -91,7 +86,7 @@ public class UpdateCommand extends AbstractIssueCommand {
             boolean markedAsFixed = FIXED.matcher(commit.log).find();
 
             for (Issue issue : issues) {
-                if (issue.projectName.equals("jenkins")) {
+                if (PROJECTS.contains(issue.projectName)) {
                     System.out.println("Updating "+issue);
                     // update JIRA
                     JiraSoapServiceService jiraSoapServiceGetter = new JiraSoapServiceServiceLocator();
@@ -99,7 +94,7 @@ public class UpdateCommand extends AbstractIssueCommand {
                     Properties props = new Properties();
                     props.load(new FileInputStream(credential));
 
-                    String id = "JENKINS-" + issue.number;
+                    String id = issue.projectName.toUpperCase() + "-" + issue.number;
 
                     JiraSoapService service = jiraSoapServiceGetter.getJirasoapserviceV2(new URL(new URL("http://issues.jenkins-ci.org/"), "rpc/soap/jirasoapservice-v2"));
                     String userName = props.getProperty("userName");
@@ -192,5 +187,7 @@ public class UpdateCommand extends AbstractIssueCommand {
      */
     private static final Pattern FIXED = Pattern.compile("\\[.*(fixed|FIXED).*\\]");
 
-   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
+
+    private static final Set<String> PROJECTS = new HashSet<String>(Arrays.asList("jenkins","infra"));
 }
