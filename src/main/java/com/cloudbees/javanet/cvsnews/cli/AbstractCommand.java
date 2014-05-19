@@ -45,6 +45,7 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.util.List;
 
@@ -54,10 +55,13 @@ import java.util.List;
 abstract class AbstractCommand implements Command {
     /**
      * Parses stdin into {@link Commit}.
+     *
+     * @param in
+     *      Where to read the email message from.
      */
-    protected final List<? extends Commit> parseStdin() throws MessagingException, ParseException {
+    protected final List<? extends Commit> parse(InputStream in) throws MessagingException, ParseException {
         MimeMessage msg = new MimeMessage(
-            Session.getInstance(System.getProperties()), System.in);
+            Session.getInstance(System.getProperties()), in);
 
         String subject = msg.getSubject();
         String from = msg.getFrom()[0].toString();

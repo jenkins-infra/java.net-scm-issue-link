@@ -39,9 +39,6 @@ package com.cloudbees.javanet.cvsnews.cli;
 
 import com.cloudbees.javanet.cvsnews.Commit;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Dumps issues found in the commit message.
  *
@@ -51,7 +48,7 @@ public class DumpIssuesCommand extends AbstractIssueCommand {
     public int execute() throws Exception {
         System.out.println("Parsing stdin");
 
-        for (Commit commit : parseStdin()) {
+        for (Commit commit : parse(System.in)) {
             System.out.println("Found "+parseIssues(commit));
         }
 

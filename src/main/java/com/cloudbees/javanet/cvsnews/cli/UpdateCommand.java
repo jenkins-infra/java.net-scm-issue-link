@@ -70,7 +70,7 @@ public class UpdateCommand extends AbstractIssueCommand {
 
     public int execute() throws Exception {
         System.out.println("Parsing stdin");
-        return execute(parseStdin());
+        return execute(parse(System.in));
     }
 
     public int execute(Collection<? extends Commit> commits) throws Exception {
