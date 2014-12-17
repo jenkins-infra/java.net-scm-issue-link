@@ -2,6 +2,7 @@ package com.cloudbees.javanet.cvsnews;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
@@ -27,6 +28,10 @@ public class GitHubParser extends NewsParser {
     public List<GitHubCommit> parse(MimeMessage msg) throws ParseException {
         try {
             Object content = msg.getContent();
+            if (content instanceof MimeMultipart) {
+                MimeMultipart mime = (MimeMultipart) content;
+                content = mime.getBodyPart(0).getContent(); // TODO: be more robust about picking up the text/plain part.
+            }
             if (!(content instanceof String))
                 throw new ParseException("Unrecognized content type " + content, -1);
 
