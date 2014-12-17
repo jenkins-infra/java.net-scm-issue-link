@@ -59,7 +59,7 @@ abstract class AbstractCommand implements Command {
      * @param in
      *      Where to read the email message from.
      */
-    protected final List<? extends Commit> parse(InputStream in) throws MessagingException, ParseException {
+    public final List<? extends Commit> parse(InputStream in) throws MessagingException, ParseException {
         MimeMessage msg = new MimeMessage(
             Session.getInstance(System.getProperties()), in);
 
