@@ -185,7 +185,7 @@ public class UpdateCommand extends AbstractIssueCommand {
     /**
      * Marked for marking bug as fixed.
      */
-    private static final Pattern FIXED = Pattern.compile("\\[.*(fixed|FIXED).*\\]");
+    private static final Pattern FIXED = Pattern.compile("\\[.*(fixed|FIXED|FIX|FIXES).*\\]");
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
 
