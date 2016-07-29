@@ -37,16 +37,13 @@
 
 package com.cloudbees.javanet.cvsnews.cli;
 
+import com.atlassian.jira.rest.client.api.JiraRestClient;
+import com.atlassian.jira.rest.client.api.domain.Comment;
+import com.atlassian.jira.rest.client.api.domain.input.TransitionInput;
 import com.cloudbees.javanet.cvsnews.CodeChange;
 import com.cloudbees.javanet.cvsnews.Commit;
 import com.cloudbees.javanet.cvsnews.GitHubCommit;
-import hudson.plugins.jira.soap.JiraSoapService;
-import hudson.plugins.jira.soap.JiraSoapServiceService;
-import hudson.plugins.jira.soap.JiraSoapServiceServiceLocator;
-import hudson.plugins.jira.soap.RemoteComment;
-import hudson.plugins.jira.soap.RemoteFieldValue;
-import hudson.plugins.jira.soap.RemoteIssue;
-import org.apache.axis.AxisFault;
+import org.jenkinsci.jira.JIRA;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -89,45 +86,33 @@ public class UpdateCommand extends AbstractIssueCommand {
                 if (PROJECTS.contains(issue.projectName)) {
                     System.out.println("Updating "+issue);
                     // update JIRA
-                    JiraSoapServiceService jiraSoapServiceGetter = new JiraSoapServiceServiceLocator();
+                    JiraRestClient service = JIRA.connect(new URL("http://issues.jenkins-ci.org/"));
 
                     Properties props = new Properties();
                     props.load(new FileInputStream(credential));
 
                     String id = issue.projectName.toUpperCase() + "-" + issue.number;
 
-                    JiraSoapService service = jiraSoapServiceGetter.getJirasoapserviceV2(new URL(new URL("http://issues.jenkins-ci.org/"), "rpc/soap/jirasoapservice-v2"));
                     String userName = props.getProperty("userName");
-                    String securityToken = service.login(userName,props.getProperty("password"));
 
                     // if an issue doesn't exist an exception will be thrown
-                    RemoteIssue i = service.getIssue(securityToken, id);
+                    com.atlassian.jira.rest.client.api.domain.Issue i = service.getIssueClient().getIssue(id).claim();
 
                     // is this commit already reported?
-                    RemoteComment[] comments = service.getComments(securityToken, id);
+                    Iterable<Comment> comments = i.getComments();
                     if (isAlreadyCommented(commit,userName,comments))
                         continue;
 
 
                     // add comment
-                    RemoteComment c = new RemoteComment();
-                    c.setBody(msg);
-                    service.addComment(securityToken, id, c);
+                    service.getIssueClient().addComment(i.getCommentsUri(),Comment.valueOf(msg));
 
                     // resolve.
                     // comment set here doesn't work. see http://jira.atlassian.com/browse/JRA-11278
                     if (markedAsFixed && issues.size()==1) {
-                        try {
-                            service.progressWorkflowAction(securityToken,id,"5" /*this is apparently the ID for "resolved"*/,
-                                new RemoteFieldValue[]{new RemoteFieldValue("comment",new String[]{"closing comment"})});
-                        } catch (AxisFault e) {
-                            // if the issue cannot be put into the "resolved" state
-                            // (perhaps it's already in that state), let it be. Or else
-                            // we end up with the carpet bombing like HUDSON-2552.
-                            // See HUDSON-5133 for the failure mode.
-                            System.err.println("Failed to mark the issue as resolved");
-                            e.printStackTrace();
-                        }
+                        service.getIssueClient().transition(i,new TransitionInput(5)); /*this is apparently the ID for "resolved"*/
+//                            service.progressWorkflowAction(securityToken,id,"5" ,
+//                                new RemoteFieldValue[]{new RemoteFieldValue("comment",new String[]{"closing comment"})});
                     }
                 }
             }
@@ -139,11 +124,11 @@ public class UpdateCommand extends AbstractIssueCommand {
     /**
      * Returns true if the given commit is already mentioned in one of the comments.
      */
-    private boolean isAlreadyCommented(Commit commit, String userName, RemoteComment[] comments) {
+    private boolean isAlreadyCommented(Commit commit, String userName, Iterable<Comment> comments) {
         String msg = createUpdateMessage(commit);
 
-        for (RemoteComment comment : comments) {
-            if (!comment.getAuthor().equals(userName))
+        for (Comment comment : comments) {
+            if (!comment.getAuthor().getName().equals(userName))
                 continue;
 
             // TODO: do this for Subversion and CVS, although GitHub is the only place where
