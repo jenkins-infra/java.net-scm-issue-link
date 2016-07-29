@@ -54,7 +54,7 @@ Content-ID: <4f10615e1c79a_1eda3fec047c62f02914c3@sh1.rs.github.com.mail>
 
   Log Message:
   -----------
-  [FIXED JENKINS-12325] Expose ANDROID_HOME variable for the SDK in use.
+  [FIXED JENKINS-37067] Expose ANDROID_HOME variable for the SDK in use.
 
 
 

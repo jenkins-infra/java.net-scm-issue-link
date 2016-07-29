@@ -39,6 +39,7 @@ package com.cloudbees.javanet.cvsnews.cli;
 
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.api.domain.Comment;
+import com.atlassian.jira.rest.client.api.domain.input.FieldInput;
 import com.atlassian.jira.rest.client.api.domain.input.TransitionInput;
 import com.cloudbees.javanet.cvsnews.CodeChange;
 import com.cloudbees.javanet.cvsnews.Commit;
@@ -47,11 +48,14 @@ import org.jenkinsci.jira.JIRA;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -86,10 +90,8 @@ public class UpdateCommand extends AbstractIssueCommand {
                 if (PROJECTS.contains(issue.projectName)) {
                     System.out.println("Updating "+issue);
                     // update JIRA
-                    JiraRestClient service = JIRA.connect(new URL("http://issues.jenkins-ci.org/"));
-
-                    Properties props = new Properties();
-                    props.load(new FileInputStream(credential));
+                    Properties props = loadConfig();
+                    JiraRestClient service = JIRA.connect(new URL("http://issues.jenkins-ci.org/"), props.getProperty("userName"), props.getProperty("password"));
 
                     String id = issue.projectName.toUpperCase() + "-" + issue.number;
 
@@ -105,12 +107,13 @@ public class UpdateCommand extends AbstractIssueCommand {
 
 
                     // add comment
-                    service.getIssueClient().addComment(i.getCommentsUri(),Comment.valueOf(msg));
+                    service.getIssueClient().addComment(i.getCommentsUri(),Comment.valueOf(msg)).claim();
 
                     // resolve.
                     // comment set here doesn't work. see http://jira.atlassian.com/browse/JRA-11278
                     if (markedAsFixed && issues.size()==1) {
-                        service.getIssueClient().transition(i,new TransitionInput(5)); /*this is apparently the ID for "resolved"*/
+
+                        service.getIssueClient().transition(i, new TransitionInput(5)).claim(); /*this is apparently the ID for "resolved"*/
 //                            service.progressWorkflowAction(securityToken,id,"5" ,
 //                                new RemoteFieldValue[]{new RemoteFieldValue("comment",new String[]{"closing comment"})});
                     }
@@ -119,6 +122,14 @@ public class UpdateCommand extends AbstractIssueCommand {
         }
 
         return 0;
+    }
+
+    private Properties loadConfig() throws IOException {
+        Properties props = new Properties();
+        try (FileReader r = new FileReader(credential)) {
+            props.load(r);
+        }
+        return props;
     }
 
     /**
