@@ -39,23 +39,18 @@ package com.cloudbees.javanet.cvsnews.cli;
 
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.api.domain.Comment;
-import com.atlassian.jira.rest.client.api.domain.input.FieldInput;
 import com.atlassian.jira.rest.client.api.domain.input.TransitionInput;
 import com.cloudbees.javanet.cvsnews.CodeChange;
 import com.cloudbees.javanet.cvsnews.Commit;
 import com.cloudbees.javanet.cvsnews.GitHubCommit;
-import org.jenkinsci.jira.JIRA;
+import com.cloudbees.javanet.cvsnews.util.Config;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -67,7 +62,7 @@ import java.util.regex.Pattern;
  * @author Kohsuke Kawaguchi
  */
 public class UpdateCommand extends AbstractIssueCommand {
-    private final File credential = new File(HOME, ".java.net.scm_issue_link");
+    private final File credential = new File(HOME, Config.CONFIG_FILE_NAME);
 
     public int execute() throws Exception {
         System.out.println("Parsing stdin");
@@ -90,21 +85,18 @@ public class UpdateCommand extends AbstractIssueCommand {
                 if (PROJECTS.contains(issue.projectName)) {
                     System.out.println("Updating "+issue);
                     // update JIRA
-                    Properties props = loadConfig();
-                    JiraRestClient service = JIRA.connect(new URL("http://issues.jenkins-ci.org/"), props.getProperty("userName"), props.getProperty("password"));
+                    final Config config = Config.loadConfig();
+                    final JiraRestClient service = config.connectClient();
 
                     String id = issue.projectName.toUpperCase() + "-" + issue.number;
-
-                    String userName = props.getProperty("userName");
 
                     // if an issue doesn't exist an exception will be thrown
                     com.atlassian.jira.rest.client.api.domain.Issue i = service.getIssueClient().getIssue(id).claim();
 
                     // is this commit already reported?
                     Iterable<Comment> comments = i.getComments();
-                    if (isAlreadyCommented(commit,userName,comments))
+                    if (isAlreadyCommented(commit, config.getUserName(), comments))
                         continue;
-
 
                     // add comment
                     service.getIssueClient().addComment(i.getCommentsUri(),Comment.valueOf(msg)).claim();
@@ -122,14 +114,6 @@ public class UpdateCommand extends AbstractIssueCommand {
         }
 
         return 0;
-    }
-
-    private Properties loadConfig() throws IOException {
-        Properties props = new Properties();
-        try (FileReader r = new FileReader(credential)) {
-            props.load(r);
-        }
-        return props;
     }
 
     /**
