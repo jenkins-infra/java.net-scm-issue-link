@@ -1,18 +1,20 @@
 package com.cloudbees.javanet.cvsnews;
 
-import com.cloudbees.javanet.cvsnews.GitHubCommit;
-import com.cloudbees.javanet.cvsnews.GitHubParser;
 import com.cloudbees.javanet.cvsnews.cli.UpdateCommand;
-import junit.framework.TestCase;
+import org.junit.Test;
 
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
 
+import static org.junit.Assert.*;
+
 /**
  * @author Kohsuke Kawaguchi
  */
-public class GitHubParserTest extends TestCase {
+public class GitHubParserTest {
+
+    @Test
     public void testParse() throws Exception {
         List<GitHubCommit> commits = new GitHubParser().parse(new MimeMessage(Session.getInstance(System.getProperties()),
                 getClass().getResourceAsStream("github.txt")));
@@ -30,6 +32,7 @@ public class GitHubParserTest extends TestCase {
         assertEquals("changelog.html", c1.getCodeChanges().get(0).fileName);
     }
 
+    @Test
     public void testParse2() throws Exception {
         List<GitHubCommit> commits = new GitHubParser().parse(new MimeMessage(Session.getInstance(System.getProperties()),
                 getClass().getResourceAsStream("github2.txt")));
@@ -38,6 +41,7 @@ public class GitHubParserTest extends TestCase {
         }
     }
 
+    @Test
     public void testParse3() throws Exception {
         List<GitHubCommit> commits = new GitHubParser().parse(new MimeMessage(Session.getInstance(System.getProperties()),
                 getClass().getResourceAsStream("github3.txt")));
@@ -45,6 +49,7 @@ public class GitHubParserTest extends TestCase {
         new UpdateCommand().execute(commits);
     }
 
+    @Test
     public void testParse4() throws Exception {
         List<GitHubCommit> commits = new GitHubParser().parse(new MimeMessage(Session.getInstance(System.getProperties()),
                 getClass().getResourceAsStream("github4.txt")));
