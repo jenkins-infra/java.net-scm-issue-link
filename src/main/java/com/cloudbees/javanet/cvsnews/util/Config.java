@@ -57,9 +57,12 @@ public class Config {
     }
 
     public static Config loadConfig() throws IOException {
-        Properties props = new Properties();
-        try (FileReader r = new FileReader(getDefaultCredentialsFile())) {
-            props.load(r);
+        final Properties props = new Properties();
+        final File config = getDefaultCredentialsFile();
+        if (config.exists()) {
+            try (FileReader r = new FileReader(config)) {
+                props.load(r);
+            }
         }
         return new Config(props);
     }
