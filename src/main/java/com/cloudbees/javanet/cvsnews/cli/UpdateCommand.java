@@ -62,7 +62,6 @@ import java.util.regex.Pattern;
  * @author Kohsuke Kawaguchi
  */
 public class UpdateCommand extends AbstractIssueCommand {
-    private final File credential = new File(HOME, Config.CONFIG_FILE_NAME);
 
     public int execute() throws Exception {
         System.out.println("Parsing stdin");
@@ -77,7 +76,8 @@ public class UpdateCommand extends AbstractIssueCommand {
             if(issues.isEmpty())
                 continue;   // no issue link
 
-            String msg = createUpdateMessage(commit);
+            final Config config = Config.loadConfig();
+            String msg = createUpdateMessage(commit, config);
 
             boolean markedAsFixed = FIXED.matcher(commit.log).find();
 
@@ -85,7 +85,7 @@ public class UpdateCommand extends AbstractIssueCommand {
                 if (PROJECTS.contains(issue.projectName)) {
                     System.out.println("Updating "+issue);
                     // update JIRA
-                    final Config config = Config.loadConfig();
+
                     final JiraRestClient service = config.connectClient();
 
                     String id = issue.projectName.toUpperCase() + "-" + issue.number;
@@ -95,7 +95,7 @@ public class UpdateCommand extends AbstractIssueCommand {
 
                     // is this commit already reported?
                     Iterable<Comment> comments = i.getComments();
-                    if (isAlreadyCommented(commit, config.getUserName(), comments))
+                    if (isAlreadyCommented(commit, config, comments))
                         continue;
 
                     // add comment
@@ -119,11 +119,11 @@ public class UpdateCommand extends AbstractIssueCommand {
     /**
      * Returns true if the given commit is already mentioned in one of the comments.
      */
-    private boolean isAlreadyCommented(Commit commit, String userName, Iterable<Comment> comments) {
-        String msg = createUpdateMessage(commit);
+    private boolean isAlreadyCommented(Commit commit, Config config, Iterable<Comment> comments) {
+        String msg = createUpdateMessage(commit, config);
 
         for (Comment comment : comments) {
-            if (!comment.getAuthor().getName().equals(userName))
+            if (!comment.getAuthor().getName().equals(config.getUserName()))
                 continue;
 
             // TODO: do this for Subversion and CVS, although GitHub is the only place where
@@ -138,7 +138,7 @@ public class UpdateCommand extends AbstractIssueCommand {
         return false;
     }
 
-    private String createUpdateMessage(Commit _commit) {
+    private String createUpdateMessage(Commit _commit, Config config) {
         StringBuilder buf = new StringBuilder();
         buf.append("Code changed in "+_commit.project+"\n");
         buf.append(MessageFormat.format("User: {0}\n",_commit.userName));
@@ -150,7 +150,7 @@ public class UpdateCommand extends AbstractIssueCommand {
             for (CodeChange cc : commit.getCodeChanges()) {
                 buf.append(MessageFormat.format(" {0}\n",cc.fileName));
             }
-            buf.append("http://jenkins-ci.org/commit/").append(commit.repository).append('/').append(commit.commitSha1);
+            buf.append(config.getJiraUrl() + "commit/").append(commit.repository).append('/').append(commit.commitSha1);
         } else {
             throw new AssertionError("Unrecognized commit type "+_commit.getClass());
         }
