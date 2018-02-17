@@ -1,10 +1,13 @@
 package com.cloudbees.javanet.cvsnews;
 
 import com.cloudbees.javanet.cvsnews.cli.UpdateCommand;
+import com.cloudbees.javanet.cvsnews.util.Config;
+import org.junit.Assume;
 import org.junit.Test;
 
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
+import java.io.File;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -43,6 +46,9 @@ public class GitHubParserTest {
 
     @Test
     public void testParse3() throws Exception {
+        final File config = Config.getDefaultCredentialsFile();
+        Assume.assumeTrue("No config file: " + config, config.exists());
+
         List<GitHubCommit> commits = new GitHubParser().parse(new MimeMessage(Session.getInstance(System.getProperties()),
                 getClass().getResourceAsStream("github3.txt")));
 
