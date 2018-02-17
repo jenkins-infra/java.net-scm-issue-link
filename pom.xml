@@ -9,9 +9,9 @@
   <groupId>com.cloudbees.javanet</groupId>
   <artifactId>scm-issue-link</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>CVSNews parser</name>
+  <name>Jenkins JIRA Issue linking tool</name>
   <description>
-    Parses CVS/Subversion commit e-mail and extracts information.
+    Parses CVS/Subversion/GitHub commit e-mails and updates JIRA tickets.
   </description>
 
   <properties>
