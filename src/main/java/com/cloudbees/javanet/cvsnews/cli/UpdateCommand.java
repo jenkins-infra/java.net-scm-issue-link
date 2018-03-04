@@ -44,16 +44,16 @@ import com.cloudbees.javanet.cvsnews.CodeChange;
 import com.cloudbees.javanet.cvsnews.Commit;
 import com.cloudbees.javanet.cvsnews.GitHubCommit;
 import com.cloudbees.javanet.cvsnews.util.Config;
+import com.cloudbees.javanet.cvsnews.util.JiraTransition;
 
-import java.io.File;
-import java.net.URL;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
@@ -62,6 +62,8 @@ import java.util.regex.Pattern;
  * @author Kohsuke Kawaguchi
  */
 public class UpdateCommand extends AbstractIssueCommand {
+
+    private static final Logger LOGGER = Logger.getLogger(UpdateCommand.class.getName());
 
     public int execute() throws Exception {
         System.out.println("Parsing stdin");
@@ -79,10 +81,8 @@ public class UpdateCommand extends AbstractIssueCommand {
             final Config config = Config.loadConfig();
             String msg = createUpdateMessage(commit, config);
 
-            boolean markedAsFixed = FIXED.matcher(commit.log).find();
-
             for (Issue issue : issues) {
-                if (PROJECTS.contains(issue.projectName)) {
+                if (config.getJiraModel().getProjects().contains(issue.projectName)) {
                     System.out.println("Updating "+issue);
                     // update JIRA
 
@@ -101,13 +101,16 @@ public class UpdateCommand extends AbstractIssueCommand {
                     // add comment
                     service.getIssueClient().addComment(i.getCommentsUri(),Comment.valueOf(msg)).claim();
 
-                    // resolve.
+                    // Apply transitions
                     // comment set here doesn't work. see http://jira.atlassian.com/browse/JRA-11278
-                    if (markedAsFixed && issues.size()==1) {
-
-                        service.getIssueClient().transition(i, new TransitionInput(5)).claim(); /*this is apparently the ID for "resolved"*/
-//                            service.progressWorkflowAction(securityToken,id,"5" ,
-//                                new RemoteFieldValue[]{new RemoteFieldValue("comment",new String[]{"closing comment"})});
+                    if (issues.size() == 1) {
+                        // TODO: apply filters
+                        for (JiraTransition transition : config.getJiraModel().getTransitions()) {
+                            if (transition.getFilter().matches(i, commit)) {
+                                LOGGER.log(Level.INFO, "Issue {0}: applying transition to {1}", new Object[] {id, transition});
+                                service.getIssueClient().transition(i, new TransitionInput(transition.getId())).claim();
+                            }
+                        }
                     }
                 }
             }
@@ -168,6 +171,4 @@ public class UpdateCommand extends AbstractIssueCommand {
     private static final Pattern FIXED = Pattern.compile("\\[.*(fixed|FIXED|FIX|FIXES).*\\]");
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
-
-    private static final Set<String> PROJECTS = new HashSet<String>(Arrays.asList("jenkins","infra"));
 }
