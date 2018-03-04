@@ -1,0 +1,35 @@
+projects:
+  - "jenkins"
+  - "infra"
+  - "website"
+  - "test"
+transitions:
+  - id: 5
+      name: "Fixed but not Released"
+      filter:
+        components:
+          # Core components
+          - "core"
+          - "remoting"
+          - "winstone"
+          - "extras-executable-war"
+          - "instance-identity-module"
+          - "windows-slave-installer-module"
+          - "cli"
+          # Utilities
+          - "acceptance-test-harness"
+          # Issue linker testing logic
+          - "test-jep-3"
+        keywords:
+          - "fixed"
+          - "FIXED"
+          - "FIX"
+          - "FIXES"
+  - name: "Resolved"
+    id: 5
+    filter:
+      keywords:
+        - "fixed"
+        - "FIXED"
+        - "FIX"
+        - "FIXES"

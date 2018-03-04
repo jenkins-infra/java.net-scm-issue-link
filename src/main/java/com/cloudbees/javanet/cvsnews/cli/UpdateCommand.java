@@ -39,26 +39,21 @@ package com.cloudbees.javanet.cvsnews.cli;
 
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.api.domain.Comment;
-import com.atlassian.jira.rest.client.api.domain.input.FieldInput;
 import com.atlassian.jira.rest.client.api.domain.input.TransitionInput;
 import com.cloudbees.javanet.cvsnews.CodeChange;
 import com.cloudbees.javanet.cvsnews.Commit;
 import com.cloudbees.javanet.cvsnews.GitHubCommit;
-import org.jenkinsci.jira.JIRA;
+import com.cloudbees.javanet.cvsnews.util.Config;
+import com.cloudbees.javanet.cvsnews.util.JiraTransition;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.URL;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
@@ -67,7 +62,8 @@ import java.util.regex.Pattern;
  * @author Kohsuke Kawaguchi
  */
 public class UpdateCommand extends AbstractIssueCommand {
-    private final File credential = new File(HOME, ".java.net.scm_issue_link");
+
+    private static final Logger LOGGER = Logger.getLogger(UpdateCommand.class.getName());
 
     public int execute() throws Exception {
         System.out.println("Parsing stdin");
@@ -82,40 +78,39 @@ public class UpdateCommand extends AbstractIssueCommand {
             if(issues.isEmpty())
                 continue;   // no issue link
 
-            String msg = createUpdateMessage(commit);
-
-            boolean markedAsFixed = FIXED.matcher(commit.log).find();
+            final Config config = Config.loadConfig();
+            String msg = createUpdateMessage(commit, config);
 
             for (Issue issue : issues) {
-                if (PROJECTS.contains(issue.projectName)) {
+                if (config.getJiraModel().getProjects().contains(issue.projectName)) {
                     System.out.println("Updating "+issue);
                     // update JIRA
-                    Properties props = loadConfig();
-                    JiraRestClient service = JIRA.connect(new URL("http://issues.jenkins-ci.org/"), props.getProperty("userName"), props.getProperty("password"));
+
+                    final JiraRestClient service = config.connectClient();
 
                     String id = issue.projectName.toUpperCase() + "-" + issue.number;
-
-                    String userName = props.getProperty("userName");
 
                     // if an issue doesn't exist an exception will be thrown
                     com.atlassian.jira.rest.client.api.domain.Issue i = service.getIssueClient().getIssue(id).claim();
 
                     // is this commit already reported?
                     Iterable<Comment> comments = i.getComments();
-                    if (isAlreadyCommented(commit,userName,comments))
+                    if (isAlreadyCommented(commit, config, comments))
                         continue;
-
 
                     // add comment
                     service.getIssueClient().addComment(i.getCommentsUri(),Comment.valueOf(msg)).claim();
 
-                    // resolve.
+                    // Apply transitions
                     // comment set here doesn't work. see http://jira.atlassian.com/browse/JRA-11278
-                    if (markedAsFixed && issues.size()==1) {
-
-                        service.getIssueClient().transition(i, new TransitionInput(5)).claim(); /*this is apparently the ID for "resolved"*/
-//                            service.progressWorkflowAction(securityToken,id,"5" ,
-//                                new RemoteFieldValue[]{new RemoteFieldValue("comment",new String[]{"closing comment"})});
+                    if (issues.size() == 1) {
+                        // TODO: apply filters
+                        for (JiraTransition transition : config.getJiraModel().getTransitions()) {
+                            if (transition.getFilter().matches(i, commit)) {
+                                LOGGER.log(Level.INFO, "Issue {0}: applying transition to {1}", new Object[] {id, transition});
+                                service.getIssueClient().transition(i, new TransitionInput(transition.getId())).claim();
+                            }
+                        }
                     }
                 }
             }
@@ -124,22 +119,14 @@ public class UpdateCommand extends AbstractIssueCommand {
         return 0;
     }
 
-    private Properties loadConfig() throws IOException {
-        Properties props = new Properties();
-        try (FileReader r = new FileReader(credential)) {
-            props.load(r);
-        }
-        return props;
-    }
-
     /**
      * Returns true if the given commit is already mentioned in one of the comments.
      */
-    private boolean isAlreadyCommented(Commit commit, String userName, Iterable<Comment> comments) {
-        String msg = createUpdateMessage(commit);
+    private boolean isAlreadyCommented(Commit commit, Config config, Iterable<Comment> comments) {
+        String msg = createUpdateMessage(commit, config);
 
         for (Comment comment : comments) {
-            if (!comment.getAuthor().getName().equals(userName))
+            if (!comment.getAuthor().getName().equals(config.getUserName()))
                 continue;
 
             // TODO: do this for Subversion and CVS, although GitHub is the only place where
@@ -154,7 +141,7 @@ public class UpdateCommand extends AbstractIssueCommand {
         return false;
     }
 
-    private String createUpdateMessage(Commit _commit) {
+    private String createUpdateMessage(Commit _commit, Config config) {
         StringBuilder buf = new StringBuilder();
         buf.append("Code changed in "+_commit.project+"\n");
         buf.append(MessageFormat.format("User: {0}\n",_commit.userName));
@@ -166,7 +153,7 @@ public class UpdateCommand extends AbstractIssueCommand {
             for (CodeChange cc : commit.getCodeChanges()) {
                 buf.append(MessageFormat.format(" {0}\n",cc.fileName));
             }
-            buf.append("http://jenkins-ci.org/commit/").append(commit.repository).append('/').append(commit.commitSha1);
+            buf.append(config.getJiraUrl() + "commit/").append(commit.repository).append('/').append(commit.commitSha1);
         } else {
             throw new AssertionError("Unrecognized commit type "+_commit.getClass());
         }
@@ -184,6 +171,4 @@ public class UpdateCommand extends AbstractIssueCommand {
     private static final Pattern FIXED = Pattern.compile("\\[.*(fixed|FIXED|FIX|FIXES).*\\]");
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
-
-    private static final Set<String> PROJECTS = new HashSet<String>(Arrays.asList("jenkins","infra"));
 }
